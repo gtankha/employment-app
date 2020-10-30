@@ -4,8 +4,8 @@ const { Users, Jobs, userInterests } = require('../../models');
 // GET all users
 router.get('/', (req, res) => {
     
-    // Access our User model and run .findAll() method)
-    User.findAll({attributes: { exclude: ['password'] }})
+   
+    Users.findAll({attributes: { exclude: ['password'] }})
       .then(dbUserData => res.json(dbUserData))
       .catch(err => {
         res.status(500).json(err);
@@ -33,17 +33,12 @@ router.post('/logout', (req, res) => {
 
 // GET single user
 router.get('/:id', (req, res) => {
-    User.findOne({ 
-        attributes: { exclude: ['password'], include: [
-            {
-              model: Post,
-              attributes: ['id', 'title', 'text', 'created_at']
-            }
-          ] },
+    Users.findOne( {
+      exclude: ['password']     
+        ,
       where: {
         id: req.params.id
-      }
-    })
+      }})
       .then(dbUserData => {
         if (!dbUserData) {
           res.status(404).json({ message: 'No user found with this id' });
@@ -62,16 +57,21 @@ router.post('/', (req, res) => {
 
 
   
-    User.create({
-      username: req.body.username,
+    Users.create({
+      full_name: req.body.full_name,
+      company_name: req.body.company_name,
       email: req.body.email,
-      password: req.body.password
+      password: req.body.password,
+      description: req.body.description,
+      type: req.body.type,
     })
       .then(dbUserData => { 
         
         req.session.save(() => {
         req.session.user_id = dbUserData.id;
-        req.session.username = dbUserData.username;
+        req.session.full_name = dbUserData.full_name,
+        req.session.type = dbUserData.type,
+        req.session.company_name = dbUserData.company_name,
         req.session.loggedIn = true;
     
         res.json(dbUserData);
@@ -88,7 +88,7 @@ router.post('/', (req, res) => {
 
     // Query operation
 
-  User.findOne({
+  Users.findOne({
     where: {
       email: req.body.email
     }
@@ -112,8 +112,11 @@ router.post('/', (req, res) => {
       req.session.save(() => {
         // declare session variables
         req.session.user_id = dbUserData.id;
-        req.session.username = dbUserData.username;
+        req.session.full_name = dbUserData.full_name,
+        req.session.type = dbUserData.type,
+        req.session.company_name = dbUserData.company_name,
         req.session.loggedIn = true;
+        
     
         res.json({ user: dbUserData, message: 'You are now logged in!' });
       });
@@ -125,32 +128,89 @@ router.post('/', (req, res) => {
   
 
 // update user
+// update user interests
 router.put('/:id', (req, res) => {
+    // update job data
   
   
-    // if req.body has exact key/value pairs to match the model, you can just use `req.body` instead
-    User.update(req.body, {
-        individualHooks: true,
-      where: {
-        id: req.params.id
-      }
+    //make sure there are actual pertinent fields
+  
+    if (!req.body.interestIds || !req.body.interestIds.length) {
+  
+    Users.update(req.body,
+      
+      {  where: { id: req.params.id }}
+      
+    )
+    .then(result => {
+    
+      Users.findOne({
+        where: {
+          id: req.params.id
+        }}
+      )
+      .then(updatedUser => res.json(updatedUser));
+      
+    
     })
-      .then(dbUserData => {
-        if (!dbUserData[0]) {
-          res.status(404).json({ message: 'No user found with this id' });
-          return;
-        }
-        res.json(dbUserData);
+  
+    .catch((err) => {
+       
+      res.status(400).json(err);
+    });
+  
+   
+    }
+  
+  
+    userInterests.findAll({ where: { user_id: req.params.id ,type:"seeker"} })
+      .then(interests => {
+        // get list of current interest_ids
+  
+        const interestsIds = interests.map(({ interest_id }) => interest_id);
+     console.log(interestsIds);
+      
+        // create filtered list of new interests
+        const newInterests = req.body.interestIds
+          .filter((interest_id) => !interestsIds.includes(interest_id))
+          .map((interest_id) => {
+            return {
+              user_id: req.params.id,
+              job_id: interest_id,
+              type:"seeker"
+              
+            };
+          });
+         console.log(newInterests);
+       
+        // figure out which ones to remove
+        const interestsToRemove = interests
+          .filter(({ interest_id }) => !req.body.interestIds.includes(interest_id))
+          .map(({ id }) => id);
+  
+          console.log(interestsToRemove);
+  
+        // run both actions
+        return Promise.all([
+          userInterests.destroy({ where: { id: interestsToRemove } }),
+          userInterests.bulkCreate(newInterests),
+        ]);
       })
-      .catch(err => {
+      .then((updatedInterests) => { 
+        
+        res.json(updatedInterests[1])
+      })
+      .catch((err) => {
+       
+        res.status(400).json(err);
         console.log(err);
-        res.status(500).json(err);
       });
   });
 
+
 // DELETE single user
 router.delete('/:id', (req, res) => {
-    User.destroy({
+    Users.destroy({
       where: {
         id: req.params.id
       }
