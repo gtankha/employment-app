@@ -1,0 +1,23 @@
+{
+  "name": "c15",
+  "version": "1.0.0",
+  "description": "",
+  "main": "server.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "node server.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/gtankha/employment-app.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/gtankha/employment-app/issues"
+  },
+  "homepage": "https://github.com/gtankha/employment-app#readme",
+  "dependencies": {
+    "handlebars": "^4.7.6"
+  }
+}

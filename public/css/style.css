@@ -1,0 +1,36 @@
+
+
+button {
+    margin-top: 1px;
+    background: none!important;
+    color: white;
+    border: none;
+    cursor: pointer;
+}
+
+header{
+    background-color: rgb(29, 198, 228);
+    border-bottom: solid 4px yellow;
+    color: white;
+}
+
+header h1{
+    border-bottom: solid 1px yellow;
+}
+
+nav a, nav button{
+    margin: 10px;
+}
+
+nav a:hover, nav button:hover {   
+    border-bottom: solid 2px yellow;
+}
+
+button {
+    height: 2px;
+    padding-bottom: 40px;
+    background: none!important;
+    color: white;
+    border: none;
+    cursor: pointer;
+}
