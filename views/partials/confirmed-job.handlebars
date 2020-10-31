@@ -1,0 +1,28 @@
+<div class="confirmed-jobs">
+    
+    {{#if company}}    
+    {{#each this}}
+    <section class="card" style="width: 80%; padding-top: 20px; background-color:lime">
+        <div class="job-name card-header" style="background-color: limegreen;">
+            <h2>{{user.username}} Confirmed interview!</h2>
+        </div>
+        <div class="text card-text">
+            <p>{{user.username}} is interested in the {{job.job-name}} position! contact them at {{user.email}}!</p>
+        </div>
+    </section>
+    {{else}}
+
+    {{#each this}}
+    <section class="card" style="width: 80%; padding-top: 20px; background-color:lime">
+        <div class="job-name card-header" style="background-color: limegreen;>
+            <h2>{{job.job-name}} Confirmed interview </h2>
+        </div>
+        <div class="text card-text">
+            <p>{{job.company-name}} wants to have an interview! <a href="/">click here to schedule an interview</a></p> 
+        </div>
+    </section>
+
+    {{/if}}
+
+
+</div>
