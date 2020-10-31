@@ -1,5 +1,5 @@
 const router = require('express').Router();
-const { Users, Jobs, userInterests } = require('../../models');
+const { Users, Jobs, userInterests, jobSkills, Skills } = require('../../models');
 
 // GET all Jobs
 router.get('/', (req, res) => {
@@ -9,7 +9,17 @@ router.get('/', (req, res) => {
         , include: [{
               model: Users,
               attributes: ['id', 'description', 'company_name']
-            }] 
+            },
+         {
+            model: Skills,
+            attributes: ['name'],
+           through: jobSkills
+           },
+         //  {
+          //   model: Users,
+           //  through: userInterests
+          // }
+          ] 
         
         })
         .then(dbUserData => res.json(dbUserData))
@@ -76,7 +86,7 @@ router.put('/:id', (req, res) => {
   
     //make sure there are actual pertinent fields
   
-    if (!req.body.interestIds || !req.body.interestIds.length) {
+    if ((((typeof(req.body.skillIds) === 'undefined')))  && (((typeof(req.body.interestIds) === 'undefined'))))  {
   
     Jobs.update(req.body,
       
@@ -102,8 +112,47 @@ router.put('/:id', (req, res) => {
   
    
     }
+    if ((!(typeof(req.body.skillIds) === 'undefined')))  {
+      jobSkills.findAll({ where: { job_id: req.params.id} })
+      .then(skills => {
+        // get list of current interest_ids
+    
+        const skillIds = skills.map(({ skill_id }) => skill_id);
+        console.log(skillIds);
+    
+        // create filtered list of new interests
+        const newSkills = req.body.skillIds
+          .filter((skill_id) => !skillIds.includes(skill_id))
+          .map((skill_id) => {
+            return {
+              job_id: req.params.id,
+              skill_id: skill_id
+            };
+          });
+        console.log(newSkills);
+    
+        // figure out which ones to remove
+        const skillsToRemove = skills
+          .filter(({skill_id }) => !req.body.skillIds.includes(skill_id))
+          .map(({id }) => id);
+    
+        console.log(skillsToRemove);
+    
+        // run both actions
+        return Promise.all([
+          jobSkills.destroy({ where: { id: skillsToRemove } }),
+          jobSkills.bulkCreate(newSkills)
+        ]);
+      })
+      .then((updatedSkillIds) => res.json(updatedSkillIds))
+      .catch((err) => {
+        // console.log(err);
+        res.status(400).json(err);
+      });
+      }
+    
   
-  
+    if (!(typeof(req.body.interestIds) === 'undefined')) {
     userInterests.findAll({ where: { job_id: req.params.id ,type:"employer"} })
       .then(interests => {
         // get list of current interest_ids
@@ -146,6 +195,7 @@ router.put('/:id', (req, res) => {
         res.status(400).json(err);
         console.log(err);
       });
+    }
   });
 
 
