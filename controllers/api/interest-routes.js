@@ -18,7 +18,7 @@ router.get('/', (req, res) => {
                     include:{
                         model:Jobs,
                         as:"interested_in",
-                        include:{model:Users,as:"company"}
+                        include:{model:Users,as:"company",attributes:{exclude:['password']}}
                     } 
             
                 })
@@ -27,6 +27,24 @@ router.get('/', (req, res) => {
                     res.status(500).json(err);
                     console.log(err);
                 });
+        }
+        else if(req.body.type == "employer"){
+
+            Jobs.findAll({
+                where:{company_id:req.body.id},
+                include: {
+                    model:userInterests,
+                    as:"job_interests",
+                    include:{model:Users,as:'candidates',attributes:{exclude:['password']}}
+                
+                }
+            })
+            .then(dbUserData => res.json(dbUserData))
+            .catch(err => {
+                res.status(500).json(err);
+                console.log(err);
+            });
+
         }
 
 

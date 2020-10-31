@@ -30,12 +30,12 @@ userInterests.belongsTo(Jobs,{
 
 Users.hasMany(userInterests,{
     foreign_key:"user_id",
-    as:"users_int"
+    as:"candidates"
 })
 
 userInterests.belongsTo(Users,{
     foreignKey: "user_id",
-    as:"int_users"
+    as:"candidates"
 })
 
 // many to many
