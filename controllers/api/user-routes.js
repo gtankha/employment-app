@@ -4,32 +4,99 @@ const { Users, Jobs, userInterests, Skills, userSkills, jobSkills } = require('.
 // GET all users
 router.get('/', (req, res) => {
 
+  console.log(req.query);
 
-  Users.findAll({
-    attributes: { exclude: ['password'] },
-
-    include: [
-      {
-        model: Skills,
-        attributes: ['name'],
-        through: userSkills
+  if (req.query.type == "seeker") {
+    Users.findAll({
+      attributes: { exclude: ['password'] },
+      where: {
+        type: req.query.type
       },
-      {
-        model: userInterests,
-         attributes: ['id','job_id','type'],
-        as:"interested_in"
-      // model:Jobs,
-      // as:"interested_in",
-      // include:{model:Users,as:"company",attributes:{exclude:['password']}}
-      }
-    ]
+      include: [
+        {
+          model: Skills,
+          attributes: ['name'],
+          through: userSkills
+        },
+        {
+          model: userInterests,
+          attributes: ['id', 'job_id', 'type'],
+          as: "interested_in",
+          include: { model: Jobs, as: "interested_in", attributes: { exclude: ['password', 'id'] } }
+        },
+      ]
+    })
+      .then(dbUserData => {
+        console.log(dbUserData);
+        res.json(dbUserData)
+      })
+      .catch(err => {
+        console.log(err);
+        res.status(500).json(err);
+      });
+  }
 
-  })
-    .then(dbUserData => res.json(dbUserData))
-    .catch(err => {
-      console.log(err);
-      res.status(500).json(err);
-    });
+  if (req.query.type == "employer") {
+    Users.findAll({
+      attributes: { exclude: ['password'] },
+      where: {
+        type: req.query.type
+      },
+      include: [
+        //   {
+        //     model: Skills,
+        //     attributes: ['name'],
+        //     through: userSkills
+        //   },
+        //    {
+        //     model: userInterests,
+        //     attributes: ['id', 'job_id', 'type'],
+        //     as: "interested_in",
+        //   include:{model:Jobs,as:"interested_in",attributes:{exclude:['password','id']}}
+        //    model:Jobs,
+        //   through: userInterests,
+        //    as:"job_interests",
+        //   include:{model:Users,as:"company",attributes:{exclude:['password']}}
+
+        //   },
+        {
+          model: Jobs,
+          attributes: ["id", "title", "company_id"],
+          include: {
+            model: userInterests,
+            as: "parties_interested",
+            attributes: ['user_id','type'],
+            //  include: { model: Users,  attributes: ['full_name'] }
+          }
+        },
+        {
+          model: userInterests,
+          attributes: ['user_id', 'type'],
+          as: "interested_in",
+           // include: { model: Users, attributes:  ['full_name'] }
+        },
+      ]
+
+
+    })
+      .then(dbUserData => {
+        console.log(dbUserData);
+        res.json(dbUserData)
+      })
+      .catch(err => {
+        console.log(err);
+        res.status(500).json(err);
+      });
+  }
+
+
+
+
+
+
+
+
+
 });
 
 
@@ -50,7 +117,6 @@ router.post('/logout', (req, res) => {
 });
 
 
-
 // GET single user
 router.get('/:id', (req, res) => {
   Users.findOne({
@@ -67,12 +133,12 @@ router.get('/:id', (req, res) => {
       },
       {
         model: userInterests,
-        attributes: ['id','job_id','type'],
-        as:"interested_in"
-     // model:Jobs,
-     // through: userInterests,
-     // as: 'job_interests',
-     // include:{model:Users,as:"company",attributes:{exclude:['password']}}
+        attributes: ['id', 'job_id', 'type'],
+        as: "interested_in"
+        // model:Jobs,
+        // through: userInterests,
+        // as: 'job_interests',
+        // include:{model:Users,as:"company",attributes:{exclude:['password']}}
       }
     ]
   })
@@ -172,7 +238,7 @@ router.put('/:id', (req, res) => {
 
   //make sure there are actual pertinent fields
 
-  if ((((typeof(req.body.skillIds) === 'undefined')))  && (((typeof(req.body.interestIds) === 'undefined'))))  {
+  if ((((typeof (req.body.skillIds) === 'undefined'))) && (((typeof (req.body.interestIds) === 'undefined')))) {
 
     Users.update(req.body,
 
@@ -197,89 +263,89 @@ router.put('/:id', (req, res) => {
 
 
   }
- 
-  if ((!(typeof(req.body.skillIds) === 'undefined')))  {
-  userSkills.findAll({ where: { user_id: req.params.id} })
-  .then(skills => {
-    // get list of current interest_ids
 
-    const skillIds = skills.map(({ skill_id }) => skill_id);
-    console.log(skillIds);
+  if ((!(typeof (req.body.skillIds) === 'undefined'))) {
+    userSkills.findAll({ where: { user_id: req.params.id } })
+      .then(skills => {
+        // get list of current interest_ids
 
-    // create filtered list of new interests
-    const newSkills = req.body.skillIds
-      .filter((skill_id) => !skillIds.includes(skill_id))
-      .map((skill_id) => {
-        return {
-          user_id: req.params.id,
-          skill_id: skill_id
-        };
+        const skillIds = skills.map(({ skill_id }) => skill_id);
+        console.log(skillIds);
+
+        // create filtered list of new interests
+        const newSkills = req.body.skillIds
+          .filter((skill_id) => !skillIds.includes(skill_id))
+          .map((skill_id) => {
+            return {
+              user_id: req.params.id,
+              skill_id: skill_id
+            };
+          });
+        console.log(newSkills);
+
+        // figure out which ones to remove
+        const skillsToRemove = skills
+          .filter(({ skill_id }) => !req.body.skillIds.includes(skill_id))
+          .map(({ id }) => id);
+
+        console.log(skillsToRemove);
+
+        // run both actions
+        return Promise.all([
+          userSkills.destroy({ where: { id: skillsToRemove } }),
+          userSkills.bulkCreate(newSkills)
+        ]);
+      })
+      .then((updatedSkillIds) => res.json(updatedSkillIds))
+      .catch((err) => {
+        // console.log(err);
+        res.status(400).json(err);
       });
-    console.log(newSkills);
-
-    // figure out which ones to remove
-    const skillsToRemove = skills
-      .filter(({skill_id }) => !req.body.skillIds.includes(skill_id))
-      .map(({id }) => id);
-
-    console.log(skillsToRemove);
-
-    // run both actions
-    return Promise.all([
-      userSkills.destroy({ where: { id: skillsToRemove } }),
-      userSkills.bulkCreate(newSkills)
-    ]);
-  })
-  .then((updatedSkillIds) => res.json(updatedSkillIds))
-  .catch((err) => {
-    // console.log(err);
-    res.status(400).json(err);
-  });
   }
 
 
-  if (!(typeof(req.body.interestIds) === 'undefined')) {
-  userInterests.findAll({ where: { user_id: req.params.id, type: "seeker" } })
-    .then(interests => {
-      // get list of current interest_ids
+  if (!(typeof (req.body.interestIds) === 'undefined')) {
+    userInterests.findAll({ where: { user_id: req.params.id, type: "seeker" } })
+      .then(interests => {
+        // get list of current interest_ids
 
-      const interestsIds = interests.map(({ interest_id }) => interest_id);
-      console.log(interestsIds);
-      // create filtered list of new interests
-      const newInterests = req.body.interestIds
-        .filter((interest_id) => !interestsIds.includes(interest_id))
-        .map((interest_id) => {
-          return {
-            user_id: req.params.id,
-            job_id: interest_id,
-            type: "seeker"
+        const interestsIds = interests.map(({ interest_id }) => interest_id);
+        console.log(interestsIds);
+        // create filtered list of new interests
+        const newInterests = req.body.interestIds
+          .filter((interest_id) => !interestsIds.includes(interest_id))
+          .map((interest_id) => {
+            return {
+              user_id: req.params.id,
+              job_id: interest_id,
+              type: "seeker"
 
-          };
-        });
-      console.log(newInterests);
+            };
+          });
+        console.log(newInterests);
 
-      // figure out which ones to remove
-      const interestsToRemove = interests
-        .filter(({ interest_id }) => !req.body.interestIds.includes(interest_id))
-        .map(({ id }) => id);
+        // figure out which ones to remove
+        const interestsToRemove = interests
+          .filter(({ interest_id }) => !req.body.interestIds.includes(interest_id))
+          .map(({ id }) => id);
 
-      console.log(interestsToRemove);
+        console.log(interestsToRemove);
 
-      // run both actions
-      return Promise.all([
-        userInterests.destroy({ where: { id: interestsToRemove } }),
-        userInterests.bulkCreate(newInterests),
-      ]);
-    })
-    .then((updatedInterests) => {
+        // run both actions
+        return Promise.all([
+          userInterests.destroy({ where: { id: interestsToRemove } }),
+          userInterests.bulkCreate(newInterests),
+        ]);
+      })
+      .then((updatedInterests) => {
 
-      res.json(updatedInterests[1])
-    })
-    .catch((err) => {
+        res.json(updatedInterests[1])
+      })
+      .catch((err) => {
 
-      res.status(400).json(err);
-      console.log(err);
-    });
+        res.status(400).json(err);
+        console.log(err);
+      });
   }
 });
 
