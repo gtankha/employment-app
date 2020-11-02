@@ -9,12 +9,12 @@ const userInterests = require('./User-interests');
 
 // one to many
 Users.hasMany(Jobs, {
-    as:"company",
+  //  as:"company",
     foreignKey: 'company_id'
   });
 
 Jobs.belongsTo(Users, {
-    as:"company",
+   // as:"company",
     foreignKey: 'company_id',
   });
 
