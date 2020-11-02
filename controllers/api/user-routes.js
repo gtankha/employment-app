@@ -42,42 +42,22 @@ router.get('/', (req, res) => {
       where: {
         type: req.query.type
       },
-      include: [
-        //   {
-        //     model: Skills,
-        //     attributes: ['name'],
-        //     through: userSkills
-        //   },
-        //    {
-        //     model: userInterests,
-        //     attributes: ['id', 'job_id', 'type'],
-        //     as: "interested_in",
-        //   include:{model:Jobs,as:"interested_in",attributes:{exclude:['password','id']}}
-        //    model:Jobs,
-        //   through: userInterests,
-        //    as:"job_interests",
-        //   include:{model:Users,as:"company",attributes:{exclude:['password']}}
-
-        //   },
-        {
-          model: Jobs,
-          attributes: ["id", "title", "company_id"],
-          include: {
+      include: [{
+        model: Jobs,
+        attributes: ["id", "title", "company_id"],
+        include: [
+          {
+            model: Skills,
+            attributes: ['name'],
+            through: jobSkills
+          },
+          {
             model: userInterests,
             as: "parties_interested",
-            attributes: ['user_id','type'],
-            //  include: { model: Users,  attributes: ['full_name'] }
-          }
-        },
-        {
-          model: userInterests,
-          attributes: ['user_id', 'type'],
-          as: "interested_in",
-           // include: { model: Users, attributes:  ['full_name'] }
-        },
-      ]
-
-
+            attributes: ['user_id', 'type']
+            //  include: { model: Users,  attributes: ['full_name'] }   
+          }]
+      }]
     })
       .then(dbUserData => {
         console.log(dbUserData);
