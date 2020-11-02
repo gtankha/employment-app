@@ -4,122 +4,135 @@ const { Users, Jobs, userInterests, jobSkills, Skills } = require('../../models'
 // GET all Jobs
 router.get('/', (req, res) => {
 
-    Jobs.findAll(
-       { exclude: ['password']
-        , include: [{
-              model: Users,
-              attributes: ['id', 'description', 'company_name']
-            },
-         {
-            model: Skills,
-            attributes: ['name'],
-           through: jobSkills
-           },
-         //  {
-          //   model: Users,
-           //  through: userInterests
-          // }
-          ] 
-        
-        })
-        .then(dbUserData => res.json(dbUserData))
-        .catch(err => {
-            res.status(500).json(err);
-        });
+  Jobs.findAll(
+    {
+      exclude: ['password']
+      , include: [{
+        model: Users,
+        attributes: ['id', 'description', 'company_name']
+      },
+      {
+        model: Skills,
+        attributes: ['name'],
+        through: jobSkills
+      },
+      {
+        model: userInterests,
+        attributes: ['id', 'user_id', 'type'],
+        as: "parties_interested"
+      }
+      ]
+
+    })
+    .then(dbUserData => res.json(dbUserData))
+    .catch(err => {
+      console.log(err);
+      res.status(500).json(err);
+    });
 
 });
 
 // GET single job
 router.get('/:id', (req, res) => {
-    Jobs.findOne({
-    
-        include: 
-          [{
-            model: Users,
-            attributes: ['id', 'description', 'company_name']
-          }]
-        ,
-        where:{id:req.params.id}
-        
-      
-        })
-      .then(dbUserData => {
-        if (!dbUserData) {
-          res.status(404).json({ message: 'No user found with this id' });
-          return;
-        }
-        res.json(dbUserData);
-      })
-      .catch(err => {
-        console.log(err);
-        res.status(500).json(err);
-      });
-  });
+  Jobs.findOne({
+
+    include:
+      [{
+        model: Users,
+        attributes: ['id', 'description', 'company_name']
+      },
+      {
+        model: Skills,
+        attributes: ['name'],
+        through: jobSkills
+      },
+      {
+        model: userInterests,
+        attributes: ['id', 'user_id', 'type'],
+        as: "parties_interested"
+      }
+      ],
+    where: { id: req.params.id }
+
+  })
+    .then(dbUserData => {
+      if (!dbUserData) {
+        res.status(404).json({ message: 'No user found with this id' });
+        return;
+      }
+      res.json(dbUserData);
+    })
+    .catch(err => {
+      console.log(err);
+      res.status(500).json(err);
+    });
+});
 
 // create new job
 router.post('/', (req, res) => {
 
 
 
-    Jobs.create({
-        title: req.body.title,
-        description: req.body.description,
-        company_id: req.body.company_id
+  Jobs.create({
+    title: req.body.title,
+    description: req.body.description,
+    company_id: req.body.company_id
 
+  })
+    .then(dbUserData => {
+
+      res.json(dbUserData);
     })
-        .then(dbUserData => {
 
-            res.json(dbUserData);
-        })
-
-        .catch(err => {
-            console.log(err);
-            res.status(500).json(err);
-        });
+    .catch(err => {
+      console.log(err);
+      res.status(500).json(err);
+    });
 
 })
 
 // update job
 router.put('/:id', (req, res) => {
-    // update job data
-  
-  
-    //make sure there are actual pertinent fields
-  
-    if ((((typeof(req.body.skillIds) === 'undefined')))  && (((typeof(req.body.interestIds) === 'undefined'))))  {
-  
+  // update job data
+
+
+  //make sure there are actual pertinent fields
+
+  if ((((typeof (req.body.skillIds) === 'undefined'))) && (((typeof (req.body.interestIds) === 'undefined')))) {
+
     Jobs.update(req.body,
-      
-      {  where: { id: req.params.id }}
-      
+
+      { where: { id: req.params.id } }
+
     )
-    .then(result => {
-    
-      Jobs.findOne({
-        where: {
-          id: req.params.id
-        }}
-      )
-      .then(updatedJob => res.json(updatedJob));
-      
-    
-    })
-  
-    .catch((err) => {
-       
-      res.status(400).json(err);
-    });
-  
-   
-    }
-    if ((!(typeof(req.body.skillIds) === 'undefined')))  {
-      jobSkills.findAll({ where: { job_id: req.params.id} })
+      .then(result => {
+
+        Jobs.findOne({
+          where: {
+            id: req.params.id
+          }
+        }
+        )
+          .then(updatedJob => res.json(updatedJob));
+
+
+      })
+
+      .catch((err) => {
+
+        res.status(400).json(err);
+      });
+
+
+  }
+  if ((!(typeof (req.body.skillIds) === 'undefined'))) {
+    jobSkills.findAll({ where: { job_id: req.params.id } })
       .then(skills => {
         // get list of current interest_ids
-    
+
         const skillIds = skills.map(({ skill_id }) => skill_id);
         console.log(skillIds);
-    
+
         // create filtered list of new interests
         const newSkills = req.body.skillIds
           .filter((skill_id) => !skillIds.includes(skill_id))
@@ -130,14 +143,14 @@ router.put('/:id', (req, res) => {
             };
           });
         console.log(newSkills);
-    
+
         // figure out which ones to remove
         const skillsToRemove = skills
-          .filter(({skill_id }) => !req.body.skillIds.includes(skill_id))
-          .map(({id }) => id);
-    
+          .filter(({ skill_id }) => !req.body.skillIds.includes(skill_id))
+          .map(({ id }) => id);
+
         console.log(skillsToRemove);
-    
+
         // run both actions
         return Promise.all([
           jobSkills.destroy({ where: { id: skillsToRemove } }),
@@ -149,17 +162,17 @@ router.put('/:id', (req, res) => {
         // console.log(err);
         res.status(400).json(err);
       });
-      }
-    
-  
-    if (!(typeof(req.body.interestIds) === 'undefined')) {
-    userInterests.findAll({ where: { job_id: req.params.id ,type:"employer"} })
+  }
+
+
+  if (!(typeof (req.body.interestIds) === 'undefined')) {
+    userInterests.findAll({ where: { job_id: req.params.id, type: "employer" } })
       .then(interests => {
         // get list of current interest_ids
-  
+
         const interestsIds = interests.map(({ interest_id }) => interest_id);
-     console.log(interestsIds);
-      
+        console.log(interestsIds);
+
         // create filtered list of new interests
         const newInterests = req.body.interestIds
           .filter((interest_id) => !interestsIds.includes(interest_id))
@@ -167,45 +180,45 @@ router.put('/:id', (req, res) => {
             return {
               job_id: req.params.id,
               user_id: interest_id,
-              type:"employer"
-              
+              type: "employer"
+
             };
           });
-         console.log(newInterests);
-       
+        console.log(newInterests);
+
         // figure out which ones to remove
         const interestsToRemove = interests
           .filter(({ interest_id }) => !req.body.interestIds.includes(interest_id))
           .map(({ id }) => id);
-  
-          console.log(interestsToRemove);
-  
+
+        console.log(interestsToRemove);
+
         // run both actions
         return Promise.all([
           userInterests.destroy({ where: { id: interestsToRemove } }),
           userInterests.bulkCreate(newInterests),
         ]);
       })
-      .then((updatedInterests) => { 
-        
+      .then((updatedInterests) => {
+
         res.json(updatedInterests[1])
       })
       .catch((err) => {
-       
+
         res.status(400).json(err);
         console.log(err);
       });
-    }
-  });
+  }
+});
 
 
-  router.delete('/:id', (req, res) => {
+router.delete('/:id', (req, res) => {
 
-    Jobs.destroy({where:{id:req.params.id}})
+  Jobs.destroy({ where: { id: req.params.id } })
     .then(result => res.status(200).json(result))
     .catch((err) => res.status(400).json(err))
-    
-  })
+
+})
 
 module.exports = router;
 

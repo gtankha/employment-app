@@ -15,14 +15,19 @@ router.get('/', (req, res) => {
         through: userSkills
       },
       {
-        model: Jobs,
-        through: userInterests
+        model: userInterests,
+         attributes: ['id','job_id','type'],
+        as:"interested_in"
+      // model:Jobs,
+      // as:"interested_in",
+      // include:{model:Users,as:"company",attributes:{exclude:['password']}}
       }
     ]
 
   })
     .then(dbUserData => res.json(dbUserData))
     .catch(err => {
+      console.log(err);
       res.status(500).json(err);
     });
 });
@@ -61,9 +66,13 @@ router.get('/:id', (req, res) => {
         through: userSkills
       },
       {
-        model: Skills,
-        attributes: ['name'],
-        through: jobSkills
+        model: userInterests,
+        attributes: ['id','job_id','type'],
+        as:"interested_in"
+     // model:Jobs,
+     // through: userInterests,
+     // as: 'job_interests',
+     // include:{model:Users,as:"company",attributes:{exclude:['password']}}
       }
     ]
   })
