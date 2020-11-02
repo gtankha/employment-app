@@ -20,7 +20,7 @@ Jobs.belongsTo(Users, {
 
 Jobs.hasMany(userInterests,{
     foreign_key:"job_id",
-    as:"parties_interested"
+    as:"company"
 })
 
 userInterests.belongsTo(Jobs,{

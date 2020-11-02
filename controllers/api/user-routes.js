@@ -4,7 +4,6 @@ const { Users, Jobs, userInterests, Skills, userSkills, jobSkills } = require('.
 // GET all users
 router.get('/', (req, res) => {
 
-  console.log(req.query);
 
   if (req.query.type == "seeker") {
     Users.findAll({
@@ -99,40 +98,104 @@ router.post('/logout', (req, res) => {
 
 // GET single user
 router.get('/:id', (req, res) => {
-  Users.findOne({
-    exclude: ['password']
-    ,
-    where: {
-      id: req.params.id
-    },
-    include: [
-      {
-        model: Skills,
-        attributes: ['name'],
-        through: userSkills
-      },
-      {
-        model: userInterests,
-        attributes: ['id', 'job_id', 'type'],
-        as: "interested_in"
-        // model:Jobs,
-        // through: userInterests,
-        // as: 'job_interests',
-        // include:{model:Users,as:"company",attributes:{exclude:['password']}}
+
+    if (req.query.type == "seeker") {
+        Users.findAll({
+          attributes: { exclude: ['password'] },
+          where: {
+            //type: req.query.type
+            id:req.params.id
+          },
+          include: [
+            {
+              model: Skills,
+              attributes: ['name'],
+              through: userSkills
+            },
+            {
+              model: userInterests,
+              attributes: ['id', 'job_id', 'type'],
+              as: "interested_in",
+              include: { model: Jobs, as: "interested_in", attributes: { exclude: ['password', 'id'] } }
+            },
+          ]
+        })
+          .then(dbUserData => {
+            console.log(dbUserData);
+            res.json(dbUserData)
+          })
+          .catch(err => {
+            console.log(err);
+            res.status(500).json(err);
+          });
       }
-    ]
-  })
-    .then(dbUserData => {
-      if (!dbUserData) {
-        res.status(404).json({ message: 'No user found with this id' });
-        return;
+    
+      if (req.query.type == "employer") {
+        Users.findAll({
+          attributes: { exclude: ['password'] },
+          where: {
+            type: req.query.type
+          },
+          include: [{
+            model: Jobs,
+            attributes: ["id", "title", "company_id"],
+            include: [
+              {
+                model: Skills,
+                attributes: ['name'],
+                through: jobSkills
+              },
+              {
+                model: userInterests,
+                as: "parties_interested",
+                attributes: ['user_id', 'type']
+                //  include: { model: Users,  attributes: ['full_name'] }   
+              }]
+          }]
+        })
+          .then(dbUserData => {
+            console.log(dbUserData);
+            res.json(dbUserData)
+          })
+          .catch(err => {
+            console.log(err);
+            res.status(500).json(err);
+          });
       }
-      res.json(dbUserData);
-    })
-    .catch(err => {
-      console.log(err);
-      res.status(500).json(err);
-    });
+//   Users.findOne({
+//     exclude: ['password']
+//     ,
+//     where: {
+//       id: req.params.id
+//     },
+//     include: [
+//       {
+//         model: Skills,
+//         attributes: ['name'],
+//         through: userSkills
+//       },
+//       {
+//         model: userInterests,
+//         attributes: ['id', 'job_id', 'type'],
+//         as: "interested_in"
+//         // model:Jobs,
+//         // through: userInterests,
+//         // as: 'job_interests',
+//         // include:{model:Users,as:"company",attributes:{exclude:['password']}}
+//       }
+//     ]
+//   })
+//     .then(dbUserData => {
+//       if (!dbUserData) {
+//         res.status(404).json({ message: 'No user found with this id' });
+//         return;
+//       }
+//       res.json(dbUserData);
+//     })
+//     .catch(err => {
+//       console.log(err);
+//       res.status(500).json(err);
+//     });
 });
 
 // create new user

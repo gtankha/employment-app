@@ -6,14 +6,14 @@ router.get('/', (req, res) => {
 
 
 
-    if (req.body.id && req.body.type) {
+    if (req.query.id && req.query.type) {
 
-        if (req.body.type == "seeker") {
+        if (req.query.type == "seeker") {
 
             userInterests.findAll(
                 { 
                     attributes:{exclude:['id']},
-                    where: { user_id: req.body.id },
+                    where: { user_id: req.query.id },
 
                     include:{
                         model:Jobs,
@@ -31,7 +31,7 @@ router.get('/', (req, res) => {
         else if(req.body.type == "employer"){
 
             Jobs.findAll({
-                where:{company_id:req.body.id},
+                where:{company_id:req.query.id},
                 include: {
                     model:userInterests,
                     as:"job_interests",
