@@ -6,14 +6,14 @@ router.get('/', (req, res) => {
 
 
 
-    if (req.query.id && req.query.type) {
+    if (req.query.user_id) {
 
-        if (req.query.type == "seeker") {
+       
 
             userInterests.findAll(
                 {
                     attributes: { exclude: ['id', 'userId'] },
-                    where: { user_id: req.query.id, type: req.query.type },
+                    where: { user_id: req.query.user_id },
 
                     include: {
                         model: Jobs,
@@ -28,10 +28,10 @@ router.get('/', (req, res) => {
                     console.log(err);
                 });
         }
-        else if (req.query.type == "employer") {
+        else if (req.query.company_id) {
 
             Jobs.findAll({
-                where: { company_id: req.query.id },
+                where: { company_id: req.query.company_id },
                 include: {
                     model: userInterests,
                     as: "job_interests",
@@ -45,7 +45,7 @@ router.get('/', (req, res) => {
                     console.log(err);
                 });
 
-        }
+        
 
 
     }
@@ -58,6 +58,26 @@ router.get('/', (req, res) => {
 
     }
 
+});
+
+// DELETE single interest
+router.delete('/:id', (req, res) => {
+    userInterests.destroy({
+        where: {
+            id: req.params.id
+        }
+    })
+        .then(dbUserData => {
+            if (!dbUserData) {
+                res.status(404).json({ message: 'No user found with this id' });
+                return;
+            }
+            res.json(dbUserData);
+        })
+        .catch(err => {
+            console.log(err);
+            res.status(500).json(err);
+        });
 });
 
 

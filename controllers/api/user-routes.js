@@ -4,69 +4,72 @@ const { Users, Jobs, userInterests, Skills, userSkills, jobSkills } = require('.
 // GET all users
 router.get('/', (req, res) => {
 
+    Users.findAll()
+    .then(result=>res.status(200).json(result))
+    .catch(err => res.status(200).json(err))
 
-  if (req.query.type == "seeker") {
-    Users.findAll({
-      attributes: { exclude: ['password'] },
-      where: {
-        type: req.query.type
-      },
-      include: [
-        {
-          model: Skills,
-          attributes: ['name'],
-          through: userSkills
-        },
-        {
-          model: userInterests,
-          attributes: ['id', 'job_id', 'type'],
-          as: "interested_in",
-          include: { model: Jobs, as: "interested_in", attributes: { exclude: ['password', 'id'] } }
-        },
-      ]
-    })
-      .then(dbUserData => {
-        console.log(dbUserData);
-        res.json(dbUserData)
-      })
-      .catch(err => {
-        console.log(err);
-        res.status(500).json(err);
-      });
-  }
+    // if (req.query.type == "seeker") {
+    //     Users.findAll({
+    //         attributes: { exclude: ['password'] },
+    //         where: {
+    //             type: req.query.type
+    //         },
+    //         include: [
+    //             {
+    //                 model: Skills,
+    //                 attributes: ['name'],
+    //                 through: userSkills
+    //             },
+    //             {
+    //                 model: userInterests,
+    //                 attributes: ['id', 'job_id', 'type'],
+    //                 as: "interested_in",
+    //                 include: { model: Jobs, as: "interested_in", attributes: { exclude: ['password', 'id'] } }
+    //             },
+    //         ]
+    //     })
+    //         .then(dbUserData => {
+    //             console.log(dbUserData);
+    //             res.json(dbUserData)
+    //         })
+    //         .catch(err => {
+    //             console.log(err);
+    //             res.status(500).json(err);
+    //         });
+    // }
 
-  if (req.query.type == "employer") {
-    Users.findAll({
-      attributes: { exclude: ['password'] },
-      where: {
-        type: req.query.type
-      },
-      include: [{
-        model: Jobs,
-        attributes: ["id", "title", "company_id"],
-        include: [
-          {
-            model: Skills,
-            attributes: ['name'],
-            through: jobSkills
-          },
-          {
-            model: userInterests,
-            as: "parties_interested",
-            attributes: ['user_id', 'type']
-            //  include: { model: Users,  attributes: ['full_name'] }   
-          }]
-      }]
-    })
-      .then(dbUserData => {
-        console.log(dbUserData);
-        res.json(dbUserData)
-      })
-      .catch(err => {
-        console.log(err);
-        res.status(500).json(err);
-      });
-  }
+    // if (req.query.type == "employer") {
+    //     Users.findAll({
+    //         attributes: { exclude: ['password'] },
+    //         where: {
+    //             type: req.query.type
+    //         },
+    //         include: [{
+    //             model: Jobs,
+    //             attributes: ["id", "title", "company_id"],
+    //             include: [
+    //                 {
+    //                     model: Skills,
+    //                     attributes: ['name'],
+    //                     through: jobSkills
+    //                 },
+    //                 {
+    //                     model: userInterests,
+    //                     as: "parties_interested",
+    //                     attributes: ['user_id', 'type']
+    //                     //  include: { model: Users,  attributes: ['full_name'] }   
+    //                 }]
+    //         }]
+    //     })
+    //         .then(dbUserData => {
+    //             console.log(dbUserData);
+    //             res.json(dbUserData)
+    //         })
+    //         .catch(err => {
+    //             console.log(err);
+    //             res.status(500).json(err);
+    //         });
+    // }
 
 
 
@@ -84,14 +87,14 @@ router.post('/logout', (req, res) => {
 
 
 
-  if (req.session.loggedIn) {
-    req.session.destroy(() => {
-      res.status(204).end();
-    });
-  }
-  else {
-    res.status(404).end();
-  }
+    if (req.session.loggedIn) {
+        req.session.destroy(() => {
+            res.status(204).end();
+        });
+    }
+    else {
+        res.status(404).end();
+    }
 
 });
 
@@ -101,101 +104,101 @@ router.get('/:id', (req, res) => {
 
     if (req.query.type == "seeker") {
         Users.findAll({
-          attributes: { exclude: ['password'] },
-          where: {
-            //type: req.query.type
-            id:req.params.id
-          },
-          include: [
-            {
-              model: Skills,
-              attributes: ['name'],
-              through: userSkills
+            attributes: { exclude: ['password'] },
+            where: {
+                //type: req.query.type
+                id: req.params.id
             },
-            {
-              model: userInterests,
-              attributes: ['id', 'job_id', 'type'],
-              as: "interested_in",
-              include: { model: Jobs, as: "interested_in", attributes: { exclude: ['password', 'id'] } }
-            },
-          ]
-        })
-          .then(dbUserData => {
-            console.log(dbUserData);
-            res.json(dbUserData)
-          })
-          .catch(err => {
-            console.log(err);
-            res.status(500).json(err);
-          });
-      }
-    
-      if (req.query.type == "employer") {
-        Users.findAll({
-          attributes: { exclude: ['password'] },
-          where: {
-            type: req.query.type
-          },
-          include: [{
-            model: Jobs,
-            attributes: ["id", "title", "company_id"],
             include: [
-              {
-                model: Skills,
-                attributes: ['name'],
-                through: jobSkills
-              },
-              {
-                model: userInterests,
-                as: "parties_interested",
-                attributes: ['user_id', 'type']
-                //  include: { model: Users,  attributes: ['full_name'] }   
-              }]
-          }]
+                {
+                    model: Skills,
+                    attributes: ['name'],
+                    through: userSkills
+                },
+                {
+                    model: userInterests,
+                    attributes: ['id', 'job_id', 'type'],
+                    as: "interested_in",
+                    include: { model: Jobs, as: "interested_in", attributes: { exclude: ['password', 'id'] } }
+                },
+            ]
         })
-          .then(dbUserData => {
-            console.log(dbUserData);
-            res.json(dbUserData)
-          })
-          .catch(err => {
-            console.log(err);
-            res.status(500).json(err);
-          });
-      }
-//   Users.findOne({
-//     exclude: ['password']
-//     ,
-//     where: {
-//       id: req.params.id
-//     },
-//     include: [
-//       {
-//         model: Skills,
-//         attributes: ['name'],
-//         through: userSkills
-//       },
-//       {
-//         model: userInterests,
-//         attributes: ['id', 'job_id', 'type'],
-//         as: "interested_in"
-//         // model:Jobs,
-//         // through: userInterests,
-//         // as: 'job_interests',
-//         // include:{model:Users,as:"company",attributes:{exclude:['password']}}
-//       }
-//     ]
-//   })
-//     .then(dbUserData => {
-//       if (!dbUserData) {
-//         res.status(404).json({ message: 'No user found with this id' });
-//         return;
-//       }
-//       res.json(dbUserData);
-//     })
-//     .catch(err => {
-//       console.log(err);
-//       res.status(500).json(err);
-//     });
+            .then(dbUserData => {
+                console.log(dbUserData);
+                res.json(dbUserData)
+            })
+            .catch(err => {
+                console.log(err);
+                res.status(500).json(err);
+            });
+    }
+
+    if (req.query.type == "employer") {
+        Users.findAll({
+            attributes: { exclude: ['password'] },
+            where: {
+                type: req.query.type
+            },
+            include: [{
+                model: Jobs,
+                attributes: ["id", "title", "company_id"],
+                include: [
+                    {
+                        model: Skills,
+                        attributes: ['name'],
+                        through: jobSkills
+                    },
+                    {
+                        model: userInterests,
+                        as: "parties_interested",
+                        attributes: ['user_id', 'type']
+                        //  include: { model: Users,  attributes: ['full_name'] }   
+                    }]
+            }]
+        })
+            .then(dbUserData => {
+                console.log(dbUserData);
+                res.json(dbUserData)
+            })
+            .catch(err => {
+                console.log(err);
+                res.status(500).json(err);
+            });
+    }
+    //   Users.findOne({
+    //     exclude: ['password']
+    //     ,
+    //     where: {
+    //       id: req.params.id
+    //     },
+    //     include: [
+    //       {
+    //         model: Skills,
+    //         attributes: ['name'],
+    //         through: userSkills
+    //       },
+    //       {
+    //         model: userInterests,
+    //         attributes: ['id', 'job_id', 'type'],
+    //         as: "interested_in"
+    //         // model:Jobs,
+    //         // through: userInterests,
+    //         // as: 'job_interests',
+    //         // include:{model:Users,as:"company",attributes:{exclude:['password']}}
+    //       }
+    //     ]
+    //   })
+    //     .then(dbUserData => {
+    //       if (!dbUserData) {
+    //         res.status(404).json({ message: 'No user found with this id' });
+    //         return;
+    //       }
+    //       res.json(dbUserData);
+    //     })
+    //     .catch(err => {
+    //       console.log(err);
+    //       res.status(500).json(err);
+    //     });
 });
 
 // create new user
@@ -203,72 +206,72 @@ router.post('/', (req, res) => {
 
 
 
-  Users.create({
-    full_name: req.body.full_name,
-    company_name: req.body.company_name,
-    email: req.body.email,
-    password: req.body.password,
-    description: req.body.description,
-    type: req.body.type,
-  })
-    .then(dbUserData => {
-
-      req.session.save(() => {
-        req.session.user_id = dbUserData.id;
-        req.session.full_name = dbUserData.full_name,
-          req.session.type = dbUserData.type,
-          req.session.company_name = dbUserData.company_name,
-          req.session.loggedIn = true;
-
-        res.json(dbUserData);
-      });
-
+    Users.create({
+        full_name: req.body.full_name,
+        company_name: req.body.company_name,
+        email: req.body.email,
+        password: req.body.password,
+        description: req.body.description,
+        type: req.body.type,
     })
-    .catch(err => {
-      console.log(err);
-      res.status(500).json(err);
-    });
+        .then(dbUserData => {
+
+            req.session.save(() => {
+                req.session.user_id = dbUserData.id;
+                req.session.full_name = dbUserData.full_name,
+                    req.session.type = dbUserData.type,
+                    req.session.company_name = dbUserData.company_name,
+                    req.session.loggedIn = true;
+
+                res.json(dbUserData);
+            });
+
+        })
+        .catch(err => {
+            console.log(err);
+            res.status(500).json(err);
+        });
 });
 
 router.post('/login', (req, res) => {
 
-  // Query operation
+    // Query operation
 
-  Users.findOne({
-    where: {
-      email: req.body.email
-    }
-  }).then(dbUserData => {
-    if (!dbUserData) {
-      res.status(400).json({ message: 'No user with that email address!' });
-      return;
-    }
-
-
-
-    // Verify user
-
-    const validPassword = dbUserData.checkPassword(req.body.password);
-
-    if (!validPassword) {
-      res.status(400).json({ message: 'Incorrect password!' });
-      return;
-    }
-
-    req.session.save(() => {
-      // declare session variables
-      req.session.user_id = dbUserData.id;
-      req.session.full_name = dbUserData.full_name,
-        req.session.type = dbUserData.type,
-        req.session.company_name = dbUserData.company_name,
-        req.session.loggedIn = true;
+    Users.findOne({
+        where: {
+            email: req.body.email
+        }
+    }).then(dbUserData => {
+        if (!dbUserData) {
+            res.status(400).json({ message: 'No user with that email address!' });
+            return;
+        }
 
 
-      res.json({ user: dbUserData, message: 'You are now logged in!' });
+
+        // Verify user
+
+        const validPassword = dbUserData.checkPassword(req.body.password);
+
+        if (!validPassword) {
+            res.status(400).json({ message: 'Incorrect password!' });
+            return;
+        }
+
+        req.session.save(() => {
+            // declare session variables
+            req.session.user_id = dbUserData.id;
+            req.session.full_name = dbUserData.full_name,
+                req.session.type = dbUserData.type,
+                req.session.company_name = dbUserData.company_name,
+                req.session.loggedIn = true;
+
+
+            res.json({ user: dbUserData, message: 'You are now logged in!' });
+        });
+
+
     });
-
-
-  });
 
 })
 
@@ -276,141 +279,164 @@ router.post('/login', (req, res) => {
 // update user
 // update user interests
 router.put('/:id', (req, res) => {
-  // update job data
+    // update job data
 
 
-  //make sure there are actual pertinent fields
+    //make sure there are actual pertinent fields
 
-  if ((((typeof (req.body.skillIds) === 'undefined'))) && (((typeof (req.body.interestIds) === 'undefined')))) {
+    if ((((typeof (req.body.skillIds) === 'undefined'))) && (((typeof (req.body.interestIds) === 'undefined')))) {
 
-    Users.update(req.body,
+        Users.update(req.body,
 
-      { where: { id: req.params.id } }
+            { where: { id: req.params.id } }
 
-    )
-      .then(result => {
-
-        Users.findOne({
-          where: {
-            id: req.params.id
-          }
-        }
         )
-          .then(updatedUser => res.json(updatedUser));
-      })
+            .then(result => {
 
-      .catch((err) => {
+                Users.findOne({
+                    where: {
+                        id: req.params.id
+                    }
+                }
+                )
+                    .then(updatedUser => res.json(updatedUser));
+            })
 
-        res.status(400).json(err);
-      });
+            .catch((err) => {
 
-
-  }
-
-  if ((!(typeof (req.body.skillIds) === 'undefined'))) {
-    userSkills.findAll({ where: { user_id: req.params.id } })
-      .then(skills => {
-        // get list of current interest_ids
-
-        const skillIds = skills.map(({ skill_id }) => skill_id);
-        console.log(skillIds);
-
-        // create filtered list of new interests
-        const newSkills = req.body.skillIds
-          .filter((skill_id) => !skillIds.includes(skill_id))
-          .map((skill_id) => {
-            return {
-              user_id: req.params.id,
-              skill_id: skill_id
-            };
-          });
-        console.log(newSkills);
-
-        // figure out which ones to remove
-        const skillsToRemove = skills
-          .filter(({ skill_id }) => !req.body.skillIds.includes(skill_id))
-          .map(({ id }) => id);
-
-        console.log(skillsToRemove);
-
-        // run both actions
-        return Promise.all([
-          userSkills.destroy({ where: { id: skillsToRemove } }),
-          userSkills.bulkCreate(newSkills)
-        ]);
-      })
-      .then((updatedSkillIds) => res.json(updatedSkillIds))
-      .catch((err) => {
-        // console.log(err);
-        res.status(400).json(err);
-      });
-  }
+                res.status(400).json(err);
+            });
 
 
-  if (!(typeof (req.body.interestIds) === 'undefined')) {
-    userInterests.findAll({ where: { user_id: req.params.id, type: "seeker" } })
-      .then(interests => {
-        // get list of current interest_ids
+    }
 
-        const interestsIds = interests.map(({ interest_id }) => interest_id);
-        console.log(interestsIds);
-        // create filtered list of new interests
-        const newInterests = req.body.interestIds
-          .filter((interest_id) => !interestsIds.includes(interest_id))
-          .map((interest_id) => {
-            return {
-              user_id: req.params.id,
-              job_id: interest_id,
-              type: "seeker"
+    if ((!(typeof (req.body.skillIds) === 'undefined'))) {
+        userSkills.findAll({ where: { user_id: req.params.id } })
+            .then(skills => {
+                // get list of current interest_ids
 
-            };
-          });
-        console.log(newInterests);
+                const skillIds = skills.map(({ skill_id }) => skill_id);
+                console.log(skillIds);
 
-        // figure out which ones to remove
-        const interestsToRemove = interests
-          .filter(({ interest_id }) => !req.body.interestIds.includes(interest_id))
-          .map(({ id }) => id);
+                // create filtered list of new interests
+                const newSkills = req.body.skillIds
+                    .filter((skill_id) => !skillIds.includes(skill_id))
+                    .map((skill_id) => {
+                        return {
+                            user_id: req.params.id,
+                            skill_id: skill_id
+                        };
+                    });
+                console.log(newSkills);
 
-        console.log(interestsToRemove);
+                // figure out which ones to remove
+                const skillsToRemove = skills
+                    .filter(({ skill_id }) => !req.body.skillIds.includes(skill_id))
+                    .map(({ id }) => id);
 
-        // run both actions
-        return Promise.all([
-          userInterests.destroy({ where: { id: interestsToRemove } }),
-          userInterests.bulkCreate(newInterests),
-        ]);
-      })
-      .then((updatedInterests) => {
+                console.log(skillsToRemove);
 
-        res.json(updatedInterests[1])
-      })
-      .catch((err) => {
+                // run both actions
+                return Promise.all([
+                    userSkills.destroy({ where: { id: skillsToRemove } }),
+                    userSkills.bulkCreate(newSkills)
+                ]);
+            })
+            .then((updatedSkillIds) => res.json(updatedSkillIds))
+            .catch((err) => {
+                // console.log(err);
+                res.status(400).json(err);
+            });
+    }
 
-        res.status(400).json(err);
-        console.log(err);
-      });
-  }
+
+    if (!(typeof (req.body.interestIds) === 'undefined')) {
+
+        // if there's already seeker interest in this job, update the type to "interview"
+
+        userInterests.findAll({ where: { user_id: parseInt(req.params.id), job_id: req.body.interestIds[0],type:"employer" } })
+            .then(result => {
+                if (result.length) {
+
+                    userInterests.update({ type: "interview" }, { where: { user_id: req.params.id, job_id: req.body.interestIds[0], type: "employer" } })
+                        .then(result => {
+
+                            console.log(result)
+                            res.status(200).json(result);
+
+                        })
+                        .catch(err=>console.log(err))
+                }
+                // if there isn't seeker interest, create company interest
+                else {
+
+
+                    userInterests.findAll({ where: { user_id: req.params.id, type: "seeker" } })
+                        .then(interests => {
+                            // get list of current interest_ids
+
+                            const interestsIds = interests.map(({ interest_id }) => interest_id);
+                            console.log(interestsIds);
+                            // create filtered list of new interests
+                            const newInterests = req.body.interestIds
+                                .filter((interest_id) => !interestsIds.includes(interest_id))
+                                .map((interest_id) => {
+                                    return {
+                                        user_id: req.params.id,
+                                        job_id: interest_id,
+                                        type: "seeker"
+
+                                    };
+                                });
+                            console.log(newInterests);
+
+                            // figure out which ones to remove
+                            const interestsToRemove = interests
+                                .filter(({ interest_id }) => !req.body.interestIds.includes(interest_id))
+                                .map(({ id }) => id);
+
+                            console.log(interestsToRemove);
+
+                            // run both actions
+                            return Promise.all([
+                                userInterests.destroy({ where: { id: interestsToRemove } }),
+                                userInterests.bulkCreate(newInterests),
+                            ]);
+                        })
+                        .then((updatedInterests) => {
+
+                            res.json(updatedInterests[1])
+                        })
+                        .catch((err) => {
+
+                            res.status(400).json(err);
+                            console.log(err);
+                        });
+
+                }
+            })
+    }
 });
 
 
 // DELETE single user
 router.delete('/:id', (req, res) => {
-  Users.destroy({
-    where: {
-      id: req.params.id
-    }
-  })
-    .then(dbUserData => {
-      if (!dbUserData) {
-        res.status(404).json({ message: 'No user found with this id' });
-        return;
-      }
-      res.json(dbUserData);
+    Users.destroy({
+        where: {
+            id: req.params.id
+        }
     })
-    .catch(err => {
-      console.log(err);
-      res.status(500).json(err);
-    });
+        .then(dbUserData => {
+            if (!dbUserData) {
+                res.status(404).json({ message: 'No user found with this id' });
+                return;
+            }
+            res.json(dbUserData);
+        })
+        .catch(err => {
+            console.log(err);
+            res.status(500).json(err);
+        });
 });
 
 module.exports = router;
