@@ -19,7 +19,7 @@ router.get('/', (req, res) => {
       {
         model: userInterests,
         attributes: ['id', 'user_id', 'type'],
-        as: "parties_interested"
+        as: "job_interests"
       }
       ]
 
@@ -49,7 +49,7 @@ router.get('/:id', (req, res) => {
       {
         model: userInterests,
         attributes: ['id', 'user_id', 'type'],
-        as: "parties_interested"
+        as: "jobs_interests"
       }
       ],
     where: { id: req.params.id }
