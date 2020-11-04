@@ -1,0 +1,16 @@
+
+<div class="d-flex flex-wrap user" style="margin: 20px;">
+    {{#each users as |user|}}
+            <div class="card" style="width: 18rem; margin: 10px">
+
+                <div class="card-header">
+                    <h2 class="card-title">{{user.full_name}}</h2>
+                    <h6 class="card-subtitle mb-2 text-muted">seeker</h6>
+                </div>
+                <div class="card-body">
+                    <div class="card-text">{{user.description}}</div>
+                    <a href="http://localhost:3001/api/users/{{user.id}}" class="" style="margin: 10px;">See User Profile</a>
+                </div>
+            </div>
+    {{/each}}
+</div>

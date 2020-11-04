@@ -1,0 +1,21 @@
+<div class="card" style="width: 50%; margin-top: 20px; margin-left: 25%">
+    <div class="card-header">
+        <h2>{{username}}</h2>
+    </div>
+    <div class="card-body">
+        <h3>{{userdescription}}</h3>
+        {{#if skills}}
+        <p>
+            {{skills}}
+        </p>
+
+        {{/if}}
+
+        {{#if company-login}}
+        <button type="button" class="btn btn-primary interested">I'm interested</button>
+        {{else}}
+        <button type="button" class="btn btn-primary interested" disabled >I'm interested (must be loggin in as company)</button>
+        {{/if}}
+    </div>
+
+</div>

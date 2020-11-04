@@ -127,7 +127,15 @@ router.get('/:id', (req, res) => {
         res.status(404).json({ message: 'No user found with this id' });
         return;
       }
-      res.json(dbUserData);
+      const userName = dbUserData.full_name;
+      const userDescription = dbUserData.description;
+      const userId = dbUserData.id;
+      console.log(dbUserData);
+      res.render('employee-page', {
+        userName,
+        userDescription,
+        userId
+      });
     })
     .catch(err => {
       console.log(err);
