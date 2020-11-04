@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<head></head>
+<body>
+
+    <form id="upload-form">
+        <label for="img">Select image:</label>
+        <input type="file" id="img-input" name="img" accept="image/*">
+        <input type="submit">
+      </form>
+
+    <script>
+
+
+var formEl = document.getElementById('upload-form');
+var imgInputEl = document.getElementById('img-input');
+var user_id = 1;
+
+var formData = new FormData();
+
+
+
+
+        formEl.onsubmit = async (e) => {
+           
+
+          e.preventDefault();
+          console.log(formEl);
+          formData.append("image", imgInputEl.files[0]);
+         
+      
+          let response = await fetch('/api/upload?id='+user_id, {
+            method: 'POST',
+            body: formData
+          });
+      
+          let result = await response.json();
+      
+          alert(result.message);
+        };
+      </script>
+      
+</body>

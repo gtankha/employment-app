@@ -150,7 +150,7 @@ router.get('/:id', (req, res) => {
                     },
                     {
                         model: userInterests,
-                        as: "parties_interested",
+                        as: "job_interests",
                         attributes: ['user_id', 'type']
                         //  include: { model: Users,  attributes: ['full_name'] }   
                     }]
@@ -212,6 +212,7 @@ router.post('/', (req, res) => {
         email: req.body.email,
         password: req.body.password,
         description: req.body.description,
+        image:null,
         type: req.body.type,
     })
         .then(dbUserData => {
