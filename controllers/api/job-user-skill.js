@@ -36,7 +36,7 @@ router.get('/employer/:id', (req, res) => {
         where: {
             skill_id: {
                 [Op.in]:
-                [Sequelize.literal(`(SELECT job_id FROM job_skills WHERE job_id IN (SELECT id from JOBS WHERE company_id = ${req.params.id}))`)]
+                [Sequelize.literal(`(SELECT skill_id FROM job_skills WHERE job_id IN (SELECT id from JOBS WHERE company_id = ${req.params.id}))`)]
             }
         }
     })
