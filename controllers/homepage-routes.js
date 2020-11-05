@@ -52,11 +52,11 @@ router.get('/', (req, res) => {
                     attributes: ['name'],
                     through: jobSkills
                 },
-                {
-                    model: userInterests,
-                    attributes: ['id', 'user_id', 'type'],
-                    as: "parties_interested"
-                }
+                // {
+                //     model: userInterests,
+                //     attributes: ['id', 'user_id', 'type'],
+                //     as: "job_interests"
+                // }
                 ]
 
             })
