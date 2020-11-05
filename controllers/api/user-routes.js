@@ -94,104 +94,58 @@ router.post('/logout', (req, res) => {
 
 // GET single user
 router.get('/:id', (req, res) => {
-
-    if (req.query.type == "seeker") {
-        Users.findAll({
-            attributes: { exclude: ['password'] },
-            where: {
-                //type: req.query.type
-                id: req.params.id
-            },
-            include: [
-                {
-                    model: Skills,
-                    attributes: ['name'],
-                    through: userSkills
-                },
-                {
-                    model: userInterests,
-                    attributes: ['id', 'job_id', 'type'],
-                    as: "interested_in",
-                    include: { model: Jobs, as: "interested_in", attributes: { exclude: ['password', 'id'] } }
-                },
-            ]
-        })
-            .then(dbUserData => {
-                console.log(dbUserData);
-                res.json(dbUserData)
-            })
-            .catch(err => {
-                console.log(err);
-                res.status(500).json(err);
-            });
-    }
-
-    if (req.query.type == "employer") {
-        Users.findAll({
-            attributes: { exclude: ['password'] },
-            where: {
-                type: req.query.type
-            },
-            include: [{
-                model: Jobs,
-                attributes: ["id", "title", "company_id"],
-                include: [
-                    {
-                        model: Skills,
-                        attributes: ['name'],
-                        through: jobSkills
-                    },
-                    {
-                        model: userInterests,
-                        as: "job_interests",
-                        attributes: ['user_id', 'type']
-                        //  include: { model: Users,  attributes: ['full_name'] }   
-                    }]
-            }]
-        })
-            .then(dbUserData => {
-                console.log(dbUserData);
-                res.json(dbUserData)
-            })
-            .catch(err => {
-                console.log(err);
-                res.status(500).json(err);
-            });
-    }
-    //   Users.findOne({
-    //     exclude: ['password']
-    //     ,
-    //     where: {
-    //       id: req.params.id
-    //     },
-    //     include: [
-    //       {
-    //         model: Skills,
-    //         attributes: ['name'],
-    //         through: userSkills
-    //       },
-    //       {
-    //         model: userInterests,
-    //         attributes: ['id', 'job_id', 'type'],
-    //         as: "interested_in"
-    //         // model:Jobs,
-    //         // through: userInterests,
-    //         // as: 'job_interests',
-    //         // include:{model:Users,as:"company",attributes:{exclude:['password']}}
-    //       }
-    //     ]
-    //   })
-    //     .then(dbUserData => {
-    //       if (!dbUserData) {
-    //         res.status(404).json({ message: 'No user found with this id' });
-    //         return;
-    //       }
-    //       res.json(dbUserData);
-    //     })
-    //     .catch(err => {
-    //       console.log(err);
-    //       res.status(500).json(err);
-    //     });
+  Users.findOne({
+    exclude: ['password']
+    ,
+    where: {
+      id: req.params.id
+    },
+    include: [
+      {
+        model: Skills,
+        attributes: ['name'],
+        through: userSkills
+      },
+      {
+        model: userInterests,
+        attributes: ['id', 'job_id', 'type'],
+        as: "interested_in"
+        // model:Jobs,
+        // through: userInterests,
+        // as: 'job_interests',
+        // include:{model:Users,as:"company",attributes:{exclude:['password']}}
+      }
+    ]
+  })
+    .then(dbUserData => {
+      if (!dbUserData) {
+        res.status(404).json({ message: 'No user found with this id' });
+        return;
+      }
+      const userName = dbUserData.full_name;
+      const userDescription = dbUserData.description;
+      const userId = dbUserData.id;
+      const company = true;
+      console.log(dbUserData);
+      if(req.session.type === "company"){
+        res.render('employee-page', {
+          userName,
+          userDescription,
+          userId,
+          company
+        });
+      }else{
+        res.render('employee-page', {
+          userName,
+          userDescription,
+          userId,
+        });
+      }
+    })
+    .catch(err => {
+      console.log(err);
+      res.status(500).json(err);
+    });
 });
 
 // create new user
