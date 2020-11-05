@@ -3,3 +3,47 @@
 <h2>If you're a user you come here to adjust your resume and edit your account</h2>
 
 <h2>For either of them, there's going to be a tab that shows the interviews confirmed so far</h2>
+
+<h2>Candidates you're interested in:</h2>
+
+<ul class="nav nav-pills nav-fill">
+  <li class="nav-item">
+    <a class="nav-link active" href="#">Active</a>
+  </li>
+  <li class="nav-item">
+    <a class="nav-link" href="#">Longer nav link</a>
+  </li>
+  <li class="nav-item">
+    <a class="nav-link" href="#">Link</a>
+  </li>
+  <li class="nav-item">
+    <a class="nav-link disabled" href="#">Disabled</a>
+  </li>
+</ul>
+
+
+{{{format_interests_employer interests "employer"}}}
+
+<h2>Candidates interested in Jobs that you're offering:</h2>
+{{{format_interests_employer interests "seeker"}}}
+
+<h2>Confirmed Interviews:</h2>
+{{{format_interests_employer interests "interview"}}}
+
+  {{!-- {{#each interests as |interest|}}
+
+            <div class="card" style="width: 18rem; margin: 10px">
+
+                <div class="card-header">
+                    <h2 class="card-title">{{user.full_name}}</h2>
+                    <h6 class="card-subtitle mb-2 text-muted">Seeker</h6>
+                </div>
+                <div class="card-body">
+                    <div class="card-text">{{user.description}}</div>
+                    <a href="http://localhost:3001/api/users/{{user.id}}" class="" style="margin: 10px;">See User Profile</a>
+                </div>
+            </div>
+
+        
+
+    {{/each}} --}}

@@ -110,10 +110,6 @@ router.get('/:id', (req, res) => {
         model: userInterests,
         attributes: ['id', 'job_id', 'type'],
         as: "interested_in"
-        // model:Jobs,
-        // through: userInterests,
-        // as: 'job_interests',
-        // include:{model:Users,as:"company",attributes:{exclude:['password']}}
       }
     ]
   })
@@ -122,30 +118,32 @@ router.get('/:id', (req, res) => {
         res.status(404).json({ message: 'No user found with this id' });
         return;
       }
-      const userName = dbUserData.full_name;
-      const userDescription = dbUserData.description;
-      const userId = dbUserData.id;
-      const company = true;
-      console.log(dbUserData);
-      if(req.session.type === "company"){
-        res.render('employee-page', {
-          userName,
-          userDescription,
-          userId,
-          company
-        });
-      }else{
-        res.render('employee-page', {
-          userName,
-          userDescription,
-          userId,
-        });
-      }
-    })
-    .catch(err => {
-      console.log(err);
-      res.status(500).json(err);
-    });
+    //   const userName = dbUserData.full_name;
+    //   const userDescription = dbUserData.description;
+    //   const userId = dbUserData.id;
+    //   const company = true;
+    //   console.log(dbUserData);
+    //   if(req.session.type === "employer"){
+    //     res.render('employee-page', {
+    //       userName,
+    //       userDescription,
+    //       userId,
+    //       company
+    //     });
+    //   }else{
+    //     res.render('employee-page', {
+    //       userName,
+    //       userDescription,
+    //       userId,
+    //     });
+    //   }
+
+     })
+
+    // .catch(err => {
+    //   console.log(err);
+    //   res.status(500).json(err);
+    // });
 });
 
 // create new user
@@ -213,6 +211,10 @@ router.post('/login', (req, res) => {
                 req.session.type = dbUserData.type,
                 req.session.company_name = dbUserData.company_name,
                 req.session.loggedIn = true;
+
+                req.session.cookie.id = dbUserData.id;
+                req.session.cookie.type = dbUserData.type;
+                console.log(req.session)
 
 
             res.json({ user: dbUserData, message: 'You are now logged in!' });

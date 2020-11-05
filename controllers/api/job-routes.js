@@ -49,7 +49,7 @@ router.get('/:id', (req, res) => {
             {
                 model: userInterests,
                 attributes: ['id', 'user_id', 'type'],
-                as: "jobs_interests"
+                as: "job_interests"
             }
             ],
         where: { id: req.params.id }
@@ -57,7 +57,7 @@ router.get('/:id', (req, res) => {
     })
         .then(dbUserData => {
             if (!dbUserData) {
-                res.status(404).json({ message: 'No user found with this id' });
+                res.status(404).json({ message: 'No job found with this id' });
                 return;
             }
             res.json(dbUserData);
