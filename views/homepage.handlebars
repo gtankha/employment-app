@@ -1,16 +1,36 @@
+{{#unless loggedIn}}
+<h2>You are not logged in</h2>
+{{/unless}}
 
 <div class="d-flex flex-wrap user" style="margin: 20px;">
     {{#each users as |user|}}
+
             <div class="card" style="width: 18rem; margin: 10px">
 
                 <div class="card-header">
                     <h2 class="card-title">{{user.full_name}}</h2>
-                    <h6 class="card-subtitle mb-2 text-muted">seeker</h6>
+                    <h6 class="card-subtitle mb-2 text-muted">Seeker</h6>
                 </div>
                 <div class="card-body">
                     <div class="card-text">{{user.description}}</div>
                     <a href="http://localhost:3001/api/users/{{user.id}}" class="" style="margin: 10px;">See User Profile</a>
                 </div>
             </div>
+
+        
+
+    {{/each}}
+    {{#each jobs as |job|}}
+    <div class="card" style="width: 18rem; margin: 10px">
+    
+        <div class="card-header">
+            <h2 class="card-title">{{job.title}}</h2>
+            <h6 class="card-subtitle mb-2 text-muted">Job</h6>
+        </div>
+        <div class="card-body">
+            <div class="card-text">{{job.description}}</div>
+            <a href="http://localhost:3001/api/users/" class="" style="margin: 10px;">See Job Page</a>
+        </div>
+    </div>
     {{/each}}
 </div>

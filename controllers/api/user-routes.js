@@ -130,12 +130,22 @@ router.get('/:id', (req, res) => {
       const userName = dbUserData.full_name;
       const userDescription = dbUserData.description;
       const userId = dbUserData.id;
+      const company = true;
       console.log(dbUserData);
-      res.render('employee-page', {
-        userName,
-        userDescription,
-        userId
-      });
+      if(req.session.type === "company"){
+        res.render('employee-page', {
+          userName,
+          userDescription,
+          userId,
+          company
+        });
+      }else{
+        res.render('employee-page', {
+          userName,
+          userDescription,
+          userId,
+        });
+      }
     })
     .catch(err => {
       console.log(err);
