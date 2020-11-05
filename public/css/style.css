@@ -19,6 +19,7 @@ nav a, nav button{
 
 nav a:hover, nav button:hover {   
     border-bottom: solid 2px yellow;
+    color: inherit;
 }
 
 nav button {
@@ -33,4 +34,12 @@ nav button {
 .card-header {
     background-color: rgb(29, 198, 228);
     color: white;
+}
+
+button a:hover{
+    color: inherit;
+}
+
+button a{
+    color: inherit;
 }

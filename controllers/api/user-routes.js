@@ -101,6 +101,7 @@ router.post('/logout', (req, res) => {
 
 // GET single user
 router.get('/:id', (req, res) => {
+<<<<<<< HEAD
 
     if (req.query.type == "seeker") {
         Users.findAll({
@@ -199,6 +200,60 @@ router.get('/:id', (req, res) => {
     //       console.log(err);
     //       res.status(500).json(err);
     //     });
+=======
+  Users.findOne({
+    exclude: ['password']
+    ,
+    where: {
+      id: req.params.id
+    },
+    include: [
+      {
+        model: Skills,
+        attributes: ['name'],
+        through: userSkills
+      },
+      {
+        model: userInterests,
+        attributes: ['id', 'job_id', 'type'],
+        as: "interested_in"
+        // model:Jobs,
+        // through: userInterests,
+        // as: 'job_interests',
+        // include:{model:Users,as:"company",attributes:{exclude:['password']}}
+      }
+    ]
+  })
+    .then(dbUserData => {
+      if (!dbUserData) {
+        res.status(404).json({ message: 'No user found with this id' });
+        return;
+      }
+      const userName = dbUserData.full_name;
+      const userDescription = dbUserData.description;
+      const userId = dbUserData.id;
+      const company = true;
+      console.log(dbUserData);
+      if(req.session.type === "company"){
+        res.render('employee-page', {
+          userName,
+          userDescription,
+          userId,
+          company
+        });
+      }else{
+        res.render('employee-page', {
+          userName,
+          userDescription,
+          userId,
+        });
+      }
+    })
+    .catch(err => {
+      console.log(err);
+      res.status(500).json(err);
+    });
+>>>>>>> feature/login
 });
 
 // create new user
