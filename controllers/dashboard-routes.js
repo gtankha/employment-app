@@ -9,7 +9,7 @@ router.get('/', (req, res) => {
 
     console.log(session_type);
 
-    if (session_type == "employer") {
+    if (session_type == "company") {
 
         Jobs.findAll(
             {

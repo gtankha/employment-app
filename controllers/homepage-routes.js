@@ -22,7 +22,7 @@ router.get('/', (req, res) => {
                     {
                         model: userInterests,
                         attributes: ['id', 'job_id', 'type'],
-                        as: "interested_in",
+                        as: "candidates",
                         include: { model: Jobs, as: "interested_in", attributes: { exclude: ['password', 'id'] } }
                     },
                 ]

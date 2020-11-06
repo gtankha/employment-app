@@ -223,11 +223,11 @@ router.put('/:id', (req, res) => {
 
         // if there's already seeker interest in this job, update the type to "interview"
 
-        userInterests.findAll({ where: { user_id: parseInt(req.params.id), job_id: req.body.interestIds[0],type:"employer" } })
+        userInterests.findAll({ where: { user_id: parseInt(req.params.id), job_id: req.body.interestIds[0],type:"company" } })
             .then(result => {
                 if (result.length) {
 
-                    userInterests.update({ type: "interview" }, { where: { user_id: req.params.id, job_id: req.body.interestIds[0], type: "employer" } })
+                    userInterests.update({ type: "interview" }, { where: { user_id: req.params.id, job_id: req.body.interestIds[0], type: "company" } })
                         .then(result => {
 
                             console.log(result)

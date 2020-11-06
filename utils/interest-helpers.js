@@ -1,7 +1,7 @@
 module.exports = {
 
 
-    format_interests_employer: (interests,tab) => {
+    format_interests_company: (interests,tab) => {
 
       const emp_interests = [];
       let intObj = {};

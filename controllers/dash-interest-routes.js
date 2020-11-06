@@ -9,7 +9,7 @@ router.get('/', (req, res) => {
 
     console.log(session_type);
 
-    if (session_type == "employer") {
+    if (session_type == "company") {
 
         Jobs.findAll(
             {
@@ -20,7 +20,7 @@ router.get('/', (req, res) => {
 
 
 
-                res.render('dashboard', { interests: interests, company:true,seeker:false });
+                res.render('dash-interests', { interests: interests, company:true,seeker:false });
             })
 
             .catch(err => console.log(err))
