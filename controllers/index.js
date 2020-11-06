@@ -6,6 +6,10 @@ const homepageRoutes = require('./homepage-routes');
 
  const dashboardRoutes = require('./dashboard-routes');
 
+ const dashInterestRoutes = require('./dash-interest-routes');
+
+ router.use('/dash-interests', dashInterestRoutes);
+
  router.use('/dash', dashboardRoutes);
 
 router.use('/api', apiRoutes);

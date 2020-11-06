@@ -1,67 +1,8 @@
-{{!-- <h2>If you're a company, you come here to create jobs and edit your account</h2>
+<h2>If you're a company, you come here to create jobs and edit your account</h2>
 
 <h2>If you're a user you come here to adjust your resume and edit your account</h2>
 
 <h2>For either of them, there's going to be a tab that shows the interviews confirmed so far</h2>
 
-<h2>Candidates you're interested in:</h2> --}}
-{{#if company}}    
-<ul class="nav nav-tabs nav-fill mt-3">
-  <li class="nav-item">
-    <a id="employer-btn" class="nav-link active" href="#">Candidates you're iterested in:</a>
-  </li>
-  <li class="nav-item">
-    <a id="candidate-btn" class="nav-link" href="#">Candidates interested in you:</a>
-  </li>
-  <li class="nav-item">
-    <a id="interview-btn" class="nav-link" href="#">Confirmed interviews:</a>
-  </li>
-  <li class="nav-item">
-    <a class="nav-link disabled" href="#">Candidates matches (by Skills)</a>
-  </li>
-</ul>
+<h2>Candidates you're interested in:</h2>
 
-<div id="employer-interest">
-{{{format_interests_employer interests "employer"}}}
-</div>
-
-<div id="candidate-interest">
-{{{format_interests_employer interests "seeker"}}}
-</div>
-
-<div id="interviews">
-{{{format_interests_employer interests "interview"}}}
-</div>
-{{/if}}
-
-
-{{#if seeker}}    
-<ul class="nav nav-tabs nav-fill mt-3">
-  <li class="nav-item">
-    <a id="employer-btn" class="nav-link active" href="#">Jobs you're iterested in:</a>
-  </li>
-  <li class="nav-item">
-    <a id="candidate-btn" class="nav-link" href="#">Jobs offered to you:</a>
-  </li>
-  <li class="nav-item">
-    <a id="interview-btn" class="nav-link" href="#">Confirmed interviews:</a>
-  </li>
-  <li class="nav-item">
-    <a class="nav-link disabled" href="#">Job matches (by Skills)</a>
-  </li>
-</ul>
-
-<div id="employer-interest">
-{{{format_interests_seeker interests "employer" }}}
-</div>
-
-<div id="candidate-interest">
-{{{format_interests_seeker interests "seeker" }}}
-</div>
-
-<div id="interviews">
-{{{format_interests_seeker interests "interview" }}}
-</div>
-{{/if}}
-
-<script src="/javascript/interests.js"></script>

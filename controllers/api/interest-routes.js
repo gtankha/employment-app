@@ -12,7 +12,7 @@ router.get('/', (req, res) => {
 
             userInterests.findAll(
                 {
-                    attributes: { exclude: ['id', 'userId'] },
+                    attributes: { exclude: ['userId'] },
                     
 
                     include: {
@@ -32,6 +32,30 @@ router.get('/', (req, res) => {
    
 
 });
+
+// update single interest
+router.put('/:id', (req, res) => {
+userInterests.update(req.body,
+
+    { where: { id: req.params.id } }
+
+)
+    .then(result => {
+
+        userInterests.findOne({
+            where: {
+                id: req.params.id
+            }
+        }
+        )
+            .then(updatedUser => res.json(updatedUser));
+    })
+
+    .catch((err) => {
+
+        res.status(400).json(err);
+    });
+})
 
 // DELETE single interest
 router.delete('/:id', (req, res) => {

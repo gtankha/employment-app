@@ -215,8 +215,8 @@ router.put('/:id', (req, res) => {
 
                             // run both actions
                             return Promise.all([
-                                userInterests.destroy({ where: { id: interestsToRemove } }),
-                                userInterests.bulkCreate(newInterests),
+                                //userInterests.destroy({ where: { id: interestsToRemove } }),
+                                userInterests.bulkCreate(newInterests)
                             ]);
                         })
                         .then((updatedInterests) => {
