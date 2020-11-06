@@ -19,12 +19,12 @@ router.get('/', (req, res) => {
                         attributes: ['name'],
                         through: userSkills
                     },
-                    {
-                        model: userInterests,
-                        attributes: ['id', 'job_id', 'type'],
-                        as: "interested_in",
-                        include: { model: Jobs, as: "interested_in", attributes: { exclude: ['password', 'id'] } }
-                    },
+                    // {
+                    //     model: userInterests,
+                    //     attributes: ['id', 'job_id', 'type'],
+                    //     as: "candidates",
+                    //     include: { model: Jobs, as: "candidates", attributes: { exclude: ['password', 'id'] } }
+                    // },
                 ]
             })
             .then(dbUserData => {

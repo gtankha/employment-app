@@ -7,7 +7,7 @@ async function signupFormHandler(event) {
     const password = document.querySelector('#password-signup').value.trim();
     const description = "this is the default description"
     const type = document.querySelector('#company').value;
-
+    const image = null;
 
     if (full_name && email && password) {
         const response = await fetch('/api/users', {
@@ -18,6 +18,7 @@ async function signupFormHandler(event) {
                 email,
                 password,
                 description,
+                image,
                 type
             }),
             headers: { 'Content-Type': 'application/json' }
