@@ -1,7 +1,7 @@
 module.exports = {
 
 
-    format_interests_employer: (interests,tab) => {
+    format_interests_employer: (interests,tab,session_type) => {
 
       const emp_interests = [];
       console.log(JSON.stringify(interests))
@@ -36,8 +36,11 @@ module.exports = {
 
       emp_interests.forEach(i=>{
 
+        if(session_type == "employer")
+        {
+
         innerHtml += 
-        `<div class="card" style="width: 18rem; margin: 10px">
+        `<div class="card mt-5" style="width: 18rem; margin: 10px">
 
             <div class="card-header">
                 <h2 class="card-title">${i.candidate_name}</h2>
@@ -49,6 +52,9 @@ module.exports = {
                 <a href="http://localhost:3001/api/users/${i.candidate_id}" class="" style="margin: 10px;">See User Profile</a>
             </div>
         </div>`
+
+        }
+
 
       })
      

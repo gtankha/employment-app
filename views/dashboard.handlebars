@@ -1,49 +1,36 @@
-<h2>If you're a company, you come here to create jobs and edit your account</h2>
+{{!-- <h2>If you're a company, you come here to create jobs and edit your account</h2>
 
 <h2>If you're a user you come here to adjust your resume and edit your account</h2>
 
 <h2>For either of them, there's going to be a tab that shows the interviews confirmed so far</h2>
 
-<h2>Candidates you're interested in:</h2>
+<h2>Candidates you're interested in:</h2> --}}
 
-<ul class="nav nav-pills nav-fill">
+<ul class="nav nav-tabs nav-fill mt-3">
   <li class="nav-item">
-    <a class="nav-link active" href="#">Active</a>
+    <a id="employer-btn" class="nav-link active" href="#">Candidates you're iterested in:</a>
   </li>
   <li class="nav-item">
-    <a class="nav-link" href="#">Longer nav link</a>
+    <a id="candidate-btn" class="nav-link" href="#">Candidates interested in you:</a>
   </li>
   <li class="nav-item">
-    <a class="nav-link" href="#">Link</a>
+    <a id="interview-btn" class="nav-link" href="#">Confirmed interviews:</a>
   </li>
   <li class="nav-item">
-    <a class="nav-link disabled" href="#">Disabled</a>
+    <a class="nav-link disabled" href="#">Candidates matches (by Skills)</a>
   </li>
 </ul>
 
+<div id="employer-interest">
+{{{format_interests_employer interests "employer" type}}}
+</div>
 
-{{{format_interests_employer interests "employer"}}}
+<div id="candidate-interest">
+{{{format_interests_employer interests "seeker" type}}}
+</div>
 
-<h2>Candidates interested in Jobs that you're offering:</h2>
-{{{format_interests_employer interests "seeker"}}}
+<div id="interviews">
+{{{format_interests_employer interests "interview" type}}}
+</div>
 
-<h2>Confirmed Interviews:</h2>
-{{{format_interests_employer interests "interview"}}}
-
-  {{!-- {{#each interests as |interest|}}
-
-            <div class="card" style="width: 18rem; margin: 10px">
-
-                <div class="card-header">
-                    <h2 class="card-title">{{user.full_name}}</h2>
-                    <h6 class="card-subtitle mb-2 text-muted">Seeker</h6>
-                </div>
-                <div class="card-body">
-                    <div class="card-text">{{user.description}}</div>
-                    <a href="http://localhost:3001/api/users/{{user.id}}" class="" style="margin: 10px;">See User Profile</a>
-                </div>
-            </div>
-
-        
-
-    {{/each}} --}}
+<script src="/javascript/interests.js"></script>

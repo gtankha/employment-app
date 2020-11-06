@@ -6,14 +6,14 @@ router.get('/', (req, res) => {
 
 
 
-    if (req.query.user_id) {
+  
 
        
 
             userInterests.findAll(
                 {
                     attributes: { exclude: ['id', 'userId'] },
-                    where: { user_id: req.query.user_id },
+                    
 
                     include: {
                         model: Jobs,
@@ -27,36 +27,9 @@ router.get('/', (req, res) => {
                     res.status(500).json(err);
                     console.log(err);
                 });
-        }
-        else if (req.query.company_id) {
-
-            Jobs.findAll({
-                where: { company_id: req.query.company_id },
-                include: {
-                    model: userInterests,
-                    as: "job_interests",
-                    include: { model: Users, as: 'candidates', attributes: { exclude: ['password'] } }
-
-                }
-            })
-                .then(dbUserData => res.json(dbUserData))
-                .catch(err => {
-                    res.status(500).json(err);
-                    console.log(err);
-                });
-
         
-
-
-    }
-    else {
-        userInterests.findAll()
-            .then(dbUserData => res.json(dbUserData))
-            .catch(err => {
-                res.status(500).json(err);
-            });
-
-    }
+       
+   
 
 });
 
