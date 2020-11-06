@@ -5,7 +5,7 @@ const apiRoutes = require('./api');
 const homepageRoutes = require('./homepage-routes');
 const dashboardRoutes = require('./dashboard-routes');
 
-const testSkillsRoutes = require('./testskills-routes');
+const testSkillsRoutes = require('./matchingskills-routes');
 
 router.use('/dash', dashboardRoutes);
 
