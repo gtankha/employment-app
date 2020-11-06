@@ -14,22 +14,24 @@ if (req.session.type === "company") {
                 [Op.in]:
                     [Sequelize.literal(`(SELECT skill_id FROM job_skills WHERE job_id IN (SELECT id from JOBS WHERE company_id = ${req.session.user_id}))`)]
             }
-        }
+        },
+        include: [{
+            model: Users,
+               include: [
+               {
+                   model: Skills,
+                   attributes:['name']
+               }]
+           },
+          
+       ]
     })
         .then(dbUserData => {
-           // console.log(dbUserData.job_skills);
            const duplicateSkillUsers = dbUserData.map(post => post.get({ plain: true }));
-           console.log(duplicateSkillUsers);
-           console.log (req.session);
-           const matchingSkillUsers = duplicateSkillUsers.filter((value, index)=> 
-           {
-             console.log (value.user_id);
-             console.log ("index: "+ index);
-             console.log (duplicateSkillUsers.findIndex(value => value.user_id));
-             console.log (duplicateSkillUsers.findIndex(value => value.user_id) == index);
-             return duplicateSkillUsers.findIndex(value => value.user_id) === index;
-           }
-           );
+           const matchingSkillUsers = Array.from(new Set(duplicateSkillUsers.map(a => a.user_id)))
+           .map(user_id => {
+             return duplicateSkillUsers.find(a => a.user_id === user_id)
+           })
 
            res.render('test-skills', {
                matchingSkillUsers,
@@ -59,12 +61,14 @@ if (req.session.type === "seeker") {
             include: [{
                 model: Users,
                 as: "company"
+            },
+            {
+                model: Skills,
+                attributes:['name']
+                
             }]
         },
-        {
-        model: Skills
-    
-        }
+       
     ]
     
     })
@@ -72,16 +76,10 @@ if (req.session.type === "seeker") {
          //   console.log(dbUserData);
 
             const duplicateSkillUsers = dbUserData.map(post => post.get({ plain: true }));
-            console.log(duplicateSkillUsers);
-            console.log (req.session);
-            const matchingSkillUsers = duplicateSkillUsers.filter((value, index)=> 
-            {
-              console.log (value);
-              return duplicateSkillUsers.findIndex(value => value.job_id) === index;
-
-            }
-            );
-
+            const matchingSkillUsers = Array.from(new Set(duplicateSkillUsers.map(a => a.job_id)))
+            .map(job_id => {
+              return duplicateSkillUsers.find(a => a.job_id === job_id)
+            });
             res.render('test-skills', {
                 matchingSkillUsers,
                 loggedIn: req.session.loggedIn,
@@ -99,20 +97,4 @@ if (req.session.type === "seeker") {
 
 module.exports = router;
 
-    // Jobs.findAll({
-    //     include:
-    //         [{
-    //             model: Users,
-    //             attributes: ['id', 'description', 'company_name']
-    //         },
-    //         {
-    //             model: Skills,
-    //             attributes: ['name'],
-    //             through: jobSkills
-    //         }
-    //         ],
-    //     where: { company_id: req.session.id }
 
-    // }).then(jobs=>{
-    //     console.log(jobs)
-    // })
