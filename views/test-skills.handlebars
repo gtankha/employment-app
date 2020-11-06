@@ -1,0 +1,50 @@
+{{#unless loggedIn}}
+<h2>You are not logged in</h2>
+{{/unless}}
+
+<div class="d-flex flex-wrap user" style="margin: 20px;">
+    {{#each matchingSkillUsers as |matchingSkillUsers|}}
+
+    <div class="card" style="width: 18rem; margin: 10px">
+
+        {{#if matchingSkillUsers.job_id}}
+        <div class="card-header">
+            <h2 class="card-title">{{type}}</h2>
+            <h6 class="card-subtitle mb-2 text-muted">Seeker</h6>
+        </div>
+
+        <div class="card-body">
+            <div class="card-text">
+                Job ID: {{matchingSkillUsers.job_id}} <br>
+                Company: {{matchingSkillUsers.job.company.company_name}} <br>
+                Job Title: {{matchingSkillUsers.job.title}} <br>
+                Job Description: {{matchingSkillUsers.job.description}}
+                Skill: {{matchingSkillUsers.skill.name}}
+                </div>
+        </div>
+        {{/if}}
+
+       {{#if matchingSkillUsers.user_id}}
+        <div class="card-header">
+            <h2 class="card-title">Matching Users</h2>
+            <h6 class="card-subtitle mb-2 text-muted">Seeker</h6>
+        </div>
+
+        <div class="card-body">
+            <div class="card-text">
+                User ID: {{matchingSkillUsers.user_id}}
+                User Name: {{matchingSkillUsers.full_name}}
+                User email: {{matchingSkillUsers.email}}
+            </div>
+           
+        </div>
+        {{/if}}
+
+
+
+
+
+    </div>
+
+
+    {{/each}}

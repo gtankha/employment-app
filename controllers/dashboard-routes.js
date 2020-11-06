@@ -1,6 +1,9 @@
 const router = require('express').Router();
 const session = require('express-session');
 const { Users, Jobs, userInterests, Skills, userSkills, jobSkills } = require('../models');
+const { Op } = require('sequelize');
+const Sequelize = require('sequelize');
+
 
 
 router.get('/', (req, res) => {
@@ -19,23 +22,8 @@ router.get('/', (req, res) => {
             })
         })
     }
-        // Jobs.findAll({
-        //     include:
-        //         [{
-        //             model: Users,
-        //             attributes: ['id', 'description', 'company_name']
-        //         },
-        //         {
-        //             model: Skills,
-        //             attributes: ['name'],
-        //             through: jobSkills
-        //         }
-        //         ],
-        //     where: { company_id: req.session.id }
 
-        // }).then(jobs=>{
-        //     console.log(jobs)
-        // })
-})
+   })
 
 module.exports = router;
+    

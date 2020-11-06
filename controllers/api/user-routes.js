@@ -8,6 +8,75 @@ router.get('/', (req, res) => {
     .then(result=>res.status(200).json(result))
     .catch(err => res.status(200).json(err))
 
+    // if (req.query.type == "seeker") {
+    //     Users.findAll({
+    //         attributes: { exclude: ['password'] },
+    //         where: {
+    //             type: req.query.type
+    //         },
+    //         include: [
+    //             {
+    //                 model: Skills,
+    //                 attributes: ['name'],
+    //                 through: userSkills
+    //             },
+    //             {
+    //                 model: userInterests,
+    //                 attributes: ['id', 'job_id', 'type'],
+    //                 as: "interested_in",
+    //                 include: { model: Jobs, as: "interested_in", attributes: { exclude: ['password', 'id'] } }
+    //             },
+    //         ]
+    //     })
+    //         .then(dbUserData => {
+    //             console.log(dbUserData);
+    //             res.json(dbUserData)
+    //         })
+    //         .catch(err => {
+    //             console.log(err);
+    //             res.status(500).json(err);
+    //         });
+    // }
+
+    // if (req.query.type == "employer") {
+    //     Users.findAll({
+    //         attributes: { exclude: ['password'] },
+    //         where: {
+    //             type: req.query.type
+    //         },
+    //         include: [{
+    //             model: Jobs,
+    //             attributes: ["id", "title", "company_id"],
+    //             include: [
+    //                 {
+    //                     model: Skills,
+    //                     attributes: ['name'],
+    //                     through: jobSkills
+    //                 },
+    //                 {
+    //                     model: userInterests,
+    //                     as: "parties_interested",
+    //                     attributes: ['user_id', 'type']
+    //                     //  include: { model: Users,  attributes: ['full_name'] }   
+    //                 }]
+    //         }]
+    //     })
+    //         .then(dbUserData => {
+    //             console.log(dbUserData);
+    //             res.json(dbUserData)
+    //         })
+    //         .catch(err => {
+    //             console.log(err);
+    //             res.status(500).json(err);
+    //         });
+    // }
+
+
+
+
+
+
+
 
 
 });
@@ -110,7 +179,6 @@ router.post('/', (req, res) => {
                     req.session.loggedIn = true;
 
                 res.json(dbUserData);
-                console.log(dbUserData)
             });
 
         })
@@ -144,7 +212,7 @@ router.post('/login', (req, res) => {
             res.status(400).json({ message: 'Incorrect password!' });
             return;
         }
-
+        
         req.session.save(() => {
             // declare session variables
             req.session.user_id = dbUserData.id;
@@ -152,8 +220,6 @@ router.post('/login', (req, res) => {
                 req.session.type = dbUserData.type,
                 req.session.company_name = dbUserData.company_name,
                 req.session.loggedIn = true;
-
-
             res.json({ user: dbUserData, message: 'You are now logged in!' });
         });
 
