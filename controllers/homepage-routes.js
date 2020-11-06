@@ -8,6 +8,7 @@ router.get('/', (req, res) => {
     console.log(req.query);
 
     if (req.session.type === "company") {
+        
             Users.findAll({
                 attributes: { exclude: ['password'] },
                 where: {
@@ -22,12 +23,14 @@ router.get('/', (req, res) => {
                     {
                         model: userInterests,
                         attributes: ['id', 'job_id', 'type'],
-                        as: "interested_in",
+                        as: "candidates",
                         include: { model: Jobs, as: "interested_in", attributes: { exclude: ['password', 'id'] } }
                     },
                 ]
             })
             .then(dbUserData => {
+
+
                 console.log(dbUserData);
                 const users = dbUserData.map(post => post.get({ plain: true }));
                 res.render('homepage', {

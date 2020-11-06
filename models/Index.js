@@ -69,9 +69,19 @@ Users.belongsToMany(Skills, {
 Skills.belongsToMany(Users, {
     through: userSkills,
     foreignKey: "skill_id"
+}),
+Jobs.hasMany(jobSkills, {
+    foreignKey: "job_id"
+}),
+jobSkills.belongsTo(Jobs,{
+    foreignKey: "job_id"
 })
-
- 
-
+Skills.hasMany(jobSkills, {
+    foreignKey: "skill_id",
+    as:"skill"
+}),
+jobSkills.belongsTo(Skills,{
+   
+})
 
 module.exports = { Users, Jobs, userInterests, Skills,jobSkills,userSkills };

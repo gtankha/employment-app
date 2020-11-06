@@ -29,7 +29,7 @@ router.get('/seeker/:id', (req, res) => {
 
 
 
-router.get('/employer/:id', (req, res) => {
+router.get('/company/:id', (req, res) => {
 
     userSkills.findAll({
         attributes: ['user_id'],
