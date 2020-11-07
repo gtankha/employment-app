@@ -48,7 +48,7 @@ router.get('/:id', (req, res) => {
             {
                 model: userInterests,
                 attributes: ['id', 'user_id', 'type'],
-                as: "jobs_interests"
+                as: "job_interests"
             }
             ],
         where: { id: req.params.id }
@@ -56,7 +56,7 @@ router.get('/:id', (req, res) => {
     })
         .then(dbUserData => {
             if (!dbUserData) {
-                res.status(404).json({ message: 'No user found with this id' });
+                res.status(404).json({ message: 'No job found with this id' });
                 return;
             }
             res.json(dbUserData);
@@ -185,7 +185,7 @@ router.put('/:id', (req, res) => {
                 else {
 
 
-                    userInterests.findAll({ where: { job_id: req.params.id, type: "employer" } })
+                    userInterests.findAll({ where: { job_id: req.params.id, type: "company" } })
                         .then(interests => {
                             // get list of current interest_ids
 
@@ -199,7 +199,7 @@ router.put('/:id', (req, res) => {
                                     return {
                                         job_id: req.params.id,
                                         user_id: interest_id,
-                                        type: "employer"
+                                        type: "company"
 
                                     };
                                 });
@@ -214,8 +214,8 @@ router.put('/:id', (req, res) => {
 
                             // run both actions
                             return Promise.all([
-                                userInterests.destroy({ where: { id: interestsToRemove } }),
-                                userInterests.bulkCreate(newInterests),
+                                //userInterests.destroy({ where: { id: interestsToRemove } }),
+                                userInterests.bulkCreate(newInterests)
                             ]);
                         })
                         .then((updatedInterests) => {

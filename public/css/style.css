@@ -35,6 +35,14 @@ nav button {
     background-color: rgb(29, 198, 228);
     color: white;
 }
+.card-profilebody {
+  max-height: 200px;
+  overflow : scroll; 
+}
+.card-skillbody {
+  max-height: 100px;
+  overflow : scroll; 
+}
 
 button a:hover{
     color: inherit;

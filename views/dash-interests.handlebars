@@ -1,0 +1,72 @@
+{{#if company}}    
+<ul class="nav nav-tabs nav-fill mt-3">
+  <li class="nav-item">
+    <a id="company-btn" class="nav-link active" href="#">Candidates you're iterested in:</a>
+  </li>
+  <li class="nav-item">
+    <a id="candidate-btn" class="nav-link" href="#">Candidates interested in you:</a>
+  </li>
+  <li class="nav-item">
+    <a id="interview-btn" class="nav-link" href="#">Confirmed interviews:</a>
+  </li>
+  <li class="nav-item">
+    <a class="nav-link" href="#skills">Candidates matches (by Skills)</a>
+  </li>
+</ul>
+
+<div id="company-interest">
+{{{format_interests_company interests "company"}}}
+</div>
+
+<div id="candidate-interest">
+{{{format_interests_company interests "seeker"}}}
+</div>
+
+<div id="interviews">
+{{{format_interests_company interests "interview"}}}
+</div>
+
+<div id="matchingskills">
+{{> matching-skills}}
+</div>
+
+
+{{/if}}
+
+
+{{#if seeker}}    
+<ul class="nav nav-tabs nav-fill mt-3">
+  <li class="nav-item">
+    <a id="company-btn" class="nav-link active" href="#">Jobs you're iterested in:</a>
+  </li>
+  <li class="nav-item">
+    <a id="candidate-btn" class="nav-link" href="#">Jobs offered to you:</a>
+  </li>
+  <li class="nav-item">
+    <a id="interview-btn" class="nav-link" href="#">Confirmed interviews:</a>
+  </li>
+  <li class="nav-item">
+    <a class="nav-link" href="#skills">Job matches (by Skills)</a>
+  </li>
+</ul>
+
+<div id="company-interest">
+{{{format_interests_seeker interests "company" }}}
+</div>
+
+<div id="candidate-interest">
+{{{format_interests_seeker interests "seeker" }}}
+</div>
+
+<div id="interviews">
+{{{format_interests_seeker interests "interview" }}}
+</div>
+
+<div id="matchingskills">
+{{> matching-skills}}
+</div>
+
+{{/if}}
+
+
+<script src="/javascript/interests.js"></script>

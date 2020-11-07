@@ -6,14 +6,14 @@ router.get('/', (req, res) => {
 
 
 
-    if (req.query.user_id) {
+  
 
        
 
             userInterests.findAll(
                 {
-                    attributes: { exclude: ['id', 'userId'] },
-                    where: { user_id: req.query.user_id },
+                    attributes: { exclude: ['userId'] },
+                    
 
                     include: {
                         model: Jobs,
@@ -27,38 +27,35 @@ router.get('/', (req, res) => {
                     res.status(500).json(err);
                     console.log(err);
                 });
-        }
-        else if (req.query.company_id) {
-
-            Jobs.findAll({
-                where: { company_id: req.query.company_id },
-                include: {
-                    model: userInterests,
-                    as: "job_interests",
-                    include: { model: Users, as: 'candidates', attributes: { exclude: ['password'] } }
-
-                }
-            })
-                .then(dbUserData => res.json(dbUserData))
-                .catch(err => {
-                    res.status(500).json(err);
-                    console.log(err);
-                });
-
         
-
-
-    }
-    else {
-        userInterests.findAll()
-            .then(dbUserData => res.json(dbUserData))
-            .catch(err => {
-                res.status(500).json(err);
-            });
-
-    }
+       
+   
 
 });
+
+// update single interest
+router.put('/:id', (req, res) => {
+userInterests.update(req.body,
+
+    { where: { id: req.params.id } }
+
+)
+    .then(result => {
+
+        userInterests.findOne({
+            where: {
+                id: req.params.id
+            }
+        }
+        )
+            .then(updatedUser => res.json(updatedUser));
+    })
+
+    .catch((err) => {
+
+        res.status(400).json(err);
+    });
+})
 
 // DELETE single interest
 router.delete('/:id', (req, res) => {

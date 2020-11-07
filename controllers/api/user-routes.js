@@ -9,7 +9,6 @@ router.get('/', (req, res) => {
     .catch(err => res.status(200).json(err))
 
 
-
 });
 
 
@@ -48,10 +47,6 @@ router.get('/:id', (req, res) => {
         model: userInterests,
         attributes: ['id', 'job_id', 'type'],
         as: "interested_in"
-        // model:Jobs,
-        // through: userInterests,
-        // as: 'job_interests',
-        // include:{model:Users,as:"company",attributes:{exclude:['password']}}
       }
     ]
   })
@@ -60,26 +55,10 @@ router.get('/:id', (req, res) => {
         res.status(404).json({ message: 'No user found with this id' });
         return;
       }
-      const userName = dbUserData.full_name;
-      const userDescription = dbUserData.description;
-      const userId = dbUserData.id;
-      const company = true;
-      console.log(dbUserData);
-      if(req.session.type === "company"){
-        res.render('employee-page', {
-          userName,
-          userDescription,
-          userId,
-          company
-        });
-      }else{
-        res.render('employee-page', {
-          userName,
-          userDescription,
-          userId,
-        });
-      }
-    })
+ 
+
+     })
+
     .catch(err => {
       console.log(err);
       res.status(500).json(err);
@@ -110,7 +89,6 @@ router.post('/', (req, res) => {
                     req.session.loggedIn = true;
 
                 res.json(dbUserData);
-                console.log(dbUserData)
             });
 
         })
@@ -146,7 +124,7 @@ router.post('/login', (req, res) => {
             res.status(400).json({ message: 'Incorrect password!' });
             return;
         }
-
+        
         req.session.save(() => {
             // declare session variables
             req.session.user_id = dbUserData.id;
@@ -154,8 +132,6 @@ router.post('/login', (req, res) => {
                 req.session.type = dbUserData.type,
                 req.session.company_name = dbUserData.company_name,
                 req.session.loggedIn = true;
-
-
             res.json({ user: dbUserData, message: 'You are now logged in!' });
         });
 
@@ -242,11 +218,11 @@ router.put('/:id', (req, res) => {
 
         // if there's already seeker interest in this job, update the type to "interview"
 
-        userInterests.findAll({ where: { user_id: parseInt(req.params.id), job_id: req.body.interestIds[0],type:"employer" } })
+        userInterests.findAll({ where: { user_id: parseInt(req.params.id), job_id: req.body.interestIds[0],type:"company" } })
             .then(result => {
                 if (result.length) {
 
-                    userInterests.update({ type: "interview" }, { where: { user_id: req.params.id, job_id: req.body.interestIds[0], type: "employer" } })
+                    userInterests.update({ type: "interview" }, { where: { user_id: req.params.id, job_id: req.body.interestIds[0], type: "company" } })
                         .then(result => {
 
                             console.log(result)
@@ -287,7 +263,7 @@ router.put('/:id', (req, res) => {
 
                             // run both actions
                             return Promise.all([
-                                userInterests.destroy({ where: { id: interestsToRemove } }),
+                             //   userInterests.destroy({ where: { id: interestsToRemove } }),
                                 userInterests.bulkCreate(newInterests),
                             ]);
                         })

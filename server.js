@@ -4,14 +4,14 @@ const sequelize = require('./config/connection');
 const session = require('express-session');
 const exphbs = require('express-handlebars');
 const path = require('path');
-//const helpers = require('./utils/helpers');
+const helpers = require('./utils/interest-helpers');
 
 
 const SequelizeStore = require('connect-session-sequelize')(session.Store);
 
 const sess = {
   secret: 'secret secret schmecret',
-  cookie: {},
+  cookie: {id:null, type:null},
   resave: false,
   saveUninitialized: true,
   store: new SequelizeStore({
@@ -25,8 +25,7 @@ const app = express();
 const PORT = process.env.PORT || 3001;
 
 
-//const hbs = exphbs.create({helpers});
-const hbs = exphbs.create({});
+const hbs = exphbs.create({helpers});
 
 
 
