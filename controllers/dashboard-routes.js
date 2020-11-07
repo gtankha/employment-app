@@ -3,6 +3,7 @@ const session = require('express-session');
 const { Users, Jobs, userInterests, Skills, userSkills, jobSkills } = require('../models');
 const { Op } = require('sequelize');
 const Sequelize = require('sequelize');
+const { request } = require('express');
 
 
 
@@ -18,14 +19,33 @@ router.get('/', (req, res) => {
             const jobs = data.map(post => post.get({ plain: true }))
             res.render('dashboard',{
                 jobs,
-                companyId
+                companyId,
+                type:req.session.type,
+                
             })
         })
-    }else if(req.session.type === "seeker"){
+    } 
+    else if(req.session.type === "seeker"){
         const seeker = req.session.user_id;
-        res.render('dashboard', {
-            seeker
+        Skills.findAll({
         })
+            .then(dbUserData => {
+                console.log(dbUserData);
+                const skills = dbUserData.map(post => post.get({ plain: true }));
+                console.log(skills);
+                res.render('dashboard', {
+                    skills,
+                    loggedIn: req.session.loggedIn,
+                    user_id: req.session.user_id,
+                    type: req.session.type,
+                    seeker
+    
+                });
+            })
+            .catch(err => {
+                console.log(err);
+                res.status(500).json(err);
+            });
     }
 
    })
