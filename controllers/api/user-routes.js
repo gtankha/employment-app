@@ -120,6 +120,8 @@ router.post('/', (req, res) => {
         });
 });
 
+
+//login
 router.post('/login', (req, res) => {
 
     // Query operation
@@ -167,7 +169,6 @@ router.post('/login', (req, res) => {
 // update user interests
 router.put('/:id', (req, res) => {
     // update job data
-
 
     //make sure there are actual pertinent fields
 

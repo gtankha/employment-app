@@ -86,3 +86,29 @@
 
 <script src="./javascript/post-job.js"></script>
 {{/if}}
+
+{{#if seeker}}
+    <div class="d-flex">
+        <form>
+            <input type="hidden" id="UserID" name="userID" value="{{seeker}}">
+
+            <div>
+            <p>skill partail placeholder</p>
+            <button  id="skills" type="click">Submit Skill</button>
+            </div>
+            
+            <div>
+                <label for="descriptionUpdate">Description:</label>
+                <input type="text" id="descriptionUpdate" />
+            <button id = "description" type="click">Update description</button>
+            </div>
+
+            <div>
+            <label for="img">Select image:</label>
+            <input type="file" id="img-input" name="img" accept="image/*">
+            <button id="image"type="click">Change Profile Image</button>
+            </div>
+        </form>
+    </div>
+    <script src="./javascript/user-update-form.js"></script>
+{{/if}}
