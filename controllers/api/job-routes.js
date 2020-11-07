@@ -185,7 +185,7 @@ router.put('/:id', (req, res) => {
                 else {
 
 
-                    userInterests.findAll({ where: { job_id: req.params.id, type: "employer" } })
+                    userInterests.findAll({ where: { job_id: req.params.id, type: "company" } })
                         .then(interests => {
                             // get list of current interest_ids
 
@@ -199,7 +199,7 @@ router.put('/:id', (req, res) => {
                                     return {
                                         job_id: req.params.id,
                                         user_id: interest_id,
-                                        type: "employer"
+                                        type: "company"
 
                                     };
                                 });
@@ -214,8 +214,8 @@ router.put('/:id', (req, res) => {
 
                             // run both actions
                             return Promise.all([
-                                userInterests.destroy({ where: { id: interestsToRemove } }),
-                                userInterests.bulkCreate(newInterests),
+                                //userInterests.destroy({ where: { id: interestsToRemove } }),
+                                userInterests.bulkCreate(newInterests)
                             ]);
                         })
                         .then((updatedInterests) => {

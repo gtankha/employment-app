@@ -8,69 +8,6 @@ router.get('/', (req, res) => {
     .then(result=>res.status(200).json(result))
     .catch(err => res.status(200).json(err))
 
-    // if (req.query.type == "seeker") {
-    //     Users.findAll({
-    //         attributes: { exclude: ['password'] },
-    //         where: {
-    //             type: req.query.type
-    //         },
-    //         include: [
-    //             {
-    //                 model: Skills,
-    //                 attributes: ['name'],
-    //                 through: userSkills
-    //             },
-    //             {
-    //                 model: userInterests,
-    //                 attributes: ['id', 'job_id', 'type'],
-    //                 as: "interested_in",
-    //                 include: { model: Jobs, as: "interested_in", attributes: { exclude: ['password', 'id'] } }
-    //             },
-    //         ]
-    //     })
-    //         .then(dbUserData => {
-    //             console.log(dbUserData);
-    //             res.json(dbUserData)
-    //         })
-    //         .catch(err => {
-    //             console.log(err);
-    //             res.status(500).json(err);
-    //         });
-    // }
-
-    // if (req.query.type == "employer") {
-    //     Users.findAll({
-    //         attributes: { exclude: ['password'] },
-    //         where: {
-    //             type: req.query.type
-    //         },
-    //         include: [{
-    //             model: Jobs,
-    //             attributes: ["id", "title", "company_id"],
-    //             include: [
-    //                 {
-    //                     model: Skills,
-    //                     attributes: ['name'],
-    //                     through: jobSkills
-    //                 },
-    //                 {
-    //                     model: userInterests,
-    //                     as: "parties_interested",
-    //                     attributes: ['user_id', 'type']
-    //                     //  include: { model: Users,  attributes: ['full_name'] }   
-    //                 }]
-    //         }]
-    //     })
-    //         .then(dbUserData => {
-    //             console.log(dbUserData);
-    //             res.json(dbUserData)
-    //         })
-    //         .catch(err => {
-    //             console.log(err);
-    //             res.status(500).json(err);
-    //         });
-    // }
-
 
 });
 
@@ -118,32 +55,14 @@ router.get('/:id', (req, res) => {
         res.status(404).json({ message: 'No user found with this id' });
         return;
       }
-    //   const userName = dbUserData.full_name;
-    //   const userDescription = dbUserData.description;
-    //   const userId = dbUserData.id;
-    //   const company = true;
-    //   console.log(dbUserData);
-    //   if(req.session.type === "employer"){
-    //     res.render('employee-page', {
-    //       userName,
-    //       userDescription,
-    //       userId,
-    //       company
-    //     });
-    //   }else{
-    //     res.render('employee-page', {
-    //       userName,
-    //       userDescription,
-    //       userId,
-    //     });
-    //   }
+ 
 
      })
 
-    // .catch(err => {
-    //   console.log(err);
-    //   res.status(500).json(err);
-    // });
+    .catch(err => {
+      console.log(err);
+      res.status(500).json(err);
+    });
 });
 
 // create new user
@@ -298,11 +217,11 @@ router.put('/:id', (req, res) => {
 
         // if there's already seeker interest in this job, update the type to "interview"
 
-        userInterests.findAll({ where: { user_id: parseInt(req.params.id), job_id: req.body.interestIds[0],type:"employer" } })
+        userInterests.findAll({ where: { user_id: parseInt(req.params.id), job_id: req.body.interestIds[0],type:"company" } })
             .then(result => {
                 if (result.length) {
 
-                    userInterests.update({ type: "interview" }, { where: { user_id: req.params.id, job_id: req.body.interestIds[0], type: "employer" } })
+                    userInterests.update({ type: "interview" }, { where: { user_id: req.params.id, job_id: req.body.interestIds[0], type: "company" } })
                         .then(result => {
 
                             console.log(result)
@@ -343,7 +262,7 @@ router.put('/:id', (req, res) => {
 
                             // run both actions
                             return Promise.all([
-                                userInterests.destroy({ where: { id: interestsToRemove } }),
+                             //   userInterests.destroy({ where: { id: interestsToRemove } }),
                                 userInterests.bulkCreate(newInterests),
                             ]);
                         })
