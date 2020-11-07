@@ -50,7 +50,7 @@ router.get('/', (req, res) => {
                             matchingSkillUsers = matchingSkillUsers.filter(a => a.user_id != req.session.user_id );
                             console.log(matchingSkillUsers);
                         
-                            res.render('dash-interests', { interests: interests, matchingSkillUsers: matchingSkillUsers, company: true, seeker: false, loggedIn: req.session.loggedIn });
+                            res.render('dash-interests', { interests: interests, matchingSkillUsers: matchingSkillUsers, company: true, seeker: false, loggedIn: req.session.loggedIn, type:req.session.type });
                     })
 
                     .catch(err => console.log(err))

@@ -1,16 +1,16 @@
-
-<div class="form-check">
-    <form class = {{user_id}} id="skillform">
-        <fieldset>
-           
-            <legend>Please Select Skillsets</legend>
-            {{#each skills as |skills|}}
-            <input type="checkbox" id="skill{{@index}}" value="{{skills.id}}"">{{skills.name}}<br>
-            {{/each}}
-            <br>
-            <input type="submit" value="Submit now" />
-        </fieldset>
-    </form>
-</div>  
+<div class={{type}} id="types">
+    <div class="form-check">
+        <form class={{user_id}} id="skillform">
+            <fieldset>
+                <legend>Please Select Skillsets</legend>
+                {{#each skills as |skills|}}
+                <input type="checkbox" id="skill{{@index}}" value="{{skills.id}}">{{skills.name}}<br>
+                {{/each}}
+                <br>
+                <input type="submit" value="Submit now" />
+            </fieldset>
+        </form>
+    </div>
+</div>
 
 <script src="/javascript/listskill.js"></script>

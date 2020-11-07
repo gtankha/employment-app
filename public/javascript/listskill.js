@@ -15,17 +15,36 @@ function skillForm(event) {
             }
             i++;
         }
-        else 
-        {
-            console.log (skills);
+        else {
+
+            let type = document.getElementById("types").className;
             let user_id = document.getElementById("skillform");
-            if (user_id) { user_id = user_id.className};
-            console.log ("user_id"  + user_id);
-           let results =  {user: user_id, skills: skills};
-           console.log (results);
-           return results;
+            if (user_id) { user_id = user_id.className };
+            let results = { user: user_id, skills: skills, type: type };
+            console.log(results);
+
+
+        /*    if (type = "seeker") {
+                const response = await fetch('/api/users', {
+                    method: 'put',
+                    body: JSON.stringify({
+                       skillIds: skills
+                    }),
+                    headers: { 'Content-Type': 'application/json' }
+                });
+
+                if (response.ok) {
+                    document.location.replace('/dash');
+                } else {
+                    alert(response.statusText);
+                }
+
             }
+        */}
+
+
+        return results;
     }
 }
 
-    document.querySelector("#skillform").addEventListener('submit', skillForm);
+document.querySelector("#skillform").addEventListener('submit', skillForm);
