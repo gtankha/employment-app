@@ -203,7 +203,7 @@ router.post('/login', (req, res) => {
             res.status(400).json({ message: 'Incorrect password!' });
             return;
         }
-
+        
         req.session.save(() => {
             // declare session variables
             req.session.user_id = dbUserData.id;
@@ -211,12 +211,6 @@ router.post('/login', (req, res) => {
                 req.session.type = dbUserData.type,
                 req.session.company_name = dbUserData.company_name,
                 req.session.loggedIn = true;
-
-                req.session.cookie.id = dbUserData.id;
-                req.session.cookie.type = dbUserData.type;
-                console.log(req.session)
-
-
             res.json({ user: dbUserData, message: 'You are now logged in!' });
         });
 

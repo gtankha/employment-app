@@ -35,7 +35,6 @@ router.get('/', (req, res) => {
 // GET single job
 router.get('/:id', (req, res) => {
     Jobs.findOne({
-
         include:
             [{
                 model: Users,
