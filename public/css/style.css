@@ -3,13 +3,14 @@
 
 
 header{
-    background-color: rgb(29, 198, 228);
+    background-color: rgb(29, 115, 228);
     border-bottom: solid 4px yellow;
     color: white;
 }
 
 header h1{
-    border-bottom: solid 1px yellow;
+  font-family: 'Montserrat Subrayada', sans-serif;
+  
 }
 
 nav a, nav button{
@@ -31,6 +32,16 @@ nav button {
     cursor: pointer;
 }
 
+.signup_heading {
+
+  font-family: 'Montserrat Subrayada', sans-serif;
+}
+
+.w-form {
+
+  width:400px;
+}
+
 .card-header {
     background-color: rgb(29, 198, 228);
     color: white;
@@ -42,6 +53,13 @@ nav button {
 .card-skillbody {
   max-height: 100px;
   overflow : scroll; 
+}
+
+.hero {
+ /* height: 300px;
+ background-image: url("../images/banner.jpg");
+  background-repeat: no-repeat;
+  background-size: cover;*/
 }
 
 button a:hover{
