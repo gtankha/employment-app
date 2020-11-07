@@ -1,4 +1,7 @@
-
+html, body {
+  overflow-x:hidden;
+  
+} 
 
 
 
@@ -31,7 +34,10 @@ nav button {
     border: none;
     cursor: pointer;
 }
+.more-round {
 
+  border-radius:15px;
+}
 .signup_heading {
 
   font-family: 'Montserrat Subrayada', sans-serif;

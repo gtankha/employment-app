@@ -5,8 +5,8 @@ const { Users, Jobs, userInterests, Skills, userSkills, jobSkills } = require('.
 router.get('/', (req, res) => {
 
     Users.findAll()
-    .then(result=>res.status(200).json(result))
-    .catch(err => res.status(200).json(err))
+        .then(result => res.status(200).json(result))
+        .catch(err => res.status(200).json(err))
 
 
 });
@@ -31,38 +31,38 @@ router.post('/logout', (req, res) => {
 
 // GET single user
 router.get('/:id', (req, res) => {
-  Users.findOne({
-    exclude: ['password']
-    ,
-    where: {
-      id: req.params.id
-    },
-    include: [
-      {
-        model: Skills,
-        attributes: ['name'],
-        through: userSkills
-      },
-      {
-        model: userInterests,
-        attributes: ['id', 'job_id', 'type'],
-        as: "interested_in"
-      }
-    ]
-  })
-    .then(dbUserData => {
-      if (!dbUserData) {
-        res.status(404).json({ message: 'No user found with this id' });
-        return;
-      }
- 
+    Users.findOne({
+        exclude: ['password']
+        ,
+        where: {
+            id: req.params.id
+        },
+        include: [
+            {
+                model: Skills,
+                attributes: ['name'],
+                through: userSkills
+            },
+            {
+                model: userInterests,
+                attributes: ['id', 'job_id', 'type'],
+                as: "interested_in"
+            }
+        ]
+    })
+        .then(dbUserData => {
+            if (!dbUserData) {
+                res.status(404).json({ message: 'No user found with this id' });
+                return;
+            }
 
-     })
 
-    .catch(err => {
-      console.log(err);
-      res.status(500).json(err);
-    });
+        })
+
+        .catch(err => {
+            console.log(err);
+            res.status(500).json(err);
+        });
 });
 
 // create new user
@@ -76,7 +76,7 @@ router.post('/', (req, res) => {
         email: req.body.email,
         password: req.body.password,
         description: req.body.description,
-        image:null,
+        image: null,
         type: req.body.type,
     })
         .then(dbUserData => {
@@ -85,7 +85,9 @@ router.post('/', (req, res) => {
                 req.session.user_id = dbUserData.id;
                 req.session.full_name = dbUserData.full_name,
                     req.session.type = dbUserData.type,
+                    req.session.description = dbUserData.description,
                     req.session.company_name = dbUserData.company_name,
+                    req.session.image = dbUserData.image,
                     req.session.loggedIn = true;
 
                 res.json(dbUserData);
@@ -122,13 +124,15 @@ router.post('/login', (req, res) => {
             res.status(400).json({ message: 'Incorrect password!' });
             return;
         }
-        
+
         req.session.save(() => {
             // declare session variables
             req.session.user_id = dbUserData.id;
             req.session.full_name = dbUserData.full_name,
                 req.session.type = dbUserData.type,
+                req.session.description = dbUserData.description,
                 req.session.company_name = dbUserData.company_name,
+                req.session.image = dbUserData.image,
                 req.session.loggedIn = true;
             res.json({ user: dbUserData, message: 'You are now logged in!' });
         });
@@ -217,7 +221,7 @@ router.put('/:id', (req, res) => {
 
         // if there's already seeker interest in this job, update the type to "interview"
 
-        userInterests.findAll({ where: { user_id: parseInt(req.params.id), job_id: req.body.interestIds[0],type:"company" } })
+        userInterests.findAll({ where: { user_id: parseInt(req.params.id), job_id: req.body.interestIds[0], type: "company" } })
             .then(result => {
                 if (result.length) {
 
@@ -228,7 +232,7 @@ router.put('/:id', (req, res) => {
                             res.status(200).json(result);
 
                         })
-                        .catch(err=>console.log(err))
+                        .catch(err => console.log(err))
                 }
                 // if there isn't seeker interest, create company interest
                 else {
@@ -262,7 +266,7 @@ router.put('/:id', (req, res) => {
 
                             // run both actions
                             return Promise.all([
-                             //   userInterests.destroy({ where: { id: interestsToRemove } }),
+                                //   userInterests.destroy({ where: { id: interestsToRemove } }),
                                 userInterests.bulkCreate(newInterests),
                             ]);
                         })

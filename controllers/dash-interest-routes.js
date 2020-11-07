@@ -20,7 +20,7 @@ router.get('/', (req, res) => {
 
 
 
-                res.render('dash-interests', { interests: interests, company:true,seeker:false });
+                res.render('dash-interests', { interests: interests, company:true,seeker:false ,session:req.session });
             })
 
             .catch(err => console.log(err))
@@ -31,7 +31,7 @@ router.get('/', (req, res) => {
         userInterests.findAll({ where: { user_id: session_user_id }, include: { model: Jobs, as: "interested_in", include: { model: Users, as: "company" } } })
             .then(interests => {
 
-                res.render('dash-interests', { interests: interests, company:false,seeker:true });
+                res.render('dash-interests', { interests: interests, company:false,seeker:true,session:req.session });
 
             })
             .catch(err => console.log(err))
