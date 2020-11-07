@@ -1,8 +1,11 @@
-<h2>If you're a company, you come here to create jobs and edit your account</h2>
+{{#if companyId}}
+<div class="d-flex" style="margin: 20px;">
+    <div class="display-jobs split left" style="margin: 20px; size: 40%;">
+        <div class="card" style="margin: 10px;">
+        <h2 class="card-header" >Your Jobs:</h2>
 
-<h2>For either of them, there's going to be a tab that shows the interviews confirmed so far</h2>
-
-<h2>Candidates you're interested in:</h2>
+        <!-- Trigger/Open The Modal -->
+        <button id="myBtn" class="btn btn-primary">Create a job</button>
 
         <!-- The Modal -->
         <div id="myModal" class="modal">
@@ -91,7 +94,7 @@
 
             <div>
             <p>skill partail placeholder</p>
-            <button  id="skills" type="click">Submit Skill</button>
+            <button id="skills" type="click">Submit Skill</button>
             </div>
             
             <div>

@@ -19,7 +19,7 @@ async function descriptionUpdate(event) {
     console.log(description);
     console.log("Test34")
 
-    userID=document.querySelector("#UserID").value;
+    const userID=document.querySelector("#UserID").value;
 
     const response = await fetch(`/dash/`+userID, {
         method: 'put',
@@ -40,11 +40,15 @@ async function descriptionUpdate(event) {
 async function photoChange(event) {
     event.preventDefault();
 
-    const response = await fetch('/api/upload?id=' + user_id, {
-        method: 'POST',
-        body: 1
-    });
+    const imgInputEl = document.getElementById('img-input');
 
+    formData.append("image", imgInputEl.files[0]);
+
+    const response = await fetch('/api/upload?id=' + querySelector("#UserID").value, {
+        method: 'POST',
+        body: formData
+    });
+    alert(response)
 
         if (response.ok) {
             document.location.replace('/dash')
