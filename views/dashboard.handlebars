@@ -59,7 +59,11 @@
         </script>
 
 
-
+{{#if companyId}}
+    <div>
+             {{> seekerskill}}
+     </br>
+     </div>
 
         </div>
         {{#each jobs as |job|}}
@@ -82,19 +86,29 @@
 </div>
 
 <script src="./javascript/post-job.js"></script>
-<<<<<<< HEAD
 {{/if}}
 
 {{#if seeker}}
+
+
+
+     <div>
+             {{> seekerskill}}
+     </br>
+     </div>
+
+
     <div class="d-flex">
         <form>
             <input type="hidden" id="UserID" name="userID" value="{{seeker}}">
 
-            <div>
+            {{!-- <div>
             <p>skill partail placeholder</p>
             <button  id="skills" type="click">Submit Skill</button>
             </div>
+             --}}
             
+
             <div>
                 <label for="descriptionUpdate">Description:</label>
                 <input type="text" id="descriptionUpdate" />
@@ -109,7 +123,5 @@
         </form>
     </div>
     <script src="./javascript/user-update-form.js"></script>
+  
 {{/if}}
-=======
-
->>>>>>> d82fe9f266957dc9f4619ab55ab662c98717be9c
