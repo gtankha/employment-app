@@ -40,6 +40,12 @@ async function descriptionUpdate(event) {
 async function photoChange(event) {
     event.preventDefault();
 
+    const response = await fetch('/api/upload?id=' + user_id, {
+        method: 'POST',
+        body: 1
+    });
+
+
         if (response.ok) {
             document.location.replace('/dash')
         } else {
