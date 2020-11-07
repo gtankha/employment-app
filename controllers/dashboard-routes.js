@@ -21,9 +21,35 @@ router.get('/', (req, res) => {
                 companyId
             })
         })
+    }else if(req.session.type === "seeker"){
+        const seeker = req.session.user_id;
+        res.render('dashboard', {
+            seeker
+        })
     }
 
    })
 
+router.put('/:id', (req,res) => {
+    console.log('yeeeouch')
+    Users.update(req.body, {
+        individualHooks: true,
+        where: {
+            id: req.params.id
+        }
+    })
+        .then(dbUserData => {
+            if (!dbUserData[0]) {
+                res.status(404).json({ message: 'No user found with this id' });
+                return;
+            }
+            res.json(dbUserData);
+        })
+        .catch(err => {
+            console.log(err);
+            res.status(500).json(err);
+        });
+})
+
+
 module.exports = router;
-    
