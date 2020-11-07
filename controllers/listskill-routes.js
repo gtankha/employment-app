@@ -15,6 +15,7 @@ router.get('/', (req, res) => {
             res.render('test2-skills', {
                 skills,
                 loggedIn: req.session.loggedIn,
+                user_id: req.session.user_id
             });
         })
         .catch(err => {

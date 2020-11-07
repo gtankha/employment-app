@@ -1,6 +1,7 @@
 const companyInterestTab = document.querySelector("#company-interest");
 const candidateInterestTab = document.querySelector("#candidate-interest");
 const interviewTab = document.querySelector("#interviews");
+//const skillsTab = document.querySelector("#matchingkills");
 
 
 const companyBtn = document.querySelector("#company-btn");
@@ -17,6 +18,7 @@ function init() {
     candidateInterestTab.style.display = 'none';
     interviewTab.style.display = 'none';
     companyInterestTab.style.display = 'flex';
+  //  skillsTab.style.display = 'none';
 
 }
 
