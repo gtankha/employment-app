@@ -1,0 +1,12 @@
+<div class="form-check">
+    <form method="post" action="/Tests/Post/">
+        <fieldset>
+            <legend>Please Select Skillsets</legend>
+            {{#each skills as |skills|}}
+            <input type="checkbox" name="skills" value="skills">{{skills.name}}<br>
+            {{/each}}
+            <br>
+            <input type="submit" value="Submit now" />
+        </fieldset>
+    </form>
+</div>
