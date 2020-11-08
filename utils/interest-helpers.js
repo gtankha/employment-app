@@ -89,7 +89,7 @@ module.exports = {
 
       })
 
-      const display = tab == "seeker" ? "none": "";
+      const display = tab == "company" ? "none": "";
 
       var innerHtml = ``;
 
@@ -99,7 +99,6 @@ module.exports = {
 
         innerHtml += 
         `<div class="card mt-5" style="width: 18rem; margin: 10px">
-
             <div class="card-header">
                 <h5 class="card-title signup_heading">${i.title}</h5>
                 <h6 class="card-subtitle mb-2 text-muted">Company:${i.company_name}</h6>

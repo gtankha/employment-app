@@ -30,6 +30,7 @@ function windowSizeHandler(event) {
         if (document.getElementById("company-interest").style.display == "flex") document.getElementById("company-interest").style.display = "";
         if (document.getElementById("candidate-interest").style.display == "flex") document.getElementById("candidate-interest").style.display = "";
         if (document.getElementById("interviews").style.display == "flex") document.getElementById("interviews").style.display = "";
+        if (document.getElementById("matching-skills").style.display == "flex") document.getElementById("matching-skills").style.display = "";
 
 
     }
@@ -47,6 +48,7 @@ function windowSizeHandler(event) {
         if (document.getElementById("company-interest").style.display == "") document.getElementById("company-interest").style.display = "flex";
         if (document.getElementById("candidate-interest").style.display == "") document.getElementById("candidate-interest").style.display = "flex";
         if (document.getElementById("interviews").style.display == "") document.getElementById("interviews").style.display = "flex";
+        if (document.getElementById("matching-skills").style.display == "") document.getElementById("matching-skills").style.display = "flex";
 
 
     }

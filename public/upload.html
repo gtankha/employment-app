@@ -14,7 +14,6 @@
 var formEl = document.getElementById('upload-form');
 var imgInputEl = document.getElementById('img-input');
 var user_id = 1;
-
 var formData = new FormData();
 
 
@@ -35,7 +34,7 @@ var formData = new FormData();
       
           let result = await response.json();
       
-          alert(result.message);
+          if(!result.link.includes('imgur')) alert("error uploading file")
         };
       </script>
       
