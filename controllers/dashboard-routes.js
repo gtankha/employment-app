@@ -13,18 +13,33 @@ router.get('/', (req, res) => {
 
     if(req.session.type === "company"){
         Jobs.findAll({
-            where: {company_id: req.session.user_id}
+            where: {company_id: req.session.user_id},
+            include:[
+                {
+                    model: Skills,
+                    attributes: ['name','id'],
+                    through: jobSkills
+                }
+
+            ]
         }).then(data=>{
-            const companyId = req.session.user_id;
             const jobs = data.map(post => post.get({ plain: true }))
+            const companyId = req.session.user_id;
+            Skills.findAll({  
+
+            })
+            .then(dbUserData => {
+            const skills = dbUserData.map(post => post.get({ plain: true }))
             res.render('dashboard',{
                 jobs,
+                skills,
                 companyId,
                 type:req.session.type,
-                
             })
         })
-    } 
+    })
+    
+}
     else if(req.session.type === "seeker"){
         const seeker = req.session.user_id;
         Skills.findAll({

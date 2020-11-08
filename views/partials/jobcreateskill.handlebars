@@ -1,8 +1,8 @@
 <div class={{type}} id="types">
     <div class="form-check">
-        <form class={{user_id}} id="skillform">
+        <form class={{company_id}} id="skillform">
             <fieldset>
-                <legend>Please Select Skillsets</legend>
+                <p>Please Select Skillsets: </p>
                 {{#each skills as |skills|}}
                 <input type="checkbox" id="skill{{@index}}" value="{{skills.id}}">{{skills.name}}<br>
                 {{/each}}
@@ -12,5 +12,3 @@
         </form>
     </div>
 </div>
-
-<script src="/javascript/createskill.js"></script>
