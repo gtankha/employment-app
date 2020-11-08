@@ -184,9 +184,10 @@ router.put('/:id', (req, res) => {
                 // get list of current interest_ids
 
                 const skillIds = skills.map(({ skill_id }) => skill_id);
+                console.log('aaa');
                 console.log(skillIds);
 
-                // create filtered list of new interests
+                // create filtered list of new skills
                 const newSkills = req.body.skillIds
                     .filter((skill_id) => !skillIds.includes(skill_id))
                     .map((skill_id) => {
@@ -195,9 +196,11 @@ router.put('/:id', (req, res) => {
                             skill_id: skill_id
                         };
                     });
+                console.log('bbb');
                 console.log(newSkills);
 
                 // figure out which ones to remove
+                console.log ('ccc');
                 const skillsToRemove = skills
                     .filter(({ skill_id }) => !req.body.skillIds.includes(skill_id))
                     .map(({ id }) => id);
@@ -206,7 +209,7 @@ router.put('/:id', (req, res) => {
 
                 // run both actions
                 return Promise.all([
-                   // userSkills.destroy({ where: { id: skillsToRemove } }),
+                    userSkills.destroy({ where: { id: skillsToRemove } }),
                     userSkills.bulkCreate(newSkills)
                 ]);
             })

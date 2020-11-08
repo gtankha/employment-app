@@ -55,6 +55,6 @@ async function photoChange(event) {
         }
 }
 
-document.querySelector('#skills').addEventListener('click', skillSubmit);
+//document.querySelector('#skills').addEventListener('click', skillSubmit);
 document.querySelector('#description').addEventListener('click', descriptionUpdate);
 document.querySelector('#image').addEventListener('click', photoChange);
