@@ -36,6 +36,8 @@ router.get('/', (req, res) => {
                     skills,
                     loggedIn: req.session.loggedIn,
                     user_id: req.session.user_id,
+                    full_name: req.session.full_name,
+                    description: req.session.description,
                     type: req.session.type,
                     seeker
     
