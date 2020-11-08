@@ -100,6 +100,8 @@ router.post('/', (req, res) => {
         });
 });
 
+
+//login
 router.post('/login', (req, res) => {
 
     // Query operation
@@ -147,7 +149,6 @@ router.post('/login', (req, res) => {
 // update user interests
 router.put('/:id', (req, res) => {
     // update job data
-
 
     //make sure there are actual pertinent fields
 
@@ -205,7 +206,7 @@ router.put('/:id', (req, res) => {
 
                 // run both actions
                 return Promise.all([
-                    userSkills.destroy({ where: { id: skillsToRemove } }),
+                   // userSkills.destroy({ where: { id: skillsToRemove } }),
                     userSkills.bulkCreate(newSkills)
                 ]);
             })

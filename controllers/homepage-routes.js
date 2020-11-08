@@ -76,7 +76,7 @@ router.get('/', (req, res) => {
 });
 
 router.get('/interest-page', (req, res) => {
-    res.render('test-page',{});
+    res.render('test-page', { loggedIn: req.session.loggedIn,});
 })
 
 //login

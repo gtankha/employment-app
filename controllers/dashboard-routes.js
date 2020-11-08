@@ -3,6 +3,7 @@ const session = require('express-session');
 const { Users, Jobs, userInterests, Skills, userSkills, jobSkills } = require('../models');
 const { Op } = require('sequelize');
 const Sequelize = require('sequelize');
+const { request } = require('express');
 
 
 
@@ -18,12 +19,106 @@ router.get('/', (req, res) => {
             const jobs = data.map(post => post.get({ plain: true }))
             res.render('dashboard',{
                 jobs,
-                companyId
+                companyId,
+                type:req.session.type,
+                
             })
         })
+    } 
+    else if(req.session.type === "seeker"){
+        const seeker = req.session.user_id;
+        res.render('dashboard', {
+            seeker,
+            loggedIn: req.session.loggedIn,
+        })
+            .then(dbUserData => {
+                console.log(dbUserData);
+                const skills = dbUserData.map(post => post.get({ plain: true }));
+                console.log(skills);
+                res.render('dashboard', {
+                    skills,
+                    loggedIn: req.session.loggedIn,
+                    user_id: req.session.user_id,
+                    type: req.session.type,
+                    seeker
+    
+                });
+            })
+            .catch(err => {
+                console.log(err);
+                res.status(500).json(err);
+            });
     }
 
    })
 
-module.exports = router;
+router.put('/:id', (req,res) => {
+    Users.update(req.body, {
+        individualHooks: true,
+        where: {
+            id: req.params.id
+        }
+    })
+        .then(dbUserData => {
+            if (!dbUserData[0]) {
+                res.status(404).json({ message: 'No user found with this id' });
+                return;
+            }
+            res.json(dbUserData);
+        })
+        .catch(err => {
+            console.log(err);
+            res.status(500).json(err);
+        });
+})
+
+// router.put('/edit/:id', (req, res) => {
+//     Jobs.update(req.body, {
+//         individualHooks: true,
+//         where: {
+//             id: req.params.id
+//         }
+//     })
+//         .then(dbJobData => {
+//             if (!dbJobData[0]) {
+//                 res.status(404).json({ message: 'No job found with this id' });
+//                 return;
+//             }
+//             res.json(dbJobData);
+//         })
+//         .catch(err => {
+//             console.log(err);
+//             res.status(500).json(err);
+//         });
+// })
+
+router.get('/:id', (req, res) => {
+    Jobs.findOne({
+        where: {
+            id: req.params.id
+        }
+    })
+    .then(dbUserData => {
+        if (!dbUserData) {
+            res.status(404).json({ message: 'No user found with this id' });
+            return;
+        }
+        console.log(dbUserData.get({ plain: true }))
+        const job  = dbUserData.get({ plain: true })
+
+        res.render('edit-post', {
+            loggedIn: req.session.loggedIn,
+            job: job
+
+        })
+    })
+    .catch(err => {
+        console.log(err);
+        res.status(500).json(err);
+    });
     
+
+})
+
+
+module.exports = router;

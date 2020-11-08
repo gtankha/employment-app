@@ -17,6 +17,8 @@
     <link href="https://fonts.googleapis.com/css2?family=Montserrat+Subrayada:wght@700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="../css/style.css">
     <link rel="stylesheet" href="../../css/style.css">
+  
+
 </head>
 
 <body>
@@ -24,11 +26,11 @@
         <h1 class="ml-5">Employment App</h1>
         <nav class="d-flex justify-content-end">
             {{#if loggedIn}}
-            <a class="mt-1" href="/dashboard">Dashboard</a>
+            <a class="mt-1" href="/dash">Dashboard</a>
             {{else}}
             <a class="mt-1" href="/login">Dashboard</a>
             {{/if}}
-            
+
             <a class="mt-1" href="/">Home</a>
             {{#if loggedIn}}
             <button id="logout" class="mt-1">logout</button>

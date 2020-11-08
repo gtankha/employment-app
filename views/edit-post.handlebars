@@ -1,0 +1,30 @@
+<div class="card">
+    <div class="card-header">
+        <h2 >Current title</h2>
+        <h3 class="text-muted">{{job.title}}</h3>
+        <h2>Current description</h2>
+        <h3 class="text-muted">{{job.description}}</h3>
+        <input type="hidden" id="jobID" name="jobID" value="{{job.id}}">
+    </div>
+    <div class="card-body">
+        
+
+
+        <div>
+            <label for="title">New title:</label>
+            <input type="text" id="title" />
+        </div>
+        <div>
+            <label for="description">New description:</label>
+            <input type="text" id="description"/>
+        </div>
+
+        <button class="btn btn-primary" id="Job-name-edit">Update</button>
+
+        <h2>Skills:</h2>
+        skill goes here
+        <button class="btn btn-primary" id="skills-edit">Update</button>
+    </div> 
+</div>
+
+<script src="/javascript/edit-post.js"></script>
