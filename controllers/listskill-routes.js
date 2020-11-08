@@ -16,8 +16,7 @@ router.get('/', (req, res) => {
                 skills,
                 loggedIn: req.session.loggedIn,
                 user_id: req.session.user_id,
-                type: req.session.type
-
+                type: req.session.type,
             });
         })
         .catch(err => {

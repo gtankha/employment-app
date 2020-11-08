@@ -13,11 +13,9 @@ async function skillSubmit(event) {
 
 
 async function descriptionUpdate(event) {
-    event.preventDefault();
+
     const description = document.querySelector('#descriptionUpdate').value.trim();
-    console.log(document.querySelector("UserID"))
-    console.log(description);
-    console.log("Test34")
+
 
     const userID=document.querySelector("#UserID").value;
 
@@ -41,15 +39,15 @@ async function photoChange(event) {
     event.preventDefault();
 
     const imgInputEl = document.getElementById('img-input');
-
+    var formData = new FormData();
     formData.append("image", imgInputEl.files[0]);
+    console.log(document.querySelector("#UserID").value)
 
-    const response = await fetch('/api/upload?id=' + querySelector("#UserID").value, {
+    const response = await fetch('/api/upload?id=' + document.querySelector("#UserID").value, {
         method: 'POST',
         body: formData
     });
     alert(response)
-
         if (response.ok) {
             document.location.replace('/dash')
         } else {
