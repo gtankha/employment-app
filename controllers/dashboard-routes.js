@@ -27,10 +27,7 @@ router.get('/', (req, res) => {
     } 
     else if(req.session.type === "seeker"){
         const seeker = req.session.user_id;
-        res.render('dashboard', {
-            seeker,
-            loggedIn: req.session.loggedIn,
-        })
+            Skills.findAll({})
             .then(dbUserData => {
                 console.log(dbUserData);
                 const skills = dbUserData.map(post => post.get({ plain: true }));
