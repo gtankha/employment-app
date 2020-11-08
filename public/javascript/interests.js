@@ -1,12 +1,13 @@
 const companyInterestTab = document.querySelector("#company-interest");
 const candidateInterestTab = document.querySelector("#candidate-interest");
 const interviewTab = document.querySelector("#interviews");
-//const skillsTab = document.querySelector("#matchingkills");
+const matchingSkillsTab = document.querySelector("#matching-skills");
 
 
 const companyBtn = document.querySelector("#company-btn");
 const candidateBtn = document.querySelector("#candidate-btn");
 const interviewBtn = document.querySelector("#interview-btn");
+const matchingSkillsBtn = document.querySelector("#matching-skills-btn");
 
 const add_buttons = document.querySelectorAll('[id=add-btn]');
 const del_buttons = document.querySelectorAll('[id=del-btn]');
@@ -15,8 +16,9 @@ function init() {
 
     candidateInterestTab.style.display = 'none';
     interviewTab.style.display = 'none';
+    matchingSkillsTab.style.display = 'none';
     companyInterestTab.style.display = 'flex';
-  //  skillsTab.style.display = 'none';
+
 
     windowSizeHandler(null);
 
@@ -30,6 +32,7 @@ function tabHandler(event) {
     candidateBtn.classList.remove('active');
     companyBtn.classList.remove('active');
     interviewBtn.classList.remove('active');
+    matchingSkillsBtn.classList.remove('active');
 
     switch (event.target.id) {
         case "interview-btn":
@@ -37,6 +40,7 @@ function tabHandler(event) {
             companyInterestTab.style.display = 'none';
             candidateInterestTab.style.display = 'none';
             interviewTab.style.display = 'flex';
+            matchingSkillsTab.style.display = 'none';
             interviewBtn.classList.add('active');
             break;
 
@@ -44,6 +48,7 @@ function tabHandler(event) {
             companyInterestTab.style.display = 'none';
             candidateInterestTab.style.display = 'flex';
             interviewTab.style.display = 'none';
+            matchingSkillsTab.style.display = 'none';
             candidateBtn.classList.add('active');
             break;
 
@@ -51,7 +56,16 @@ function tabHandler(event) {
             companyInterestTab.style.display = 'flex';
             candidateInterestTab.style.display = 'none';
             interviewTab.style.display = 'none';
+            matchingSkillsTab.style.display = 'none';
             companyBtn.classList.add('active');
+            break;
+
+        case "matching-skills-btn":
+            companyInterestTab.style.display = 'none';
+            candidateInterestTab.style.display = 'none';
+            interviewTab.style.display = 'none';
+            matchingSkillsTab.style.display = 'flex';
+            matchingSkillsBtn.classList.add('active');
             break;
 
     }
@@ -146,3 +160,4 @@ init();
 companyBtn.addEventListener("click", tabHandler);
 candidateBtn.addEventListener("click", tabHandler);
 interviewBtn.addEventListener("click", tabHandler);
+matchingSkillsBtn.addEventListener("click", tabHandler);
