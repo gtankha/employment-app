@@ -10,13 +10,13 @@ const interviewBtn = document.querySelector("#interview-btn");
 const add_buttons = document.querySelectorAll('[id=add-btn]');
 const del_buttons = document.querySelectorAll('[id=del-btn]');
 
-console.log(add_buttons);
-
 function init() {
 
     candidateInterestTab.style.display = 'none';
     interviewTab.style.display = 'none';
     companyInterestTab.style.display = 'flex';
+
+    windowSizeHandler(null);
 
 }
 
@@ -53,6 +53,8 @@ function tabHandler(event) {
             break;
 
     }
+
+    windowSizeHandler(null);
 
 }
 

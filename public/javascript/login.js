@@ -64,6 +64,7 @@ async function loginFormHandler(event) {
 function switchHandler(event)
 {
     if(!event) signupForm.style.display = 'none';
+    if(!event) return
 
     event.preventDefault();
   

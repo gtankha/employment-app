@@ -7,8 +7,6 @@ router.get('/', (req, res) => {
     const session_user_id = req.session.user_id;
     const session_type = req.session.type;
 
-    console.log(session_type);
-
     if (session_type == "company") {
 
         Jobs.findAll(
