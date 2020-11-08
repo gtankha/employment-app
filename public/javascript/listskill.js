@@ -1,6 +1,7 @@
 
-function skillForm(event) {
+async function skillForm(event) {
     event.preventDefault();
+ 
     let i = 0;
     let skills = [];
 
@@ -22,29 +23,31 @@ function skillForm(event) {
             if (user_id) { user_id = user_id.className };
             let results = { user: user_id, skills: skills, type: type };
             console.log(results);
+            console.log(results.user);
 
 
-        /*    if (type = "seeker") {
-                const response = await fetch('/api/users', {
+           if (results.type = "seeker") {
+            console.log (" I am in listskill.js")
+                const response = await fetch('/api/users/'+results.user, {
                     method: 'put',
                     body: JSON.stringify({
-                       skillIds: skills
+                       skillIds: results.skills
                     }),
                     headers: { 'Content-Type': 'application/json' }
                 });
 
                 if (response.ok) {
+                    console.log ("asASAS");
                     document.location.replace('/dash');
+                    return;
                 } else {
                     alert(response.statusText);
+                    return;
                 }
 
             }
-        */}
-
-
-        return results;
+        }
     }
 }
 
-document.querySelector("#skillform").addEventListener('submit', skillForm);
+document.querySelector("#submitbutton").addEventListener('click', skillForm);
