@@ -27,7 +27,7 @@ async function skillForm(event) {
             console.log(results.skills[0]);
 
 
-           if (results.type = "seeker") {
+           if (results.type == "seeker") {
             console.log (" I am in listskill.js")
                 const response = await fetch('/api/users/'+results.user, {
                     method: 'put',

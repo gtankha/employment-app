@@ -17,13 +17,12 @@ router.get('/', (req, res) => {
                 include: { model: userInterests, as: "job_interests", include: { model: Users, as: "candidates" } }
             })
             .then(interests => {
-                ''
                 userSkills.findAll({
                     attributes: ['user_id'],
                     where: {
                         skill_id: {
                             [Op.in]:
-                                [Sequelize.literal(`(SELECT skill_id FROM job_skills WHERE job_id IN (SELECT id from JOBS WHERE company_id = ${req.session.user_id}))`)]
+                                [Sequelize.literal(`(SELECT skill_id FROM job_skills WHERE job_id IN (SELECT id from jobs WHERE company_id = ${req.session.user_id}))`)]
                         }
                     },
                     include: [{

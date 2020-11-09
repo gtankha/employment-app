@@ -5,11 +5,11 @@ const loginForm = document.querySelector('#login-form');
 async function signupFormHandler(event) {
     event.preventDefault();
 
-    const full_name = document.querySelector('#username-signup').value.trim();
-    const company_name = document.querySelector('#username-signup').value.trim();
+    const full_name = document.querySelector('#fullname-signup').value.trim();
+    const company_name = document.querySelector('#companyname-signup').value.trim();
     const email = document.querySelector('#email-signup').value.trim();
     const password = document.querySelector('#password-signup').value.trim();
-    const description = "this is the default description"
+    const description = "This section is empty. Go to the dashboard to add a new description."
     const type = document.querySelector('#company').value;
     const image = null;
 

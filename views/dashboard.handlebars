@@ -1,6 +1,6 @@
 {{#if companyId}}
 <div class="d-flex" style="margin: 20px;">
-    <div class="display-jobs split left" style="margin: 20px; size: 40%;">
+    <div class="display-jobs" style="margin: 20px; size: 40%;">
         <div class="card" style="margin: 10px;">
             <h2 class="card-header">Your Jobs:</h2>
 
@@ -86,9 +86,7 @@
         </div>
         {{/each}}
     </div>
-    <div class="confirmed-interviews split right">
-        {{!-- partial marco is making --}}
-    </div>
+
 </div>
 
 <script src="./javascript/post-job.js"></script>
@@ -108,9 +106,11 @@
 <p>{{full_name}}</p>
 <h2>Your Description</h2>
 <p>{{description}}</p>
-
-{{#each userskills.skills as |skills|}}
-<p>{{skills.name}}</p>
+<h2>Skills</h2>
+{{#each userskills as |skillsparent|}}
+{{#each skillsparent.skills as |skills|}}
+</ul>{{skills.name}}</ul><br>
+{{/each}}
 {{/each}}
 
 <button id="myBtn"class="btn btn-primary">Update profile</button>

@@ -16,7 +16,6 @@ router.get('/', (req, res) => {
 router.post('/logout', (req, res) => {
 
 
-
     if (req.session.loggedIn) {
         req.session.destroy(() => {
             res.status(204).end();
@@ -177,13 +176,17 @@ router.put('/:id', (req, res) => {
     }
 
     if ((!(typeof (req.body.skillIds) === 'undefined'))) {
-
-        if (req.session.type == "employer") {
+        console.log ("GOGOGOGOGOGGOGOGO");
+        console.log(req.session.type);
+        if (req.session.type == "company") {
             jobSkills.findAll({ where: { job_id: req.params.id } })
                 .then(skills => {
                     // get list of current skill_ids
                     console.log ("very beginning");
                     console.log (skills);
+                    for (i=0; i<req.body.skillIds.length; i++){
+                        req.body.skillIds[i] = parseInt(req.body.skillIds[i])  ;    
+                        }
 
                     const skillIds = skills.map(({ skill_id }) => skill_id);
                     console.log('aaa');
@@ -239,25 +242,34 @@ router.put('/:id', (req, res) => {
             userSkills.findAll({ where: { user_id: req.params.id } })
                 .then(skills => {
                     // get list of current skill_ids
+                    console.log(req.body);
                     console.log("AAABBBRAE");
+                    for (i=0; i<req.body.skillIds.length; i++){
+                    req.body.skillIds[i] = parseInt(req.body.skillIds[i])  ;    
+                    }
+                    console.log(req.body);
+                    console.log("AAasdasdasdABBBRAE");
+                    
                     console.log (skills);
                     const skillIds = skills.map(({ skill_id }) => skill_id);
                     console.log('aaa');
                     console.log(skillIds);
                     console.log('zzz');
-                    consle.log (req.body);
+                    console.log('vvvv');
+                    
+                    //consle.log (req.body.skillIds);
                     console.log('zzeez');
 
                     // create filtered list of new skills
                     const newSkills = req.body.skillIds
                         .filter((skill_id) => !skillIds.includes(skill_id))
                         .map((skill_id) => {
-                            if (req.body.type == "seeker") {
+                           
                                 return {
                                     user_id: req.params.id,
                                     skill_id: skill_id
                                 }
-                            }
+                            
 
                         });
                     console.log('bbb');

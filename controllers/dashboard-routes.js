@@ -20,7 +20,7 @@ router.get('/', (req, res) => {
             const companyId = req.session.user_id;
             const jobs = data.map(post => post.get({ plain: true }))
             console.log("ADADADADADMMMMMMM");
-            console.log(jobs[0].skills);
+           // console.log(jobs[0].skills);
 
             res.render('dashboard', {
                 jobs,
@@ -44,7 +44,7 @@ router.get('/', (req, res) => {
                 .then (dbUserData2 =>{
                     const userskills = dbUserData2.map(post => post.get({ plain: true }));
                     console.log ("1312983719837129837");
-                    console.log(userskills);
+                  // console.log(userskills[0].skills[0].name);
                 res.render('dashboard', {
                     skills,
                     userskills,
