@@ -1,4 +1,4 @@
-# Tech Blog
+# Employer
 
 
   ## Table of Contents
@@ -10,6 +10,7 @@
   5. [Contributing](#contributing)
   6. [Tests](#tests)
   7. [Questions](#questions)
+  8. [Contributers](#contributters)
 
 
   <a name="description"></a>
@@ -17,8 +18,9 @@
 
   Application provides the ability to do the following: 
 
-  Anonymously: View blogs, login and signup
-  Authenticated: View user blogs, add, edit or delete a blog, add a comment, sign-out
+  As a 'Seeker' you add your name to a list of potential candidates for employeers to show interest in, you can also show interest in employers. If both you and an Employer show  interest in eachother, you are matched up for an interview.
+  
+  As an Employer you can create jobs for Seekers to browse and show interest in. If you select a Seeker for a job they show interest in, you get a confirmed interview.
  
   <a name="installation"></a> 
   ## 2. Installation
@@ -46,7 +48,7 @@
   <a name="tests"></a> 
   ## 6. Test
       
-  Validation is perfomed to ensure that data is not empty. Additionally, only authenticated users can access functions such as add comment, add/edit/delete blogs and logout.
+  Validation is perfomed to ensure that data is not empty. Additionally, only authenticated users can access functions such as addding interests, add/edit/delete jobs/userdata and logout.
 
   <a name="questions"></a> 
   ## 7. Questions
@@ -59,6 +61,12 @@
 
   
   In case of any questions, please reach out to the following contact email: gtankha@gmail.com
+  
+   <a name="contributers"></a> 
+  ## 7. Contribubers
+  Ronan Smith: basic front end, Dashboard routes, README
+  Gautam Tankha: Skill routes, back end implementation, Skill selectors
+  Marco Evangelista: Style, back end implementation, interest routes, revamped home page
 
 
 
