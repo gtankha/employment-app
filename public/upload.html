@@ -1,12 +1,29 @@
 <!DOCTYPE html>
-<head></head>
+<head>
+      <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
+        integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+      <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.14.0/css/solid.min.css" />
+      
+      <link href="https://fonts.googleapis.com/css2?family=Montserrat+Subrayada:wght@700&display=swap" rel="stylesheet">
+      <link rel="stylesheet" href="../css/style.css">
+      <link rel="stylesheet" href="../../css/style.css">
+</head>
 <body>
-
-    <form id="upload-form">
+  <div class="card">
+    <div class="card-header">
+      <h3>Change Profile Image</h3>
+    </div>
+    <div class="card-body">
+      <form id="upload-form">
         <label for="img">Select image:</label>
         <input type="file" id="img-input" name="img" accept="image/*">
-        <input type="submit">
+        <input type="submit" class="btn btn-primary">
+        <br>
+        <a href="/" class="btn btn-primary">Go home</a>
       </form>
+    </div>
+  </div>
+      
 
     <script>
 
@@ -15,10 +32,6 @@ var formEl = document.getElementById('upload-form');
 var imgInputEl = document.getElementById('img-input');
 var user_id = 1;
 var formData = new FormData();
-
-
-
-
         formEl.onsubmit = async (e) => {
            
 
@@ -36,6 +49,5 @@ var formData = new FormData();
       
           if(!result.link.includes('imgur')) alert("error uploading file")
         };
-      </script>
-      
+    </script>
 </body>

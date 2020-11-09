@@ -5,6 +5,7 @@ var request = require('request-promise');
 var router = express.Router();
 
 const { Users } = require('../../models');
+const session = require('express-session');
 const clientID = 'c0c14aedd53cea6';
 
 router.post('/', function(req, res, next) {
@@ -41,14 +42,14 @@ router.post('/', function(req, res, next) {
 
                         Users.update({image:data.link},
 
-                            { where: { id: req.query.id } }
+                            { where: { id: req.session.user_id } }
                 
                         )
                             .then(result => {
                 
                                 Users.findOne({
                                     where: {
-                                        id: req.query.id
+                                        id: req.session.user_id
                                     }
                                 }
                                 )

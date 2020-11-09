@@ -24,12 +24,6 @@
                             <label for="job-description">job-description</label>
                             <input type="text" id="job-description" />
                         </div>
-                        <div>
-
-                            {{> jobseekercreate}}
-                            </br>
-
-                        </div>
                         <button id="post-job" type="submit" class="btn btn-primary">Submit Job</button>
                     </form>
                 </div>
@@ -93,36 +87,83 @@
 
 
 
-<div>
-    {{> seekerskill}}
-    </br>
+<div class="card" style="width: 500px; margin-top: 20px;">
+<div class="card-header">
+<h1>Your Profile</h1>
+</div>
+<div class="card-body">
+<h2>Your Name</h2>
+<p>{{full_name}}</p>
+<h2>Your Description</h2>
+<p>{{description}}</p>
+<button id="myBtn"class="btn btn-primary">Update profile</button>
+</div>
 </div>
 
+<div id="myModal" class="modal">
 
-<div class="d-flex">
-    <form>
-        <input type="hidden" id="UserID" name="userID" value="{{seeker}}">
+    <!-- Modal content -->
+    <div class="modal-content">
+        <span class="close">&times;</span>
+        <div>
 
-        {{!-- <div>
-            <p>skill partail placeholder</p>
-            <button id="skills" type="click">Submit Skill</button>
+            <div>
+                {{> seekerskill}}
+                </br>
             </div>
-             --}}
+
+            <form>
+                <input type="hidden" id="UserID" name="userID" value="{{seeker}}">
+
+                {{!-- <div>
+                    <p>skill partail placeholder</p>
+                    <button id="skills" type="click">Submit Skill</button>
+                    </div>
+                    --}}
 
 
-        <div>
-            <label for="descriptionUpdate">Description:</label>
-            <input type="text" id="descriptionUpdate" />
-            <button id="description" type="click">Update description</button>
-        </div>
+                <div>
+                    <label for="descriptionUpdate">Description:</label>
+                    <input type="text" id="descriptionUpdate" />
+                    <button class="btn btn-primary" id="description" type="click">Update description</button>
+                </div>
 
-        <div>
-            <label for="img">Select image:</label>
-            <input type="file" id="img-input" name="img" accept="image/*">
-            <button id="image" type="click">Change Profile Image</button>
-        </div>
-    </form>
+                <div>
+                    <a href="/image" class="btn btn-primary">Change Profile Image</a>
+                </div>
+            </form>
+        </div> 
+    </div>
 </div>
+
+
+
+<script>// Get the modal
+    var modal = document.getElementById("myModal");
+
+    // Get the button that opens the modal
+    var btn = document.getElementById("myBtn");
+
+    // Get the <span> element that closes the modal
+    var span = document.getElementsByClassName("close")[0];
+
+    // When the user clicks on the button, open the modal
+    btn.onclick = function () {
+        modal.style.display = "block";
+    }
+
+    // When the user clicks on <span> (x), close the modal
+    span.onclick = function () {
+        modal.style.display = "none";
+    }
+
+    // When the user clicks anywhere outside of the modal, close it
+    window.onclick = function (event) {
+        if (event.target == modal) {
+            modal.style.display = "none";
+        }
+    }
+</script>
 <script src="./javascript/user-update-form.js"></script>
 
 {{/if}}
