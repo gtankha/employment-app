@@ -12,7 +12,7 @@ if (req.session.type === "company") {
         where: {
                 skill_id: {
                 [Op.in]:
-                    [Sequelize.literal(`(SELECT skill_id FROM job_skills WHERE job_id IN (SELECT id from JOBS WHERE company_id = ${req.session.user_id}))`)]
+                    [Sequelize.literal(`(SELECT skill_id FROM job_skills WHERE job_id IN (SELECT id from jobs WHERE company_id = ${req.session.user_id}))`)]
             }
         },
         include: [{
