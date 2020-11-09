@@ -152,7 +152,7 @@ router.put('/:id', (req, res) => {
 
                 // run both actions
                 return Promise.all([
-                   // jobSkills.destroy({ where: { id: skillsToRemove } }),
+                   jobSkills.destroy({ where: { id: skillsToRemove } }),
                     jobSkills.bulkCreate(newSkills)
                 ]);
             })

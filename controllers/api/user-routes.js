@@ -189,20 +189,20 @@ router.put('/:id', (req, res) => {
 
                 // create filtered list of new skills
                 const newSkills = req.body.skillIds
-                    .filter((skill_id) => !skillIds.includes(skill_id))
-                    .map((skill_id) => {
-                        if (req.body.type == "seeker"){
+                    .filter(skill_id => !skillIds.includes(skill_id))
+                    .map(skill_id => {
+                        //if (req.body.type == "seeker"){
                         return {
                             user_id: req.params.id,
                             skill_id: skill_id
                         }
-                    }
-                        else {
-                            return {
-                                job_id: req.params.id,
-                                skill_id: skill_id
-                        }
-                        };
+                //    }
+                //         else {
+                //             return {
+                //                 job_id: req.params.id,
+                //                 skill_id: skill_id
+                //         }
+                //         };
                     });
                 console.log('bbb');
                 console.log(newSkills);
@@ -219,7 +219,7 @@ router.put('/:id', (req, res) => {
                 if (req.session.type == "seeker"){
                 return Promise.all([
                      
-               //    userSkills.destroy({ where: { id: skillsToRemove } }),
+                  userSkills.destroy({ where: { id: skillsToRemove } }),
                     userSkills.bulkCreate(newSkills)
                 ]);
             }
