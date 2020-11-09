@@ -3,9 +3,10 @@
 <div class="d-flex flex-wrap user" style="margin: 20px;">
     {{#each matchingSkillUsers as |matchingSkillUsers|}}
 
-    <div class="card" style="width: 18rem; margin: 10px">
+     {{#if matchingSkillUsers.job_id}}
+    <div id="match" class="card" data-job-id="{{matchingSkillUsers.job_id}}" style="width: 18rem; margin: 10px">
 
-        {{#if matchingSkillUsers.job_id}}
+       
         <div class="card-header">
             <h2 class="card-title">{{matchingSkillUsers.job.company.company_name}}</h2>
             <h6 class="card-subtitle mb-2 text-muted">Company</h6>
@@ -28,6 +29,7 @@
         {{/if}}
 
         {{#if matchingSkillUsers.user_id}}
+        <div id="match" class="card" data-user-id="{{matchingSkillUsers.user_id}}" style="width: 18rem; margin: 10px">
         <div class="card-header">
             <h5 class="card-title signup_heading">{{matchingSkillUsers.user.full_name}}</h5>
             <h6 class="card-subtitle mb-2 text-muted">Seeker</h6>
@@ -48,7 +50,8 @@
                 </ul>
                 
            
-
+    
+    
         </div>
 
     </div>

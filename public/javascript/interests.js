@@ -75,8 +75,7 @@ function tabHandler(event) {
 }
 
 
-function createAddButtons(_arr)
-{
+function createAddButtons(_arr) {
 
     // add events to all buttons (updates the interest type to "interview")
     _arr.forEach(btn => {
@@ -85,54 +84,17 @@ function createAddButtons(_arr)
 
             event.preventDefault();
             //get interest id from data attribute
-           const id = event.target.getAttribute("data-id");
+            const id = event.target.getAttribute("data-id");
 
-           //update using put request
-           const response = await fetch('/api/interests/'+id, {
-            method: 'put',
-            body: JSON.stringify({
-                type:'interview'
-            }),
-            headers: { 'Content-Type': 'application/json' }
-        });
-
-        // check the response status
-        if (response.ok) {
-            console.log('success');
-            location.reload(false);
-        } else {
-            alert(response.statusText);
-        }
-
-        }
-
-
-            btn.addEventListener("click",addHandler);
-
-    })
-}
-
-function createDelButtons(_arr)
-{
-       // add events to all buttons (updates the interest type to "interview")
-
-    _arr.forEach(btn => {
-
-           async function delHandler(event) {
-
-                
-
-                event.preventDefault();
-                //get interest id from data attribute
-               const id = event.target.getAttribute("data-id");
-
-                  //update using put request
-
-               const response = await fetch('/api/interests/'+id, {
-                method: 'delete',
+            //update using put request
+            const response = await fetch('/api/interests/' + id, {
+                method: 'put',
+                body: JSON.stringify({
+                    type: 'interview'
+                }),
                 headers: { 'Content-Type': 'application/json' }
             });
-    
+
             // check the response status
             if (response.ok) {
                 console.log('success');
@@ -141,12 +103,153 @@ function createDelButtons(_arr)
                 alert(response.statusText);
             }
 
-            }
+        }
 
-            btn.addEventListener("click",delHandler);
+
+        btn.addEventListener("click", addHandler);
 
     })
 }
+
+function createDelButtons(_arr) {
+    // add events to all buttons (updates the interest type to "interview")
+
+    _arr.forEach(btn => {
+
+        async function delHandler(event) {
+
+
+
+            event.preventDefault();
+            //get interest id from data attribute
+            const id = event.target.getAttribute("data-id");
+
+            //update using put request
+
+            const response = await fetch('/api/interests/' + id, {
+                method: 'delete',
+                headers: { 'Content-Type': 'application/json' }
+            });
+
+            // check the response status
+            if (response.ok) {
+                console.log('success');
+                location.reload(false);
+            } else {
+                alert(response.statusText);
+            }
+
+        }
+
+        btn.addEventListener("click", delHandler);
+
+    })
+}
+
+function createMatchesButtons() {
+    const type = document.getElementById("container-interests").getAttribute("data-type");
+    const user_id = document.getElementById("container-interests").getAttribute("data-user-id");
+
+    if (type == "company") {
+
+
+        fetch('api/jobs')
+            .then(response => response.json())
+            .then(data => {
+
+                const jobs = data.filter(job => job.company_id == user_id);
+
+                const matches = document.querySelectorAll("[id=match]");
+
+
+
+                matches.forEach(div => {
+                    const drop = document.createElement('div');
+                    //drop.classList.add("dropdown");
+                    drop.classList.add("mt-3");
+
+                    const toggle = document.createElement("button");
+                    toggle.textContent = "Offer Job";
+                    toggle.className = "btn btn-primary dropdown-toggle";
+
+                    toggle.addEventListener('click', function (e) {
+                        let dropdown = e.target.parentNode.childNodes[1];
+                        if (dropdown.style.display == "") dropdown.style.display = "none"
+                        else dropdown.style.display = ""
+                        console.log('dropdown', dropdown)
+                    })
+
+                    drop.appendChild(toggle);
+
+                    const dropMenu = document.createElement('div');
+                    dropMenu.setAttribute('id', 'dropdown')
+                    dropMenu.className = 'dropdown mt-2 shadow-sm';
+                    dropMenu.style.display = 'none'
+
+                    jobs.forEach(job => {
+                        const btn = document.createElement('button');
+
+                        const data_job_id = document.createAttribute("data-job-id");
+                        data_job_id.value = job.id;
+
+                        btn.setAttributeNode(data_job_id);
+
+                        btn.classList.add("dropdown-item");
+                        btn.textContent = job.title;
+
+                        btn.addEventListener('click', async function (e) {
+
+
+                            let id = div.getAttribute('data-user-id');
+                            let job_id = e.target.getAttribute('data-job-id');
+                            //update using put request
+                            const response = await fetch('/api/jobs/' + job_id, {
+                                method: 'put',
+                                body: JSON.stringify({
+                                    interestIds:[id]
+                                }),
+                                headers: { 'Content-Type': 'application/json' }
+                            });
+
+                            // check the response status
+                            if (response.ok) {
+                                console.log('success');
+                                location.reload(false);
+                            } else {
+                                alert(response.statusText);
+                            }
+
+
+                        })
+                        dropMenu.appendChild(btn);
+                    });
+
+                    drop.appendChild(dropMenu);
+
+                    div.querySelector(".card-body").appendChild(drop);
+
+                })
+            })
+
+
+
+    }
+    else if (type == "seeker")
+    {
+
+        const matches = document.querySelectorAll("[id=match]");
+        matches.forEach(seeker => {
+
+            const data_job_id = seeker.getAttribute('data-job-id');
+         
+            div.querySelector(".card-body").appendChild(button);
+
+        })
+    }
+
+}
+
+createMatchesButtons();
 
 
 createDelButtons(del_buttons);
