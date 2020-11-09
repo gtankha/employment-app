@@ -13,8 +13,11 @@ async function skillSubmit(event) {
 
 
 async function descriptionUpdate(event) {
-
+ 
+   // event.preventDefault();
     const description = document.querySelector('#descriptionUpdate').value.trim();
+   
+   ;
 
 
     const userID=document.querySelector("#UserID").value;
@@ -55,6 +58,5 @@ async function photoChange(event) {
         }
 }
 
-//document.querySelector('#skills').addEventListener('click', skillSubmit);
 document.querySelector('#description').addEventListener('click', descriptionUpdate);
 document.querySelector('#image').addEventListener('click', photoChange);

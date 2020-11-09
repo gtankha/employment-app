@@ -270,7 +270,6 @@ router.put('/:id', (req, res) => {
                         .map(({ id }) => id);
 
                    
-
                     // run both actions
                     if (req.session.type == "seeker") {
                         return Promise.all([

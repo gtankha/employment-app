@@ -65,24 +65,35 @@ router.get('/', (req, res) => {
 })
 
 router.put('/:id', (req, res) => {
-    Users.update(req.body, {
-        individualHooks: true,
-        where: {
-            id: req.params.id
-        }
-    })
-        .then(dbUserData => {
-            if (!dbUserData[0]) {
-                res.status(404).json({ message: 'No user found with this id' });
-                return;
+    
+    Users.update(req.body,
+
+        { where: { id: req.params.id } }
+
+    )
+        .then(result => {
+
+            Users.findOne({
+                where: {
+                    id: req.params.id
+                }
             }
-            res.json(dbUserData);
+            )
+                .then(updatedUser => {
+                  
+                    req.session.description = updatedUser.description;
+
+                  return res.json(updatedUser);
+
+                })
         })
-        .catch(err => {
-          
-            res.status(500).json(err);
+
+        .catch((err) => {
+
+            res.status(400).json(err);
         });
-})
+});
+
 
 
 router.get('/:id', (req, res) => {
