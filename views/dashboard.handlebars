@@ -108,6 +108,11 @@
 <p>{{full_name}}</p>
 <h2>Your Description</h2>
 <p>{{description}}</p>
+
+{{#each userskills.skills as |skills|}}
+<p>{{skills.name}}</p>
+{{/each}}
+
 <button id="myBtn"class="btn btn-primary">Update profile</button>
 </div>
 </div>

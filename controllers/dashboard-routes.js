@@ -37,8 +37,17 @@ router.get('/', (req, res) => {
                 console.log(dbUserData);
                 const skills = dbUserData.map(post => post.get({ plain: true }));
                 console.log(skills);
+                Users.findAll({
+                    where: { id: req.session.user_id },
+                    include: { model: Skills, through: userSkills,as: "skills" }
+                })
+                .then (dbUserData2 =>{
+                    const userskills = dbUserData2.map(post => post.get({ plain: true }));
+                    console.log ("1312983719837129837");
+                    console.log(userskills);
                 res.render('dashboard', {
                     skills,
+                    userskills,
                     loggedIn: req.session.loggedIn,
                     user_id: req.session.user_id,
                     full_name: req.session.full_name,
@@ -52,7 +61,8 @@ router.get('/', (req, res) => {
                 console.log(err);
                 res.status(500).json(err);
             });
-    }
+    })
+}
 
 })
 

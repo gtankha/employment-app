@@ -24,6 +24,7 @@ async function skillForm(event) {
             let results = { user: user_id, skills: skills, type: type };
             console.log(results);
             console.log(results.user);
+            console.log(results.skills[0]);
 
 
            if (results.type = "seeker") {

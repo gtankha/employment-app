@@ -55,8 +55,6 @@ router.get('/:id', (req, res) => {
                 res.status(404).json({ message: 'No user found with this id' });
                 return;
             }
-
-
         })
 
         .catch(err => {
@@ -179,65 +177,116 @@ router.put('/:id', (req, res) => {
     }
 
     if ((!(typeof (req.body.skillIds) === 'undefined'))) {
-        userSkills.findAll({ where: { user_id: req.params.id } })
-            .then(skills => {
-                // get list of current interest_ids
 
-                const skillIds = skills.map(({ skill_id }) => skill_id);
-                console.log('aaa');
-                console.log(skillIds);
+        if (req.session.type == "employer") {
+            jobSkills.findAll({ where: { job_id: req.params.id } })
+                .then(skills => {
+                    // get list of current skill_ids
+                    console.log ("very beginning");
+                    console.log (skills);
 
-                // create filtered list of new skills
-                const newSkills = req.body.skillIds
-                    .filter((skill_id) => !skillIds.includes(skill_id))
-                    .map((skill_id) => {
-                        if (req.body.type == "seeker"){
-                        return {
-                            user_id: req.params.id,
-                            skill_id: skill_id
-                        }
+                    const skillIds = skills.map(({ skill_id }) => skill_id);
+                    console.log('aaa');
+                    console.log(skillIds);
+
+                    // create filtered list of new skills
+                    const newSkills = req.body.skillIds
+                        .filter((skill_id) => !skillIds.includes(skill_id))
+                        .map((skill_id) => {
+                          
+                                return {
+                                    job_id: req.params.id,
+                                    skill_id: skill_id
+                                }
+                            
+
+                        });
+                    console.log('bbb');
+                    console.log(newSkills);
+                  //  if (typeof (newSkills[0]) == 'undefined') {
+                    //    newSkills = [];
+                   // }
+
+
+                    // figure out which ones to remove
+                    console.log('ccc');
+                    const skillsToRemove = skills
+                        .filter(({ skill_id }) => !req.body.skillIds.includes(skill_id))
+                        .map(({ id }) => id);
+
+                    console.log(skillsToRemove);
+
+                    // run both actions
+                 
+                    
+                        return Promise.all([
+
+                            jobSkills.destroy({ where: { id: skillsToRemove } }),
+                            jobSkills.bulkCreate(newSkills)
+                        ]);
+                    
+                })
+                .then((updatedSkillIds) => res.json(updatedSkillIds))
+                .catch((err) => {
+                    // console.log(err);
+                    res.status(400).json(err);
+                });
+        }
+        
+
+        else {
+
+            userSkills.findAll({ where: { user_id: req.params.id } })
+                .then(skills => {
+                    // get list of current skill_ids
+                    console.log("AAABBBRAE");
+                    console.log (skills);
+                    const skillIds = skills.map(({ skill_id }) => skill_id);
+                    console.log('aaa');
+                    console.log(skillIds);
+                    console.log('zzz');
+                    consle.log (req.body);
+                    console.log('zzeez');
+
+                    // create filtered list of new skills
+                    const newSkills = req.body.skillIds
+                        .filter((skill_id) => !skillIds.includes(skill_id))
+                        .map((skill_id) => {
+                            if (req.body.type == "seeker") {
+                                return {
+                                    user_id: req.params.id,
+                                    skill_id: skill_id
+                                }
+                            }
+
+                        });
+                    console.log('bbb');
+                    console.log(newSkills);
+
+                    // figure out which ones to remove
+                    console.log('ccc');
+                    const skillsToRemove = skills
+                        .filter(({ skill_id }) => !req.body.skillIds.includes(skill_id))
+                        .map(({ id }) => id);
+
+                    console.log(skillsToRemove);
+
+                    // run both actions
+                    if (req.session.type == "seeker") {
+                        return Promise.all([
+
+                            userSkills.destroy({ where: { id: skillsToRemove } }),
+                            userSkills.bulkCreate(newSkills)
+                        ]);
                     }
-                        else {
-                            return {
-                                job_id: req.params.id,
-                                skill_id: skill_id
-                        }
-                        };
-                    });
-                console.log('bbb');
-                console.log(newSkills);
+                })
 
-                // figure out which ones to remove
-                console.log ('ccc');
-                const skillsToRemove = skills
-                    .filter(({ skill_id }) => !req.body.skillIds.includes(skill_id))
-                    .map(({ id }) => id);
-
-                console.log(skillsToRemove);
-
-                // run both actions
-                if (req.session.type == "seeker"){
-                return Promise.all([
-                     
-               //    userSkills.destroy({ where: { id: skillsToRemove } }),
-                    userSkills.bulkCreate(newSkills)
-                ]);
-            }
-            else {
-                return Promise.all([
-                     
-              //    jobSkills.destroy({ where: { id: skillsToRemove } }),
-                    jobSkills.bulkCreate(newSkills)
-                ]);
-
-
-            }
-            })
             .then((updatedSkillIds) => res.json(updatedSkillIds))
             .catch((err) => {
                 // console.log(err);
                 res.status(400).json(err);
             });
+        }
     }
 
 
