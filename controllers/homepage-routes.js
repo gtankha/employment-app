@@ -10,6 +10,8 @@ router.get('/', (req, res) => {
     if(!req.session)  { res.redirect('/login'); return }
     if(!req.session.loggedIn)  { res.redirect('/login'); return }
 
+    console.log("jere 1")
+
     const session_user_id = req.session.user_id;
     const session_type = req.session.type;
 
@@ -21,7 +23,7 @@ router.get('/', (req, res) => {
                 include: { model: userInterests, as: "job_interests", include: { model: Users, as: "candidates" } }
             })
             .then(interests => {
-                ''
+              
                 userSkills.findAll({
                     attributes: ['user_id'],
                     where: {
@@ -49,7 +51,7 @@ router.get('/', (req, res) => {
                             })   
                             matchingSkillUsers = matchingSkillUsers.filter(a => a.user_id != req.session.user_id );
                             console.log(matchingSkillUsers);
-                        
+                            console.log("dbuser data",dbUserData)
                             res.render('dash-interests', { interests: interests, matchingSkillUsers: matchingSkillUsers, company: true, seeker: false, loggedIn: req.session.loggedIn, type:req.session.type,session:req.session });
                     })
 

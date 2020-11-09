@@ -17,7 +17,6 @@ router.get('/', (req, res) => {
                 include: { model: userInterests, as: "job_interests", include: { model: Users, as: "candidates" } }
             })
             .then(interests => {
-                ''
                 userSkills.findAll({
                     attributes: ['user_id'],
                     where: {
