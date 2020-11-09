@@ -46,7 +46,7 @@ router.get('/:id', (req, res) => {
             {
                 model: userInterests,
                 attributes: ['id', 'job_id', 'type'],
-                as: "interested_in"
+                as: "candidates"
             }
         ]
     })
@@ -105,6 +105,7 @@ router.post('/', (req, res) => {
 router.post('/login', (req, res) => {
 
     // Query operation
+console.log("here")
 
     Users.findOne({
         where: {
@@ -116,7 +117,7 @@ router.post('/login', (req, res) => {
             return;
         }
 
-        console.log(dbUserData)
+        console.log("here",dbUserData)
 
         // Verify user
 
