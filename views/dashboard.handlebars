@@ -60,17 +60,29 @@
 
         </div>
         {{#each jobs as |job|}}
-        <div class="card" style="margin: 10px;">
+        <div class="card" style="margin: 10px">
             <div class="card-header">
                 <h3>{{job.title}}</h3>
 
             </div>
             <div class="card-body">
+                <b>Profile:</b>
                 <p>
                     {{job.description}}
                 </p>
+            </div>
+             <div class="card-body">
+                <p>
+                   <b> Skills: </b>
+                    {{#each job.skills as |skills|}}
+                 <li>  {{skills.name}} </li> <br>
+                    {{/each}}
+                </p>
                 <button class="btn btn-primary"><a  href="/dash/{{job.id}}">Edit Job</a></button>
             </div>
+        
+
+
         </div>
         {{/each}}
     </div>
