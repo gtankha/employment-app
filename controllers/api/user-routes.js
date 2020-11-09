@@ -114,13 +114,11 @@ router.post('/login', (req, res) => {
             return;
         }
 
-
-        console.log(`---${req.body.password}---`,`---${req.body.email}---`);
         // Verify user
 
         const validPassword = dbUserData.checkPassword(req.body.password);
         console.log(dbUserData);
-        
+
         console.log(validPassword)
 
         if (!validPassword) {
@@ -168,7 +166,40 @@ router.put('/:id', (req, res) => {
                     }
                 }
                 )
-                    .then(updatedUser => res.json(updatedUser));
+                    .then(updatedUser => {
+                        
+                        // if(req.session)
+                        // {
+
+                         
+                        //         Users.findOne({
+                        //             exclude: ['password']
+                        //             ,
+                        //             where: {
+                        //                 id: req.session.user_id
+                        //             }})
+                        //             .then(result =>{
+                        //                 req.session.resave(() => {
+                        //                     req.session.full_name = result.full_name;
+                        //                     req.session.company_name = result.company_name;
+                        //                     req.session.image = result.image;
+                        //                     req.session.description = result.description;
+                                        
+                        //                 })
+
+                        //                 console.log("new session",req.session)
+                        //             })
+                           
+                        // }
+                        
+                        res.json(updatedUser)
+
+                    
+                    
+                    }
+                    
+                    
+                    );
             })
 
             .catch((err) => {
@@ -180,14 +211,13 @@ router.put('/:id', (req, res) => {
     }
 
     if ((!(typeof (req.body.skillIds) === 'undefined'))) {
-        console.log ("GOGOGOGOGOGGOGOGO");
-        console.log(req.session.type);
+        
+      
         if (req.session.type == "company") {
             jobSkills.findAll({ where: { job_id: req.params.id } })
                 .then(skills => {
                     // get list of current skill_ids
-                    console.log ("very beginning");
-                    console.log (skills);
+                 
                     for (i=0; i<req.body.skillIds.length; i++){
                         req.body.skillIds[i] = parseInt(req.body.skillIds[i])  ;    
                         }
@@ -208,7 +238,7 @@ router.put('/:id', (req, res) => {
                             
 
                         });
-                    console.log('bbb');
+                    
                     console.log(newSkills);
                   //  if (typeof (newSkills[0]) == 'undefined') {
                     //    newSkills = [];
@@ -246,24 +276,13 @@ router.put('/:id', (req, res) => {
             userSkills.findAll({ where: { user_id: req.params.id } })
                 .then(skills => {
                     // get list of current skill_ids
-                    console.log(req.body);
-                    console.log("AAABBBRAE");
+                   
                     for (i=0; i<req.body.skillIds.length; i++){
                     req.body.skillIds[i] = parseInt(req.body.skillIds[i])  ;    
                     }
-                    console.log(req.body);
-                    console.log("AAasdasdasdABBBRAE");
                     
-                    console.log (skills);
                     const skillIds = skills.map(({ skill_id }) => skill_id);
-                    console.log('aaa');
-                    console.log(skillIds);
-                    console.log('zzz');
-                    console.log('vvvv');
-                    
-                    //consle.log (req.body.skillIds);
-                    console.log('zzeez');
-
+                   
                     // create filtered list of new skills
                     const newSkills = req.body.skillIds
                         .filter((skill_id) => !skillIds.includes(skill_id))
@@ -276,16 +295,15 @@ router.put('/:id', (req, res) => {
                             
 
                         });
-                    console.log('bbb');
-                    console.log(newSkills);
+                
 
                     // figure out which ones to remove
-                    console.log('ccc');
+                   
                     const skillsToRemove = skills
                         .filter(({ skill_id }) => !req.body.skillIds.includes(skill_id))
                         .map(({ id }) => id);
 
-                    console.log(skillsToRemove);
+                  
 
                     // run both actions
                     if (req.session.type == "seeker") {

@@ -19,8 +19,7 @@ router.get('/', (req, res) => {
         }).then(data => {
             const companyId = req.session.user_id;
             const jobs = data.map(post => post.get({ plain: true }))
-            console.log("ADADADADADMMMMMMM");
-           // console.log(jobs[0].skills);
+       
 
             res.render('dashboard', {
                 jobs,
@@ -34,7 +33,7 @@ router.get('/', (req, res) => {
         const seeker = req.session.user_id;
         Skills.findAll({})
             .then(dbUserData => {
-                console.log(dbUserData);
+                //console.log(dbUserData);
                 const skills = dbUserData.map(post => post.get({ plain: true }));
                 console.log(skills);
                 Users.findAll({
@@ -43,15 +42,15 @@ router.get('/', (req, res) => {
                 })
                 .then (dbUserData2 =>{
                     const userskills = dbUserData2.map(post => post.get({ plain: true }));
-                    console.log ("1312983719837129837");
-                  // console.log(userskills[0].skills[0].name);
+              console.log("data2/////",dbUserData2[0].id);
                 res.render('dashboard', {
                     skills,
                     userskills,
                     loggedIn: req.session.loggedIn,
                     user_id: req.session.user_id,
-                    full_name: req.session.full_name,
-                    description: req.session.description,
+                    full_name: dbUserData2[0].full_name,
+                    description: dbUserData2[0].description,
+                    image: dbUserData2[0].image,
                     type: req.session.type,
                     seeker
 
@@ -86,25 +85,6 @@ router.put('/:id', (req, res) => {
         });
 })
 
-// router.put('/edit/:id', (req, res) => {
-//     Jobs.update(req.body, {
-//         individualHooks: true,
-//         where: {
-//             id: req.params.id
-//         }
-//     })
-//         .then(dbJobData => {
-//             if (!dbJobData[0]) {
-//                 res.status(404).json({ message: 'No job found with this id' });
-//                 return;
-//             }
-//             res.json(dbJobData);
-//         })
-//         .catch(err => {
-//             console.log(err);
-//             res.status(500).json(err);
-//         });
-// })
 
 router.get('/:id', (req, res) => {
     Jobs.findOne({
