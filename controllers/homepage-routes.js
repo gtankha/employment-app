@@ -50,7 +50,8 @@ router.get('/', (req, res) => {
                             })   
                             matchingSkillUsers = matchingSkillUsers.filter(a => a.user_id != req.session.user_id );
                            
-                            console.log("dbuser data///////////",dbUserData)
+                            console.log("dbuser data///////////")
+                            console.log(dbUserData)
                             res.render('dash-interests', { interests: interests, matchingSkillUsers: matchingSkillUsers, company: true, seeker: false, loggedIn: req.session.loggedIn, type:req.session.type,session:req.session });
                     })
 
