@@ -1,0 +1,16 @@
+<div class={{type}} id="types">
+    <div class="form-check">
+        <form class={{job.id}} id="skillform">
+            <fieldset>
+                <p>Please Select Skillsets</p>
+                {{#each skills as |skills|}}
+                <input type="checkbox" id="skill{{@index}}" value="{{skills.id}}">{{skills.name}}<br>
+                {{/each}}
+                <br>
+                <button class="btn btn-primary" id="skills-edit">Update</button>
+            </fieldset>
+        </form>
+    </div>
+</div>
+
+<script src="/javascript/editskills.js"></script>

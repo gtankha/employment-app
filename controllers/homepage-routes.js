@@ -6,6 +6,19 @@ const Sequelize = require('sequelize');
 
 
 router.get('/', (req, res) => {
+
+
+    if(!req.session)
+    {
+        res.render('login');
+        return
+    }
+    if(!req.session.loggedIn)
+    {
+        res.render('login');
+    }
+    
+
     const session_user_id = req.session.user_id;
     const session_type = req.session.type;
 

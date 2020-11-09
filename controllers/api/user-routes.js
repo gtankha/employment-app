@@ -191,9 +191,17 @@ router.put('/:id', (req, res) => {
                 const newSkills = req.body.skillIds
                     .filter((skill_id) => !skillIds.includes(skill_id))
                     .map((skill_id) => {
+                        if (req.body.type == "seeker"){
                         return {
                             user_id: req.params.id,
                             skill_id: skill_id
+                        }
+                    }
+                        else {
+                            return {
+                                job_id: req.params.id,
+                                skill_id: skill_id
+                        }
                         };
                     });
                 console.log('bbb');
@@ -208,10 +216,22 @@ router.put('/:id', (req, res) => {
                 console.log(skillsToRemove);
 
                 // run both actions
+                if (req.session.type == "seeker"){
                 return Promise.all([
-                    userSkills.destroy({ where: { id: skillsToRemove } }),
+                     
+               //    userSkills.destroy({ where: { id: skillsToRemove } }),
                     userSkills.bulkCreate(newSkills)
                 ]);
+            }
+            else {
+                return Promise.all([
+                     
+              //    jobSkills.destroy({ where: { id: skillsToRemove } }),
+                    jobSkills.bulkCreate(newSkills)
+                ]);
+
+
+            }
             })
             .then((updatedSkillIds) => res.json(updatedSkillIds))
             .catch((err) => {

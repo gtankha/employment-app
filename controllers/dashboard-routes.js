@@ -11,23 +11,28 @@ router.get('/', (req, res) => {
 
     console.log(req.session.user_id)
 
-    if(req.session.type === "company"){
+    if (req.session.type === "company") {
         Jobs.findAll({
-            where: {company_id: req.session.user_id}
-        }).then(data=>{
+            where: { company_id: req.session.user_id },
+            include: { model: Skills, through: jobSkills,as: "skills" }
+
+        }).then(data => {
             const companyId = req.session.user_id;
             const jobs = data.map(post => post.get({ plain: true }))
-            res.render('dashboard',{
+            console.log("ADADADADADMMMMMMM");
+            console.log(jobs[0].skills);
+
+            res.render('dashboard', {
                 jobs,
                 companyId,
-                type:req.session.type,
-                
+                type: req.session.type,
+
             })
         })
-    } 
-    else if(req.session.type === "seeker"){
+    }
+    else if (req.session.type === "seeker") {
         const seeker = req.session.user_id;
-            Skills.findAll({})
+        Skills.findAll({})
             .then(dbUserData => {
                 console.log(dbUserData);
                 const skills = dbUserData.map(post => post.get({ plain: true }));
@@ -40,7 +45,7 @@ router.get('/', (req, res) => {
                     description: req.session.description,
                     type: req.session.type,
                     seeker
-    
+
                 });
             })
             .catch(err => {
@@ -49,9 +54,9 @@ router.get('/', (req, res) => {
             });
     }
 
-   })
+})
 
-router.put('/:id', (req,res) => {
+router.put('/:id', (req, res) => {
     Users.update(req.body, {
         individualHooks: true,
         where: {
@@ -97,25 +102,33 @@ router.get('/:id', (req, res) => {
             id: req.params.id
         }
     })
-    .then(dbUserData => {
-        if (!dbUserData) {
-            res.status(404).json({ message: 'No user found with this id' });
-            return;
-        }
-        console.log(dbUserData.get({ plain: true }))
-        const job  = dbUserData.get({ plain: true })
+        .then(dbUserData => {
 
-        res.render('edit-post', {
-            loggedIn: req.session.loggedIn,
-            job: job
+            if (!dbUserData) {
+                res.status(404).json({ message: 'No user found with this id' });
+                return;
+            }
+            console.log(dbUserData.get({ plain: true }))
+            const job = dbUserData.get({ plain: true })
+            Skills.findAll({})
+                .then(dbUserData2 => {
+                    const skills = dbUserData2.map(post => post.get({ plain: true }));
+                    console.log("this is skills");
+                    console.log (skills);
+                    res.render('edit-post', {
+                        loggedIn: req.session.loggedIn,
+                        job: job,
+                        skills: skills,
+                        type: req.session.type
+                    })
 
+                })
         })
-    })
-    .catch(err => {
-        console.log(err);
-        res.status(500).json(err);
-    });
-    
+        .catch(err => {
+            console.log(err);
+            res.status(500).json(err);
+        });
+
 
 })
 
