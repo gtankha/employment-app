@@ -116,7 +116,7 @@ router.post('/login', (req, res) => {
             return;
         }
 
-
+        console.log(dbUserData)
 
         // Verify user
 
@@ -129,6 +129,7 @@ router.post('/login', (req, res) => {
 
         req.session.save(() => {
             // declare session variables
+            console.log(req.session)
             req.session.user_id = dbUserData.id;
             req.session.full_name = dbUserData.full_name,
                 req.session.type = dbUserData.type,
