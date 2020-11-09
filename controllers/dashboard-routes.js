@@ -81,6 +81,8 @@ router.put('/:id', (req, res) => {
             )
                 .then(updatedUser => {
                   
+                    // updates session 
+                    
                     req.session.description = updatedUser.description;
 
                   return res.json(updatedUser);
