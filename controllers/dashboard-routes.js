@@ -80,9 +80,8 @@ router.put('/:id', (req, res) => {
             }
             )
                 .then(updatedUser => {
-                  
-                    req.session.description = updatedUser.description;
-
+                  console.log(updatedUser);
+                req.session.description = updatedUser.description;
                   return res.json(updatedUser);
 
                 })
