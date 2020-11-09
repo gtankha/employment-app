@@ -43,6 +43,9 @@ router.get('/', (req, res) => {
                     ]
                 })
                     .then(dbUserData => {
+                        console.log("dbuser data///////////"+session_user_id)
+                        console.log(dbUserData)
+
                         const duplicateSkillUsers = dbUserData.map(post => post.get({ plain: true }));
                         let matchingSkillUsers = Array.from(new Set(duplicateSkillUsers.map(a => (a.user_id ))))
                             .map(user_id => {
@@ -50,8 +53,7 @@ router.get('/', (req, res) => {
                             })   
                             matchingSkillUsers = matchingSkillUsers.filter(a => a.user_id != req.session.user_id );
                            
-                            console.log("dbuser data///////////")
-                            console.log(dbUserData)
+                           
                             res.render('dash-interests', { interests: interests, matchingSkillUsers: matchingSkillUsers, company: true, seeker: false, loggedIn: req.session.loggedIn, type:req.session.type,session:req.session });
                     })
 
