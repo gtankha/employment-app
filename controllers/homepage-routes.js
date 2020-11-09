@@ -17,7 +17,7 @@ router.get('/', (req, res) => {
                 include: { model: userInterests, as: "job_interests", include: { model: Users, as: "candidates" } }
             })
             .then(interests => {
-                ''
+                const interests2 = interests.map(post => post.get({ plain: true }));
                 userSkills.findAll({
                     attributes: ['user_id'],
                     where: {
@@ -44,9 +44,13 @@ router.get('/', (req, res) => {
                                 return duplicateSkillUsers.find(a => (a.user_id === user_id ))
                             })   
                             matchingSkillUsers = matchingSkillUsers.filter(a => a.user_id != req.session.user_id );
+                            
                             console.log(matchingSkillUsers);
+                            console.log("THIS IS MATCHING SKILLS");
+                            console.log(interests2);
+                            console.log("THIS IS interest or jobs");
                         
-                            res.render('dash-interests', { interests: interests, matchingSkillUsers: matchingSkillUsers, company: true, seeker: false, loggedIn: req.session.loggedIn, type:req.session.type,session:req.session });
+                            res.render('dash-interests', { interests: interests2, matchingSkillUsers: matchingSkillUsers, company: true, seeker: false, loggedIn: req.session.loggedIn, type:req.session.type,session:req.session,user_id:req.session.user_id});
                     })
 
                     .catch(err => console.log(err))
@@ -90,9 +94,12 @@ router.get('/', (req, res) => {
                             .map(job_id => {
                                 return duplicateSkillUsers.find(a => a.job_id === job_id)
                             });
-
-
-                        res.render('dash-interests', { interests: interests, matchingSkillUsers: matchingSkillUsers, company: false, seeker: true, loggedIn: req.session.loggedIn, type: req.session.type,session:req.session });
+                            console.log("THIS IS POKEMON1");
+                            console.log(interests);
+                            console.log(matchingSkillUsers.interests);
+                            console.log("THIS IS POKEMON");
+                            
+                        res.render('dash-interests', { interests: interests, matchingSkillUsers: matchingSkillUsers, company: false, seeker: true, loggedIn: req.session.loggedIn, type: req.session.type,session:req.session, user_id:req.session.user_id});
 
                     })
                     .catch(err => console.log(err))

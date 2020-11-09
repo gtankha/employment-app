@@ -46,7 +46,7 @@ router.get('/', (req, res) => {
                             matchingSkillUsers = matchingSkillUsers.filter(a => a.user_id != req.session.user_id );
                             console.log(matchingSkillUsers);
                         
-                            res.render('dash-interests', { interests: interests, matchingSkillUsers: matchingSkillUsers, company: true, seeker: false, loggedIn: req.session.loggedIn, type:req.session.type,session:req.session });
+                            res.render('dash-interests', { interests: interests, matchingSkillUsers: matchingSkillUsers, company: true, seeker: false, loggedIn: req.session.loggedIn, type:req.session.type,user_id:req.session.user_id });
                     })
 
                     .catch(err => console.log(err))
@@ -91,8 +91,9 @@ router.get('/', (req, res) => {
                                 return duplicateSkillUsers.find(a => a.job_id === job_id)
                             });
 
-
-                        res.render('dash-interests', { interests: interests, matchingSkillUsers: matchingSkillUsers, company: false, seeker: true, loggedIn: req.session.loggedIn, type: req.session.type,session:req.session });
+                        console.log ("NNNNNNNN");     
+                        console.log(req.session.user_id);
+                        res.render('dash-interests', { interests: interests, matchingSkillUsers: matchingSkillUsers, company: false, seeker: true, loggedIn: req.session.loggedIn, type: req.session.type,user_id:req.session.user_id });
 
                     })
                     .catch(err => console.log(err))

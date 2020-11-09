@@ -4,10 +4,6 @@ const models = require('../../models');
 
 router.get('/', (req, res) => {
 
-
-
-  
-
        
 
             userInterests.findAll(

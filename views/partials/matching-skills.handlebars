@@ -1,30 +1,100 @@
+{{#if loggedIn}}
 
-{{#if loggedIn}} 
-<div class="d-flex flex-wrap user" style="margin: 20px;">
+
+<div class="userid" id="{{user_id}}"></div><br>
+
+
+<form class={{user_id}} id="interestform">
+    <fieldset>
+{{seeker}}
+
+  {{#if seeker}}
+        <legend>Please Select Interests</legend>
+        {{#each matchingSkillUsers as |matchingSkillUsers|}}
+        {{#if matchingSkillUsers.job_id}}
+        <input type="checkbox" id="joblist{{@index}}" value="{{matchingSkillUsers.job_id}}">JOB ID:
+        {{ matchingSkillUsers.job_id}}<br>
+        {{/if}}
+        {{/each}}
+        <input type="button" id="submitbutton" value="Submit now">
+    </fieldset>
+</form>
+{{/if}}
+
+
+{{#unless seeker}}
+<form class={{user_id}} id="interestform2"></form>
+<fieldset>
+    <legend>Please Select Interests</legend>
     {{#each matchingSkillUsers as |matchingSkillUsers|}}
+    {{#if matchingSkillUsers.user_id}}
+    <input type="checkbox" id="userlist{{@index}}" value="{{matchingSkillUsers.user_id}}">USER ID:
+    {{ matchingSkillUsers.user_id}} <br>
+    {{/if}}
+    {{/each}}
+    {{#each interests as |jobs|}}
+
+    {{#if jobs.id}}
+  <input type="checkbox" id="joblistall{{@index}}" value="{{jobs_id}}">JOB ID:
+    {{jobs.id}} <br>
+
+    {{/if}}
+    {{/each}}
+
+
+    <input type="button" id="submitbutton" value="Submit now">
+</fieldset>
+</form>
+{{/unless}}
+
+
+
+
+
+
+<div class="d-flex flex-wrap user" style="margin: 20px;">
+
+
+
+
+    {{#each matchingSkillUsers as |matchingSkillUsers|}}
+
+
 
     <div class="card" style="width: 18rem; margin: 10px">
 
+
+
         {{#if matchingSkillUsers.job_id}}
+
+
+
         <div class="card-header">
+            JOB ID: {{matchingSkillUsers.job_id}}
+
+            <div class="jobid{{@index}}" id={{matchingSkillUsers.job_id}}></div>
             <h2 class="card-title">{{matchingSkillUsers.job.company.company_name}}</h2>
             <h6 class="card-subtitle mb-2 text-muted">Company</h6>
         </div>
 
         <div class="card-body">
             <div class="card-text">
-                  <img class="mb-2" src="{{matchingSkillUsers.job.company.image}}" width="100" height="100"/>
+                <img class="mb-2" src="{{matchingSkillUsers.job.company.image}}" width="100" height="100" />
                 <p><b>Job Title:</b> {{matchingSkillUsers.job.title}} </p>
                 <p><b>Job Description:</b> {{matchingSkillUsers.job.description}}</p>
                 <p><b>Skills:</b> <br></p>
                 <ul class="list-group">
-                {{#each matchingSkillUsers.job.skills as |skillmatch|}}
-                <li class="list-group-item"> {{skillmatch.name}}</li>
-                {{/each}}
+                    {{#each matchingSkillUsers.job.skills as |skillmatch|}}
+                    <li class="list-group-item"> {{skillmatch.name}}</li>
+                    {{/each}}
                 </ul>
-
+                <button type="button" id='adds-btn_{{@index}}' class="btn btn-secondary"><span
+                        class="fa">&#xf4ff;</span>Add Interest</button>
             </div>
         </div>
+
+
+
         {{/if}}
 
         {{#if matchingSkillUsers.user_id}}
@@ -35,25 +105,24 @@
 
         <div class="card-body">
             <div class="card-text">
-                <img class="mb-2" src="{{matchingSkillUsers.user.image}}" width="100" height="100"/>
-          
+                <img class="mb-2" src="{{matchingSkillUsers.user.image}}" width="100" height="100" />
+
                 <p><b>Description:</b>{{matchingSkillUsers.user.description}}</p>
-                
-             
-                 <p><b>Skills:</b> <br></p>
+
+
+                <p><b>Skills:</b> <br></p>
                 <ul class="list-group">
-                {{#each matchingSkillUsers.user.skills as |skillmatch|}}
-                <li class="list-group-item">{{skillmatch.name}} </li>
-                {{/each}}
+                    {{#each matchingSkillUsers.user.skills as |skillmatch|}}
+                    <li class="list-group-item">{{skillmatch.name}} </li>
+                    {{/each}}
                 </ul>
-                
-           
+            </div>
 
         </div>
+        {{/if}}
 
     </div>
+    {{/each}}
     {{/if}}
 
-</div>
-{{/each}}
-{{/if}}
+    <script src="/javascript/matchingskills.js"></script>

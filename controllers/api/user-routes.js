@@ -245,7 +245,7 @@ router.put('/:id', (req, res) => {
                     userInterests.findAll({ where: { user_id: req.params.id, type: "seeker" } })
                         .then(interests => {
                             // get list of current interest_ids
-
+                            console.log(interests);
                             const interestsIds = interests.map(({ interest_id }) => interest_id);
                             console.log(interestsIds);
                             // create filtered list of new interests
@@ -256,7 +256,6 @@ router.put('/:id', (req, res) => {
                                         user_id: req.params.id,
                                         job_id: interest_id,
                                         type: "seeker"
-
                                     };
                                 });
                             console.log(newInterests);
@@ -270,7 +269,7 @@ router.put('/:id', (req, res) => {
 
                             // run both actions
                             return Promise.all([
-                                //   userInterests.destroy({ where: { id: interestsToRemove } }),
+                              // userInterests.destroy({ where: { id: interestsToRemove } }),
                                 userInterests.bulkCreate(newInterests),
                             ]);
                         })
