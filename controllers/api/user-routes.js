@@ -114,13 +114,11 @@ router.post('/login', (req, res) => {
             return;
         }
 
-
-        console.log(`---${req.body.password}---`,`---${req.body.email}---`);
         // Verify user
 
         const validPassword = dbUserData.checkPassword(req.body.password);
         console.log(dbUserData);
-        
+
         console.log(validPassword)
 
         if (!validPassword) {
@@ -168,7 +166,40 @@ router.put('/:id', (req, res) => {
                     }
                 }
                 )
-                    .then(updatedUser => res.json(updatedUser));
+                    .then(updatedUser => {
+                        
+                        // if(req.session)
+                        // {
+
+                         
+                        //         Users.findOne({
+                        //             exclude: ['password']
+                        //             ,
+                        //             where: {
+                        //                 id: req.session.user_id
+                        //             }})
+                        //             .then(result =>{
+                        //                 req.session.resave(() => {
+                        //                     req.session.full_name = result.full_name;
+                        //                     req.session.company_name = result.company_name;
+                        //                     req.session.image = result.image;
+                        //                     req.session.description = result.description;
+                                        
+                        //                 })
+
+                        //                 console.log("new session",req.session)
+                        //             })
+                           
+                        // }
+                        
+                        res.json(updatedUser)
+
+                    
+                    
+                    }
+                    
+                    
+                    );
             })
 
             .catch((err) => {
@@ -180,12 +211,13 @@ router.put('/:id', (req, res) => {
     }
 
     if ((!(typeof (req.body.skillIds) === 'undefined'))) {
-       
+        
+      
         if (req.session.type == "company") {
             jobSkills.findAll({ where: { job_id: req.params.id } })
                 .then(skills => {
                     // get list of current skill_ids
-                
+                 
                     for (i=0; i<req.body.skillIds.length; i++){
                         req.body.skillIds[i] = parseInt(req.body.skillIds[i])  ;    
                         }
@@ -240,19 +272,13 @@ router.put('/:id', (req, res) => {
             userSkills.findAll({ where: { user_id: req.params.id } })
                 .then(skills => {
                     // get list of current skill_ids
-                  
+                   
                     for (i=0; i<req.body.skillIds.length; i++){
                     req.body.skillIds[i] = parseInt(req.body.skillIds[i])  ;    
                     }
-                  
                     
-                 
                     const skillIds = skills.map(({ skill_id }) => skill_id);
-                  
-                    
-                    //consle.log (req.body.skillIds);
-                
-
+                   
                     // create filtered list of new skills
                     const newSkills = req.body.skillIds
                         .filter((skill_id) => !skillIds.includes(skill_id))
@@ -265,15 +291,16 @@ router.put('/:id', (req, res) => {
                             
 
                         });
-                  
+                
 
                     // figure out which ones to remove
-                  
+                   
                     const skillsToRemove = skills
                         .filter(({ skill_id }) => !req.body.skillIds.includes(skill_id))
                         .map(({ id }) => id);
 
-                   
+                  
+
                     // run both actions
                     if (req.session.type == "seeker") {
                         return Promise.all([

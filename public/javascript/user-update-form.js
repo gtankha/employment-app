@@ -22,7 +22,7 @@ async function descriptionUpdate(event) {
 
     const userID=document.querySelector("#UserID").value;
 
-    const response = await fetch(`/api/users`+userID, {
+    const response = await fetch(`/api/users/`+userID, {
         method: 'put',
         body: JSON.stringify({
             description: description,
@@ -59,4 +59,4 @@ async function photoChange(event) {
 }
 
 document.querySelector('#description').addEventListener('click', descriptionUpdate);
-document.querySelector('#image').addEventListener('click', photoChange);
+//document.querySelector('#image').addEventListener('click', photoChange);

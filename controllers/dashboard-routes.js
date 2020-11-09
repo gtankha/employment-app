@@ -19,8 +19,7 @@ router.get('/', (req, res) => {
         }).then(data => {
             const companyId = req.session.user_id;
             const jobs = data.map(post => post.get({ plain: true }))
-          
-
+       
             res.render('dashboard', {
                 jobs,
                 companyId,
@@ -48,8 +47,9 @@ router.get('/', (req, res) => {
                     userskills,
                     loggedIn: req.session.loggedIn,
                     user_id: req.session.user_id,
-                    full_name: req.session.full_name,
-                    description: req.session.description,
+                    full_name: dbUserData2[0].full_name,
+                    description: dbUserData2[0].description,
+                    image: dbUserData2[0].image,
                     type: req.session.type,
                     seeker
 
