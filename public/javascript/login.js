@@ -1,3 +1,7 @@
+const signupForm = document.querySelector('#signup-form');
+const loginForm = document.querySelector('#login-form');
+
+
 async function signupFormHandler(event) {
     event.preventDefault();
 
@@ -53,10 +57,41 @@ async function loginFormHandler(event) {
         if (response.ok) {
             document.location.replace('/')
         } else {
-            alert(response.statusText);
+            alert("incorrect email or password");
+            
         }
     }
 }
 
+function switchHandler(event)
+{
+    if(!event) signupForm.style.display = 'none';
+    if(!event) return
+
+    event.preventDefault();
+  
+
+    switch (event.target.getAttribute("id")) {
+
+            case "signup-instead":
+                loginForm.style.display = 'none';
+                signupForm.style.display = '';
+                break;
+
+            case "login-instead":
+                loginForm.style.display = '';
+                signupForm.style.display = 'none';
+                break;
+    }
+}
+
+
+
+
 document.querySelector('.signup-form').addEventListener('submit', signupFormHandler);
 document.querySelector('.login-form').addEventListener('submit', loginFormHandler);
+document.querySelector('#signup-instead').addEventListener('click', switchHandler);
+document.querySelector('#login-instead').addEventListener('click', switchHandler);
+
+switchHandler(null);
+

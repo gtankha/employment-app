@@ -9,10 +9,6 @@ router.get('/', (req, res) => {
     const session_user_id = req.session.user_id;
     const session_type = req.session.type;
 
-    console.log(req.session);
-    console.log(session_type);
-    console.log("HELLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLL");
-
     if (session_type == "company") {
 
         Jobs.findAll(
@@ -50,7 +46,7 @@ router.get('/', (req, res) => {
                             matchingSkillUsers = matchingSkillUsers.filter(a => a.user_id != req.session.user_id );
                             console.log(matchingSkillUsers);
                         
-                            res.render('dash-interests', { interests: interests, matchingSkillUsers: matchingSkillUsers, company: true, seeker: false, loggedIn: req.session.loggedIn, type:req.session.type });
+                            res.render('dash-interests', { interests: interests, matchingSkillUsers: matchingSkillUsers, company: true, seeker: false, loggedIn: req.session.loggedIn, type:req.session.type,session:req.session });
                     })
 
                     .catch(err => console.log(err))
@@ -96,7 +92,7 @@ router.get('/', (req, res) => {
                             });
 
 
-                        res.render('dash-interests', { interests: interests, matchingSkillUsers: matchingSkillUsers, company: false, seeker: true, loggedIn: req.session.loggedIn, type: req.session.type });
+                        res.render('dash-interests', { interests: interests, matchingSkillUsers: matchingSkillUsers, company: false, seeker: true, loggedIn: req.session.loggedIn, type: req.session.type,session:req.session });
 
                     })
                     .catch(err => console.log(err))

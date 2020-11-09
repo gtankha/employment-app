@@ -1,40 +1,46 @@
-<form class="login-form">
-    <div>
-        <label for="email-login">email:</label>
-        <input type="text" id="email-login" />
+<div class="hero d-flex justify-content-center">
+<form id="login-form" class="login-form shadow w-form p-3 mt-5 mb-5 rounded">
+    <div class="form-group">
+        <label for="email-login" class="signup_heading"><span class="fa">&#xf0e0;</span> email:</label><br>
+        <input type="text" class="w-100" id="email-login" />
     </div>
-    <div>
-        <label for="password-login">password:</label>
-        <input type="password" id="password-login" />
+    <div class="form-group">
+        <label for="password-login" class="signup_heading"><span class="fa">&#xf20b;</span> password:</label><br>
+        <input type="password" class="w-100" id="password-login" />
     </div>
-    <div>
-        <button type="submit">login</button>
+     <div class="form-group">
+        <button class="btn btn-primary" type="submit">login</button>
+        <button id="signup-instead" class="btn btn-secondary" type="submit">sign up instead</button>
     </div>
 </form>
 
-<form class="signup-form">
-    <div>
-        <label for="username-signup">username:</label>
-        <input type="text" id="username-signup" />
+<form id="signup-form" class="signup-form shadow w-form p-3 mt-5 mb-5 rounded flex justify-content-center">
+    <div class="form-group">
+        <label for="username-signup" class="signup_heading"><span class="fa">&#xf007;</span> username:</label><br>
+        <input type="text" class="w-100" id="username-signup" />
     </div>
-    <div>
-        <label for="email-signup">email:</label>
-        <input type="text" id="email-signup" />
+    <div class="form-group">
+        <label for="email-signup" class="signup_heading"><span class="fa">&#xf0e0;</span> email:</label><br>
+        <input type="text" class="w-100" id="email-signup" />
     </div>
-    <div>
-        <label for="password-signup">password:</label>
-        <input type="password" id="password-signup" />
+    <div class="form-group">
+        <label for="password-signup" class="signup_heading"><span class="fa">&#xf20b;</span> password:</label><br>
+        <input type="password" class="w-100" id="password-signup" />
     </div>
-    <div>
-        <label for="company">Company or User?</label>
+    <div class="form-group">
+        <label for="company" class="signup_heading">Company or User?</label><br>
         <select id="company" name="company">
             <option value="seeker">User</option>
             <option value="company">Company</option>
         </select>
     </div>
-    <div>
-        <button type="submit">signup</button>
+    <div class="form-group">
+        <button class="btn btn-primary" type="submit">signup</button>
+          <button id="login-instead" class="btn btn-secondary" type="submit">login instead</button>
     </div>
 </form>
 
+<script src="/javascript/responsive.js"></script>
 <script src="/javascript/login.js"></script>
+
+</div>

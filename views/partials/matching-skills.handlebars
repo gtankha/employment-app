@@ -1,5 +1,5 @@
 
-{{#if loggedIn}} {
+{{#if loggedIn}} 
 <div class="d-flex flex-wrap user" style="margin: 20px;">
     {{#each matchingSkillUsers as |matchingSkillUsers|}}
 
@@ -13,13 +13,15 @@
 
         <div class="card-body">
             <div class="card-text">
-                Job ID: {{matchingSkillUsers.job_id}} <br>
-                Job Title: {{matchingSkillUsers.job.title}} <br>
-                Job Description: {{matchingSkillUsers.job.description}}<br>
-                Skills: <br>
+                  <img class="mb-2" src="{{matchingSkillUsers.job.company.image}}" width="100" height="100"/>
+                <p><b>Job Title:</b> {{matchingSkillUsers.job.title}} </p>
+                <p><b>Job Description:</b> {{matchingSkillUsers.job.description}}</p>
+                <p><b>Skills:</b> <br></p>
+                <ul class="list-group">
                 {{#each matchingSkillUsers.job.skills as |skillmatch|}}
-                <li> {{skillmatch.name}}<br> </li>
+                <li class="list-group-item"> {{skillmatch.name}}</li>
                 {{/each}}
+                </ul>
 
             </div>
         </div>
@@ -27,23 +29,24 @@
 
         {{#if matchingSkillUsers.user_id}}
         <div class="card-header">
-            <h2 class="card-title">{{matchingSkillUsers.full_name}}</h2>
+            <h5 class="card-title signup_heading">{{matchingSkillUsers.user.full_name}}</h5>
             <h6 class="card-subtitle mb-2 text-muted">Seeker</h6>
         </div>
 
         <div class="card-body">
             <div class="card-text">
-                {{matchingSkillUsers.image}}
-                User ID: {{matchingSkillUsers.user_id}} <br>
-                User email: {{matchingSkillUsers.user.email}} <br>
-                <div class="card-profilebody">
-                    Profile: {{matchingSkillUsers.user.description}}<br>
-                </div>
-               
-                Skills: <br>
+                <img class="mb-2" src="{{matchingSkillUsers.user.image}}" width="100" height="100"/>
+          
+                <p><b>Description:</b>{{matchingSkillUsers.user.description}}</p>
+                
+             
+                 <p><b>Skills:</b> <br></p>
+                <ul class="list-group">
                 {{#each matchingSkillUsers.user.skills as |skillmatch|}}
-                <li> {{skillmatch.name}} </li>
+                <li class="list-group-item">{{skillmatch.name}} </li>
                 {{/each}}
+                </ul>
+                
            
 
         </div>
