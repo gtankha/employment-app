@@ -65,7 +65,9 @@
    <a name="contributers"></a> 
   ## 7. Contribubers
   Ronan Smith: basic front end, Dashboard routes, README
+  
   Gautam Tankha: Skill routes, back end implementation, Skill selectors
+  
   Marco Evangelista: Style, back end implementation, interest routes, revamped home page
 
 
