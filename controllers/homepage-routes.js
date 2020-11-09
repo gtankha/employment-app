@@ -10,7 +10,6 @@ router.get('/', (req, res) => {
     if(!req.session)  { res.redirect('/login'); return }
     if(!req.session.loggedIn)  { res.redirect('/login'); return }
 
-    console.log("jere 1")
 
     const session_user_id = req.session.user_id;
     const session_type = req.session.type;
@@ -50,8 +49,8 @@ router.get('/', (req, res) => {
                                 return duplicateSkillUsers.find(a => (a.user_id === user_id ))
                             })   
                             matchingSkillUsers = matchingSkillUsers.filter(a => a.user_id != req.session.user_id );
-                            console.log(matchingSkillUsers);
-                            console.log("dbuser data",dbUserData)
+                           
+                            console.log("dbuser data///////////",dbUserData)
                             res.render('dash-interests', { interests: interests, matchingSkillUsers: matchingSkillUsers, company: true, seeker: false, loggedIn: req.session.loggedIn, type:req.session.type,session:req.session });
                     })
 
