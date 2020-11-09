@@ -15,8 +15,7 @@ async function skillForm2(event) {
                 skills.push(skillsSelect.value)
             }
             i++;
-            console.log(skills);
-            console.log(i);
+         
         }
         else {
 
@@ -24,13 +23,11 @@ async function skillForm2(event) {
             let job_id = document.getElementById("skillform");
             if (job_id) { job_id = job_id.className };
             let results = { job: job_id, skills: skills, type: type };
-            console.log(results);
-            console.log(results.job);
-            console.log(results.type);
+         
 
 
            if (results.type == "company") {
-            console.log (" I am in listskill.js")
+        
                 const response = await fetch('/api/users/'+results.job, {
                     method: 'put',
                     body: JSON.stringify({
@@ -40,7 +37,7 @@ async function skillForm2(event) {
                 });
 
                 if (response.ok) {
-                    console.log ("asASAS");
+                  
                     document.location.replace('/dash');
                     return;
                 } else {

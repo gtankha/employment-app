@@ -57,7 +57,7 @@ router.get('/:id', (req, res) => {
         })
 
         .catch(err => {
-            console.log(err);
+          
             res.status(500).json(err);
         });
 });
@@ -92,7 +92,7 @@ router.post('/', (req, res) => {
 
         })
         .catch(err => {
-            console.log(err);
+         
             res.status(500).json(err);
         });
 });
@@ -176,21 +176,18 @@ router.put('/:id', (req, res) => {
     }
 
     if ((!(typeof (req.body.skillIds) === 'undefined'))) {
-        console.log ("GOGOGOGOGOGGOGOGO");
-        console.log(req.session.type);
+       
         if (req.session.type == "company") {
             jobSkills.findAll({ where: { job_id: req.params.id } })
                 .then(skills => {
                     // get list of current skill_ids
-                    console.log ("very beginning");
-                    console.log (skills);
+                
                     for (i=0; i<req.body.skillIds.length; i++){
                         req.body.skillIds[i] = parseInt(req.body.skillIds[i])  ;    
                         }
 
                     const skillIds = skills.map(({ skill_id }) => skill_id);
-                    console.log('aaa');
-                    console.log(skillIds);
+               
 
                     // create filtered list of new skills
                     const newSkills = req.body.skillIds
@@ -204,20 +201,17 @@ router.put('/:id', (req, res) => {
                             
 
                         });
-                    console.log('bbb');
-                    console.log(newSkills);
-                  //  if (typeof (newSkills[0]) == 'undefined') {
-                    //    newSkills = [];
-                   // }
+                  
+                
 
 
                     // figure out which ones to remove
-                    console.log('ccc');
+                   
                     const skillsToRemove = skills
                         .filter(({ skill_id }) => !req.body.skillIds.includes(skill_id))
                         .map(({ id }) => id);
 
-                    console.log(skillsToRemove);
+               
 
                     // run both actions
                  
@@ -231,7 +225,7 @@ router.put('/:id', (req, res) => {
                 })
                 .then((updatedSkillIds) => res.json(updatedSkillIds))
                 .catch((err) => {
-                    // console.log(err);
+                  
                     res.status(400).json(err);
                 });
         }
@@ -242,23 +236,18 @@ router.put('/:id', (req, res) => {
             userSkills.findAll({ where: { user_id: req.params.id } })
                 .then(skills => {
                     // get list of current skill_ids
-                    console.log(req.body);
-                    console.log("AAABBBRAE");
+                  
                     for (i=0; i<req.body.skillIds.length; i++){
                     req.body.skillIds[i] = parseInt(req.body.skillIds[i])  ;    
                     }
-                    console.log(req.body);
-                    console.log("AAasdasdasdABBBRAE");
+                  
                     
-                    console.log (skills);
+                 
                     const skillIds = skills.map(({ skill_id }) => skill_id);
-                    console.log('aaa');
-                    console.log(skillIds);
-                    console.log('zzz');
-                    console.log('vvvv');
+                  
                     
                     //consle.log (req.body.skillIds);
-                    console.log('zzeez');
+                
 
                     // create filtered list of new skills
                     const newSkills = req.body.skillIds
@@ -272,16 +261,15 @@ router.put('/:id', (req, res) => {
                             
 
                         });
-                    console.log('bbb');
-                    console.log(newSkills);
+                  
 
                     // figure out which ones to remove
-                    console.log('ccc');
+                  
                     const skillsToRemove = skills
                         .filter(({ skill_id }) => !req.body.skillIds.includes(skill_id))
                         .map(({ id }) => id);
 
-                    console.log(skillsToRemove);
+                   
 
                     // run both actions
                     if (req.session.type == "seeker") {
@@ -295,7 +283,7 @@ router.put('/:id', (req, res) => {
 
             .then((updatedSkillIds) => res.json(updatedSkillIds))
             .catch((err) => {
-                // console.log(err);
+           
                 res.status(400).json(err);
             });
         }
@@ -313,11 +301,11 @@ router.put('/:id', (req, res) => {
                     userInterests.update({ type: "interview" }, { where: { user_id: req.params.id, job_id: req.body.interestIds[0], type: "company" } })
                         .then(result => {
 
-                            console.log(result)
+                  
                             res.status(200).json(result);
 
                         })
-                        .catch(err => console.log(err))
+                        .catch(err => res.status(400).json(err));
                 }
                 // if there isn't seeker interest, create company interest
                 else {
@@ -328,7 +316,7 @@ router.put('/:id', (req, res) => {
                             // get list of current interest_ids
 
                             const interestsIds = interests.map(({ interest_id }) => interest_id);
-                            console.log(interestsIds);
+                           
                             // create filtered list of new interests
                             const newInterests = req.body.interestIds
                                 .filter((interest_id) => !interestsIds.includes(interest_id))
@@ -340,14 +328,14 @@ router.put('/:id', (req, res) => {
 
                                     };
                                 });
-                            console.log(newInterests);
+                    
 
                             // figure out which ones to remove
                             const interestsToRemove = interests
                                 .filter(({ interest_id }) => !req.body.interestIds.includes(interest_id))
                                 .map(({ id }) => id);
 
-                            console.log(interestsToRemove);
+                  
 
                             // run both actions
                             return Promise.all([
@@ -362,7 +350,7 @@ router.put('/:id', (req, res) => {
                         .catch((err) => {
 
                             res.status(400).json(err);
-                            console.log(err);
+                      
                         });
 
                 }
@@ -386,7 +374,7 @@ router.delete('/:id', (req, res) => {
             res.json(dbUserData);
         })
         .catch(err => {
-            console.log(err);
+           
             res.status(500).json(err);
         });
 });

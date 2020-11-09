@@ -9,9 +9,9 @@ router.get('/', (req, res) => {
     Skills.findAll({
     })
         .then(dbUserData => {
-            console.log(dbUserData);
+        
             const skills = dbUserData.map(post => post.get({ plain: true }));
-            console.log(skills);
+         
             res.render('test2-skills', {
                 skills,
                 loggedIn: req.session.loggedIn,
@@ -20,7 +20,7 @@ router.get('/', (req, res) => {
             });
         })
         .catch(err => {
-            console.log(err);
+            
             res.status(500).json(err);
         });
 

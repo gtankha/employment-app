@@ -22,13 +22,11 @@ async function skillForm(event) {
             let user_id = document.getElementById("skillform");
             if (user_id) { user_id = user_id.className };
             let results = { user: user_id, skills: skills, type: type };
-            console.log(results);
-            console.log(results.user);
-            console.log(results.skills[0]);
+      
 
 
            if (results.type == "seeker") {
-            console.log (" I am in listskill.js")
+           
                 const response = await fetch('/api/users/'+results.user, {
                     method: 'put',
                     body: JSON.stringify({
@@ -38,7 +36,7 @@ async function skillForm(event) {
                 });
 
                 if (response.ok) {
-                    console.log ("asASAS");
+               
                     document.location.replace('/dash');
                     return;
                 } else {

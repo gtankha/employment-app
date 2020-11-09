@@ -43,12 +43,12 @@ router.get('/', (req, res) => {
                                 return duplicateSkillUsers.find(a => (a.user_id === user_id ))
                             })   
                             matchingSkillUsers = matchingSkillUsers.filter(a => a.user_id != req.session.user_id );
-                            console.log(matchingSkillUsers);
+                           
                         
                             res.render('dash-interests', { interests: interests, matchingSkillUsers: matchingSkillUsers, company: true, seeker: false, loggedIn: req.session.loggedIn, type:req.session.type,session:req.session });
                     })
 
-                    .catch(err => console.log(err))
+                    .catch(err => res.status(500).json(err));
 
             })
     }
@@ -82,7 +82,7 @@ router.get('/', (req, res) => {
 
                 })
                     .then(dbUserData => {
-                        //   console.log(dbUserData);
+                   
 
                         const duplicateSkillUsers = dbUserData.map(post => post.get({ plain: true }));
                         const matchingSkillUsers = Array.from(new Set(duplicateSkillUsers.map(a => a.job_id)))
@@ -94,7 +94,7 @@ router.get('/', (req, res) => {
                         res.render('dash-interests', { interests: interests, matchingSkillUsers: matchingSkillUsers, company: false, seeker: true, loggedIn: req.session.loggedIn, type: req.session.type,session:req.session });
 
                     })
-                    .catch(err => console.log(err))
+                    .catch(err => res.status(500).json(err));
 
             })
 

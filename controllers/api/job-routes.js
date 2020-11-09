@@ -26,7 +26,7 @@ router.get('/', (req, res) => {
         })
         .then(dbUserData => res.json(dbUserData))
         .catch(err => {
-            console.log(err);
+       
             res.status(500).json(err);
         });
 
@@ -62,7 +62,7 @@ router.get('/:id', (req, res) => {
             res.json(dbUserData);
         })
         .catch(err => {
-            console.log(err);
+         
             res.status(500).json(err);
         });
 });
@@ -84,7 +84,7 @@ router.post('/', (req, res) => {
         })
 
         .catch(err => {
-            console.log(err);
+           
             res.status(500).json(err);
         });
 
@@ -130,7 +130,7 @@ router.put('/:id', (req, res) => {
                 // get list of current interest_ids
 
                 const skillIds = skills.map(({ skill_id }) => skill_id);
-                console.log(skillIds);
+             
 
                 // create filtered list of new interests
                 const newSkills = req.body.skillIds
@@ -141,14 +141,14 @@ router.put('/:id', (req, res) => {
                             skill_id: skill_id
                         };
                     });
-                console.log(newSkills);
+               
 
                 // figure out which ones to remove
                 const skillsToRemove = skills
                     .filter(({ skill_id }) => !req.body.skillIds.includes(skill_id))
                     .map(({ id }) => id);
 
-                console.log(skillsToRemove);
+             
 
                 // run both actions
                 return Promise.all([
@@ -158,7 +158,7 @@ router.put('/:id', (req, res) => {
             })
             .then((updatedSkillIds) => res.json(updatedSkillIds))
             .catch((err) => {
-                // console.log(err);
+           
                 res.status(400).json(err);
             });
     }
@@ -176,10 +176,10 @@ router.put('/:id', (req, res) => {
                     userInterests.update({ type: "interview" }, { where: { job_id: req.params.id, user_id: req.body.interestIds[0], type: "seeker" } })
                         .then(result => {
 
-                            console.log(result)
+                       
 
                         })
-                        .catch(console.log(err))
+                        .catch(res.status(500).json(err));
                 }
                 // if there isn't seeker interest, create company interest
                 else {
@@ -190,7 +190,7 @@ router.put('/:id', (req, res) => {
                             // get list of current interest_ids
 
                             const interestsIds = interests.map(({ interest_id }) => interest_id);
-                            console.log(interestsIds);
+                     
 
                             // create filtered list of new interests
                             const newInterests = req.body.interestIds
@@ -203,14 +203,14 @@ router.put('/:id', (req, res) => {
 
                                     };
                                 });
-                            console.log(newInterests);
+                        
 
                             // figure out which ones to remove
                             const interestsToRemove = interests
                                 .filter(({ interest_id }) => !req.body.interestIds.includes(interest_id))
                                 .map(({ id }) => id);
 
-                            console.log(interestsToRemove);
+                           
 
                             // run both actions
                             return Promise.all([
@@ -225,7 +225,7 @@ router.put('/:id', (req, res) => {
                         .catch((err) => {
 
                             res.status(400).json(err);
-                            console.log(err);
+                          
                         });
 
                 }

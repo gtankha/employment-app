@@ -35,65 +35,14 @@ router.get('/', (req, res) => {
              return duplicateSkillUsers.find(a => a.user_id === user_id)
            })
 
-        //    res.render('test-skills', {
-        //        matchingSkillUsers,
-        //        loggedIn: req.session.loggedIn,
-        //        type: req.session.type
-        //    })
+
         })
         .catch(err => {
-            console.log(err);
+        
             res.status(500).json(err);
         });
 
-//}
 
-// if (req.session.type === "seeker") {
-//     jobSkills.findAll({
-//         attributes: ['job_id'],
-//         where: {
-//             skill_id: {
-//                 [Op.in]: [
-//                     Sequelize.literal(`SELECT skill_id FROM user_skills WHERE user_id = ${req.session.user_id}`)
-//                 ]
-//             }
-//         },
-//         include: [{
-//          model: Jobs,
-//             include: [{
-//                 model: Users,
-//                 as: "company"
-//             },
-//             {
-//                 model: Skills,
-//                 attributes:['name']
-                
-//             }]
-//         },
-       
-//     ]
-    
-//     })
-//         .then(dbUserData => {
-//          //   console.log(dbUserData);
-
-//             const duplicateSkillUsers = dbUserData.map(post => post.get({ plain: true }));
-//             const matchingSkillUsers = Array.from(new Set(duplicateSkillUsers.map(a => a.job_id)))
-//             .map(job_id => {
-//               return duplicateSkillUsers.find(a => a.job_id === job_id)
-//             });
-//             res.render('test-skills', {
-//                 matchingSkillUsers,
-//                 loggedIn: req.session.loggedIn,
-//                 type: req.session.type
-//             })
-//         })
-//         .catch(err => {
-//             console.log(err);
-//             res.status(500).json(err);
-//         });
-
-// }
 
 });
 
