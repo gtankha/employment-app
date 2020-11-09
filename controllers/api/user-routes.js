@@ -1,4 +1,5 @@
 const router = require('express').Router();
+const bcrypt = require('bcrypt') ;
 const { Users, Jobs, userInterests, Skills, userSkills, jobSkills } = require('../../models');
 
 // GET all users
@@ -114,10 +115,13 @@ router.post('/login', (req, res) => {
         }
 
 
-
+        console.log(`---${req.body.password}---`,`---${req.body.email}---`);
         // Verify user
 
         const validPassword = dbUserData.checkPassword(req.body.password);
+        console.log(dbUserData);
+        
+        console.log(validPassword)
 
         if (!validPassword) {
             res.status(400).json({ message: 'Incorrect password!' });
