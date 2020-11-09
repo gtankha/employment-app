@@ -241,8 +241,33 @@ function createMatchesButtons() {
         matches.forEach(seeker => {
 
             const data_job_id = seeker.getAttribute('data-job-id');
-         
-            div.querySelector(".card-body").appendChild(button);
+            const button = document.createElement('button');
+            button.className = "btn btn-primary mt-3";
+            button.textContent = "I'm Interested";
+
+            button.addEventListener("click",async function(e){
+
+               
+                //update using put request
+                const response = await fetch('/api/users/' + user_id, {
+                    method: 'put',
+                    body: JSON.stringify({
+                        interestIds:[data_job_id]
+                    }),
+                    headers: { 'Content-Type': 'application/json' }
+                });
+
+                // check the response status
+                if (response.ok) {
+                    console.log('success');
+                    location.reload(false);
+                } else {
+                    alert(response.statusText);
+                }
+
+            })
+
+            seeker.querySelector(".card-body").appendChild(button);
 
         })
     }

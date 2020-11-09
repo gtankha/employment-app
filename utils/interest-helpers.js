@@ -89,7 +89,7 @@ module.exports = {
 
       })
 
-      const display = tab == "company" ? "none": "";
+      const display = tab == "company" ? "": "none";
 
       var innerHtml = ``;
 
