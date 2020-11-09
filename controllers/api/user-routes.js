@@ -28,43 +28,6 @@ router.post('/logout', (req, res) => {
 
 });
 
-
-// GET single user
-router.get('/:id', (req, res) => {
-    Users.findOne({
-        exclude: ['password']
-        ,
-        where: {
-            id: req.params.id
-        },
-        include: [
-            {
-                model: Skills,
-                attributes: ['name'],
-                through: userSkills
-            },
-            {
-                model: userInterests,
-                attributes: ['id', 'job_id', 'type'],
-                as: "candidates"
-            }
-        ]
-    })
-        .then(dbUserData => {
-            if (!dbUserData) {
-                res.status(404).json({ message: 'No user found with this id' });
-                return;
-            }
-
-
-        })
-
-        .catch(err => {
-            console.log(err);
-            res.status(500).json(err);
-        });
-});
-
 // create new user
 router.post('/', (req, res) => {
 
@@ -146,6 +109,41 @@ console.log("here")
 
 })
 
+// GET single user
+router.get('/:id', (req, res) => {
+    Users.findOne({
+        exclude: ['password']
+        ,
+        where: {
+            id: req.params.id
+        },
+        include: [
+            {
+                model: Skills,
+                attributes: ['name'],
+                through: userSkills
+            },
+            {
+                model: userInterests,
+                attributes: ['id', 'job_id', 'type'],
+                as: "candidates"
+            }
+        ]
+    })
+        .then(dbUserData => {
+            if (!dbUserData) {
+                res.status(404).json({ message: 'No user found with this id' });
+                return;
+            }
+
+
+        })
+
+        .catch(err => {
+            console.log(err);
+            res.status(500).json(err);
+        });
+});
 
 // update user
 // update user interests
