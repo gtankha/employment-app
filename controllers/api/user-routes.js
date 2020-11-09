@@ -58,7 +58,7 @@ router.get('/:id', (req, res) => {
         })
 
         .catch(err => {
-            console.log(err);
+         
             res.status(500).json(err);
         });
 });
@@ -93,7 +93,7 @@ router.post('/', (req, res) => {
 
         })
         .catch(err => {
-            console.log(err);
+          
             res.status(500).json(err);
         });
 });
@@ -117,9 +117,7 @@ router.post('/login', (req, res) => {
         // Verify user
 
         const validPassword = dbUserData.checkPassword(req.body.password);
-        console.log(dbUserData);
-
-        console.log(validPassword)
+      
 
         if (!validPassword) {
             res.status(400).json({ message: 'Incorrect password!' });
@@ -168,29 +166,7 @@ router.put('/:id', (req, res) => {
                 )
                     .then(updatedUser => {
                         
-                        // if(req.session)
-                        // {
-
-                         
-                        //         Users.findOne({
-                        //             exclude: ['password']
-                        //             ,
-                        //             where: {
-                        //                 id: req.session.user_id
-                        //             }})
-                        //             .then(result =>{
-                        //                 req.session.resave(() => {
-                        //                     req.session.full_name = result.full_name;
-                        //                     req.session.company_name = result.company_name;
-                        //                     req.session.image = result.image;
-                        //                     req.session.description = result.description;
-                                        
-                        //                 })
-
-                        //                 console.log("new session",req.session)
-                        //             })
-                           
-                        // }
+                        
                         
                         res.json(updatedUser)
 
@@ -223,8 +199,7 @@ router.put('/:id', (req, res) => {
                         }
 
                     const skillIds = skills.map(({ skill_id }) => skill_id);
-                    console.log('aaa');
-                    console.log(skillIds);
+                    
 
                     // create filtered list of new skills
                     const newSkills = req.body.skillIds
@@ -239,19 +214,16 @@ router.put('/:id', (req, res) => {
 
                         });
                     
-                    console.log(newSkills);
-                  //  if (typeof (newSkills[0]) == 'undefined') {
-                    //    newSkills = [];
-                   // }
+                 
 
 
                     // figure out which ones to remove
-                    console.log('ccc');
+                
                     const skillsToRemove = skills
                         .filter(({ skill_id }) => !req.body.skillIds.includes(skill_id))
                         .map(({ id }) => id);
 
-                    console.log(skillsToRemove);
+                
 
                     // run both actions
                  
@@ -265,7 +237,7 @@ router.put('/:id', (req, res) => {
                 })
                 .then((updatedSkillIds) => res.json(updatedSkillIds))
                 .catch((err) => {
-                    // console.log(err);
+                 
                     res.status(400).json(err);
                 });
         }
@@ -317,7 +289,7 @@ router.put('/:id', (req, res) => {
 
             .then((updatedSkillIds) => res.json(updatedSkillIds))
             .catch((err) => {
-                // console.log(err);
+               
                 res.status(400).json(err);
             });
         }
@@ -335,11 +307,11 @@ router.put('/:id', (req, res) => {
                     userInterests.update({ type: "interview" }, { where: { user_id: req.params.id, job_id: req.body.interestIds[0], type: "company" } })
                         .then(result => {
 
-                            console.log(result)
+                          
                             res.status(200).json(result);
 
                         })
-                        .catch(err => console.log(err))
+                        .catch( res.status(500).json(err));
                 }
                 // if there isn't seeker interest, create company interest
                 else {
@@ -350,7 +322,7 @@ router.put('/:id', (req, res) => {
                             // get list of current interest_ids
 
                             const interestsIds = interests.map(({ interest_id }) => interest_id);
-                            console.log(interestsIds);
+                          
                             // create filtered list of new interests
                             const newInterests = req.body.interestIds
                                 .filter((interest_id) => !interestsIds.includes(interest_id))
@@ -362,14 +334,14 @@ router.put('/:id', (req, res) => {
 
                                     };
                                 });
-                            console.log(newInterests);
+                          
 
                             // figure out which ones to remove
                             const interestsToRemove = interests
                                 .filter(({ interest_id }) => !req.body.interestIds.includes(interest_id))
                                 .map(({ id }) => id);
 
-                            console.log(interestsToRemove);
+                          
 
                             // run both actions
                             return Promise.all([
@@ -384,7 +356,7 @@ router.put('/:id', (req, res) => {
                         .catch((err) => {
 
                             res.status(400).json(err);
-                            console.log(err);
+                         
                         });
 
                 }
@@ -408,7 +380,7 @@ router.delete('/:id', (req, res) => {
             res.json(dbUserData);
         })
         .catch(err => {
-            console.log(err);
+        
             res.status(500).json(err);
         });
 });

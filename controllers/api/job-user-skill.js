@@ -17,11 +17,11 @@ router.get('/seeker/:id', (req, res) => {
         }
     })
         .then(dbUserData => {
-            console.log(dbUserData);
+        
             res.json(dbUserData)
         })
         .catch(err => {
-            console.log(err);
+     
             res.status(500).json(err);
         });
 
@@ -41,11 +41,11 @@ router.get('/company/:id', (req, res) => {
         }
     })
         .then(dbUserData => {
-            console.log(dbUserData);
+          
             res.json(dbUserData)
         })
         .catch(err => {
-            console.log(err);
+        
             res.status(500).json(err);
         });
 

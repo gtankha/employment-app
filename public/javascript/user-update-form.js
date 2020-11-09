@@ -4,7 +4,7 @@ async function skillSubmit(event) {
 
     // check the response status
     if (response.ok) {
-        console.log('success');
+  
         document.location.replace('/dash')
     } else {
         alert(response.statusText);
@@ -41,7 +41,7 @@ async function photoChange(event) {
     const imgInputEl = document.getElementById('img-input');
     var formData = new FormData();
     formData.append("image", imgInputEl.files[0]);
-    console.log(document.querySelector("#UserID").value)
+  
 
     const response = await fetch('/api/upload?id=' + document.querySelector("#UserID").value, {
         method: 'POST',

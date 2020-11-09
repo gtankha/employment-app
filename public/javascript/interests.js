@@ -97,7 +97,7 @@ function createAddButtons(_arr) {
 
             // check the response status
             if (response.ok) {
-                console.log('success');
+            
                 location.reload(false);
             } else {
                 alert(response.statusText);
@@ -133,7 +133,7 @@ function createDelButtons(_arr) {
 
             // check the response status
             if (response.ok) {
-                console.log('success');
+            
                 location.reload(false);
             } else {
                 alert(response.statusText);
@@ -176,7 +176,7 @@ function createMatchesButtons() {
                         let dropdown = e.target.parentNode.childNodes[1];
                         if (dropdown.style.display == "") dropdown.style.display = "none"
                         else dropdown.style.display = ""
-                        console.log('dropdown', dropdown)
+                       
                     })
 
                     drop.appendChild(toggle);
@@ -213,7 +213,7 @@ function createMatchesButtons() {
 
                             // check the response status
                             if (response.ok) {
-                                console.log('success');
+                             
                                 location.reload(false);
                             } else {
                                 alert(response.statusText);
@@ -259,7 +259,7 @@ function createMatchesButtons() {
 
                 // check the response status
                 if (response.ok) {
-                    console.log('success');
+                
                     location.reload(false);
                 } else {
                     alert(response.statusText);

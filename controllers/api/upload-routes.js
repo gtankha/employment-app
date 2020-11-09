@@ -58,15 +58,15 @@ router.post('/', function(req, res, next) {
                 
                             .catch((err) => {
                 
-                                console.log(err);
+                                res.status(500).json(err);
                             });
 
 
-                        console.log(data);
+                       
                         res.status(200).json(data);
                     })
                     .catch(function(err) {
-                        console.log(err);
+                     
                         res.status(400).json(JSON.parse(err));
                         alert(JSON.parse(err));
                     });
@@ -74,11 +74,11 @@ router.post('/', function(req, res, next) {
         }
     });
     busboy.on('field', function(fieldname, val, fieldnameTruncated, valTruncated) {
-        console.log('field');
+      
     });
     busboy.on('finish', function() {
        // res.status(200).end()
-       console.log('finish');
+      
     });
     req.pipe(busboy);
 });

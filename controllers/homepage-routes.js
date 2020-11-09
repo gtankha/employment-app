@@ -43,8 +43,7 @@ router.get('/', (req, res) => {
                     ]
                 })
                     .then(dbUserData => {
-                        console.log("dbuser data///////////"+session_user_id)
-                        console.log(dbUserData)
+                      
 
                         const duplicateSkillUsers = dbUserData.map(post => post.get({ plain: true }));
                         let matchingSkillUsers = Array.from(new Set(duplicateSkillUsers.map(a => (a.user_id ))))
@@ -57,7 +56,7 @@ router.get('/', (req, res) => {
                             res.render('dash-interests', { interests: interests, matchingSkillUsers: matchingSkillUsers, company: true, seeker: false, loggedIn: req.session.loggedIn, type:req.session.type,session:req.session });
                     })
 
-                    .catch(err => console.log(err))
+                    .catch( res.status(500).json(err));
 
             })
     }
@@ -91,7 +90,7 @@ router.get('/', (req, res) => {
 
                 })
                     .then(dbUserData => {
-                        //   console.log(dbUserData);
+  
 
                         const duplicateSkillUsers = dbUserData.map(post => post.get({ plain: true }));
                         const matchingSkillUsers = Array.from(new Set(duplicateSkillUsers.map(a => a.job_id)))
@@ -103,7 +102,7 @@ router.get('/', (req, res) => {
                         res.render('dash-interests', { interests: interests, matchingSkillUsers: matchingSkillUsers, company: false, seeker: true, loggedIn: req.session.loggedIn, type: req.session.type,session:req.session });
 
                     })
-                    .catch(err => console.log(err))
+                    .catch( res.status(500).json(err));
 
             })
 

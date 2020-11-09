@@ -42,7 +42,7 @@ app.use(express.static(path.join(__dirname, 'public')));
 app.get('/image', (req, res) => {
 
   //sends upload.html to the image route
-  console.log('here');
+  
   res.sendFile(path.join(__dirname, './public/upload.html'));
 });
 

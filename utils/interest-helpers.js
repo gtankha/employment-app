@@ -6,7 +6,7 @@ module.exports = {
       const emp_interests = [];
       let intObj = {};
       
-      console.log(JSON.stringify(interests))
+    
       interests.forEach(job => {
         
         job.job_interests.forEach(int => {
@@ -64,7 +64,7 @@ module.exports = {
     },
     format_interests_seeker: (interests,tab) => {
 
-      console.log(JSON.stringify(interests))
+
 
       const emp_interests = [];
       let intObj = {};

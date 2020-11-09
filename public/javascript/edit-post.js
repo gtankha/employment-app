@@ -3,8 +3,7 @@ async function nameUpdate(event) {
     const description = document.querySelector('#description').value.trim();
     const jobId = document.querySelector('#jobID').value;
     const name = String(document.querySelector("#title").value);
-    console.log(jobId);
-    console.log(name)
+    
    
     const response = await fetch('/edit/'+jobId, {
         method: 'put',
