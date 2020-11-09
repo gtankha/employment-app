@@ -15,6 +15,7 @@ async function skillSubmit(event) {
 async function descriptionUpdate(event) {
 
     const description = document.querySelector('#descriptionUpdate').value.trim();
+    const full_name = document.querySelector('#fullnameUpdate').value.trim();
 
 
     const userID=document.querySelector("#UserID").value;
@@ -23,6 +24,7 @@ async function descriptionUpdate(event) {
         method: 'put',
         body: JSON.stringify({
             description: description,
+            full_name: full_name
         }),
         headers: { 'Content-Type': 'application/json' }
     });
@@ -47,7 +49,6 @@ async function photoChange(event) {
         method: 'POST',
         body: formData
     });
-    alert(response)
         if (response.ok) {
             document.location.replace('/dash')
         } else {
@@ -57,4 +58,4 @@ async function photoChange(event) {
 
 //document.querySelector('#skills').addEventListener('click', skillSubmit);
 document.querySelector('#description').addEventListener('click', descriptionUpdate);
-//document.querySelector('#image').addEventListener('click', photoChange);
+document.querySelector('#submit-image').addEventListener('click', photoChange);

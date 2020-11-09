@@ -99,19 +99,22 @@
 
 <div class="card" style="width: 500px; margin-top: 20px;">
 <div class="card-header">
-<h1>Your Profile</h1>
+<h3>Your Profile</h3>
 </div>
 <div class="card-body">
-<h2>Your Name</h2>
-<p>{{full_name}}</p>
-<h2>Your Description</h2>
+<img class="mb-3" src="{{image}}" width="100" height="100">
+<p><h4>Your Name</h4>
+{{full_name}}</p>
+<h4>Your Description</h4>
 <p>{{description}}</p>
-<h2>Skills</h2>
-{{#each userskills as |skillsparent|}}
-{{#each skillsparent.skills as |skills|}}
-</ul>{{skills.name}}</ul><br>
+<h4>Skills</h4>
+<ul class="list-group">
+{{#each userskills as |skill|}}
+
+<li class="list-group-item">{{skill.name}}<li>
+
 {{/each}}
-{{/each}}
+</ul>
 
 <button id="myBtn"class="btn btn-primary">Update profile</button>
 </div>
@@ -123,30 +126,39 @@
     <div class="modal-content">
         <span class="close">&times;</span>
         <div>
+               <div>
+                    <img class="mt-2 mb-2" src="{{image}}" width="100" height="100"><br>
+                    {{!-- <a href="/image" class="btn btn-primary">Change Profile Image</a> --}}
+                  
+   
+      <h4>Change Profile Image</h4>
+ 
+   
+      <form id="upload-form">
+        {{!-- <label for="img">Select image to upload:</label><br> --}}
+        <input type="file" id="img-input" name="img" accept="image/*"><br>
+        <input type="submit" id="submit-image" value="submit image" class="btn btn-primary mt-2 mb-3">
+        <br>
+      </form>
 
-            <div>
+    
+
+            <div class="mt-3">
                 {{> seekerskill}}
                 </br>
             </div>
 
             <form>
                 <input type="hidden" id="UserID" name="userID" value="{{seeker}}">
-
-                {{!-- <div>
-                    <p>skill partail placeholder</p>
-                    <button id="skills" type="click">Submit Skill</button>
-                    </div>
-                    --}}
-
+             
 
                 <div>
+                    <h4>Update General Information</h4>
                     <label for="descriptionUpdate">Description:</label>
-                    <input type="text" id="descriptionUpdate" />
-                    <button class="btn btn-primary" id="description" type="click">Update description</button>
-                </div>
-
-                <div>
-                    <a href="/image" class="btn btn-primary">Change Profile Image</a>
+                    <input type="text" id="descriptionUpdate" value="{{description}}"/><br>
+                      <label for="fullnameUpdate">Full Name:</label>
+                    <input type="text" id="fullnameUpdate" value="{{full_name}}"/><br>
+                    <button class="btn btn-primary mt-2 mb-2" id="description" type="click">Update description</button>
                 </div>
             </form>
         </div> 

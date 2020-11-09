@@ -1,13 +1,13 @@
 <div class={{type}} id="types">
-    <div class="form-check">
+    <div class="form-check padding-zero">
         <form class={{user_id}} id="skillform">
             <fieldset>
-                <legend>Please Select Skillsets</legend>
+                <legend>Update Skillset</legend>
                 {{#each skills as |skills|}}
                 <input type="checkbox" id="skill{{@index}}" value="{{skills.id}}">{{skills.name}}<br>
                 {{/each}}
                 <br>
-                <input type="button" id="submitbutton" value="Submit now" />
+                <input type="button" class="btn btn-primary mb-4" id="submitbutton" value="Submit skillset" />
             </fieldset>
         </form>
     </div>

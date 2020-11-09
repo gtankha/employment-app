@@ -48,6 +48,9 @@ nav button {
 
   width:325px;
 }
+.padding-zero {
+  padding:0px;
+}
 
 .card-header {
     background-color: rgb(29, 198, 228);

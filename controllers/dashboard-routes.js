@@ -41,8 +41,8 @@ router.get('/', (req, res) => {
                     include: { model: Skills, through: userSkills,as: "skills" }
                 })
                 .then (dbUserData2 =>{
-                    const userskills = dbUserData2.map(post => post.get({ plain: true }));
-              console.log("data2/////",dbUserData2[0].id);
+                    const userskills =dbUserData2[0].skills.map(post => post.get({ plain: true }));
+              console.log("data2/////",dbUserData2[0]);
                 res.render('dashboard', {
                     skills,
                     userskills,
