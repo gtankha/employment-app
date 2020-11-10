@@ -72,6 +72,10 @@ nav button {
   background-size: cover;*/
 }
 
+.width600 {
+  max-width: 600px;
+}
+
 button a:hover{
     color: inherit;
 }

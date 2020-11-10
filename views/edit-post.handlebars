@@ -1,9 +1,10 @@
-<div class="card">
+<div class="d-flex justify-content-center">
+<div class="card width600  mt-5">
     <div class="card-header">
-        <h2 >Current title</h2>
-        <h3 class="text-muted">{{job.title}}</h3>
-        <h2>Current description</h2>
-        <h3 class="text-muted">{{job.description}}</h3>
+        <h4 >Current title</h4>
+        <h5 class="text-muted">{{job.title}}</h5>
+        <h4>Current description</h4>
+        <h5 class="text-muted">{{job.description}}</h5>
         <input type="hidden" id="jobID" name="jobID" value="{{job.id}}">
     </div>
     <div class="card-body">
@@ -11,15 +12,16 @@
 
 
         <div>
-            <label for="title">New title:</label>
-            <input type="text" id="title" />
+            <h5>Update General Information</h5>
+            <label for="title">New title:</label><br>
+            <input type="text" id="title" value="{{job.title}}"/>
         </div>
         <div>
-            <label for="description">New description:</label>
-            <input type="text" id="description"/>
+            <label for="description">New description:</label><br>
+            <input type="text" id="description" value="{{job.description}}"/>
         </div>
 
-        <button class="btn btn-primary" id="Job-name-edit">Update</button>
+        <button class="btn btn-primary mt-2 mb-4" id="Job-name-edit">Update</button>
 
        
         
@@ -28,6 +30,7 @@
 
        
     </div> 
+</div>
 </div>
 
 <script src="/javascript/edit-post.js"></script>

@@ -1,7 +1,78 @@
 {{#if companyId}}
-<div class="d-flex" style="margin: 20px;">
-    <div class="display-jobs" style="margin: 20px; size: 40%;">
-        <div class="card" style="margin: 10px;">
+<div class="d-flex justify-content-center mt-5">
+    <div class="card width600 mr-3">
+        <div class="card-header">
+            <h3>Your Profile</h3>
+        </div>
+        <div class="card-body">
+            <img class="mb-3" src="{{image}}" width="100" height="100">
+            <p>
+            <h5>Company Name</h5>
+            {{company_name}}</p>
+            <h5>Company Description</h5>
+            <p>{{description}}</p>
+
+            <button id="updateCompanyBtn" class="btn btn-primary">Update profile</button>
+            <div id="companyModal" class="modal">
+
+                <!-- Modal content -->
+                <div class="modal-content">
+
+                      <h4>Change Company Logo</h4>
+
+                      <img class="mt-2 mb-2" src="{{image}}" width="100" height="100"><br>
+                        <div>
+                           
+                            <input type="file" id="img-input" name="img" accept="image/*"><br>
+                            <button id="submit-image" 
+                                class="btn btn-primary mt-2 mb-3">submit </button>
+                        <br>
+
+                    <form class="update-company-form">
+                        <input type="hidden" id="companyID" name="userID" value="{{companyId}}">
+
+                  
+                        </div>
+                        <div>
+                            <label for="companynameUpdate">Company Name</label><br>
+                            <input type="text" id="companynameUpdate" value="{{company_name}}"/>
+                        </div>
+                        <div>
+                            <label for="company-description">Company Description</label><br>
+                            <input type="text" id="descriptionUpdate" value="{{description}}" />
+                        </div>
+                        <button id="description" type="submit" class="mt-3 btn btn-primary">Update
+                            Information</button>
+                    </form>
+                </div>
+
+                <script>// Get the modal
+                    var companyModal = document.getElementById("companyModal");
+
+                    // Get the button that opens the modal
+                    var btn1 = document.getElementById("updateCompanyBtn");
+
+                    // Get the <span> element that closes the modal
+
+                    // When the user clicks on the button, open the modal
+                    btn1.onclick = function () {
+
+                        companyModal.style.display = "block";
+                    }
+
+                // When the user clicks on <span> (x), close the modal
+
+
+
+                </script>
+
+            </div>
+
+
+        </div>
+    </div>
+    <div class="display-jobs width600">
+        <div class="card">
             <h2 class="card-header">Your Jobs:</h2>
 
             <!-- Trigger/Open The Modal -->
@@ -12,7 +83,7 @@
 
                 <!-- Modal content -->
                 <div class="modal-content">
-                    <span class="close">&times;</span>
+
                     <form class="post-form">
                         <input type="hidden" id="UserID" name="userID" value="{{companyId}}">
 
@@ -37,22 +108,21 @@
                 var btn = document.getElementById("myBtn");
 
                 // Get the <span> element that closes the modal
-                var span = document.getElementsByClassName("close")[0];
+
 
                 // When the user clicks on the button, open the modal
                 btn.onclick = function () {
                     modal.style.display = "block";
                 }
 
-                // When the user clicks on <span> (x), close the modal
-                span.onclick = function () {
-                    modal.style.display = "none";
-                }
-
                 // When the user clicks anywhere outside of the modal, close it
                 window.onclick = function (event) {
                     if (event.target == modal) {
                         modal.style.display = "none";
+                    }
+                    if (event.target == companyModal) {
+                        companyModal.style.display = "none";
+
                     }
                 }
             </script>
@@ -71,16 +141,18 @@
                     {{job.description}}
                 </p>
             </div>
-             <div class="card-body">
+            <div class="card-body">
                 <p>
-                   <b> Skills: </b>
+                    <b> Skills: </b>
+                <ul class="list-group">
                     {{#each job.skills as |skills|}}
-                 <li>  {{skills.name}} </li> <br>
+                    <li class="list-group-item"> {{skills.name}} </li>
                     {{/each}}
+                </ul>
                 </p>
-                <button class="btn btn-primary"><a  href="/dash/{{job.id}}">Edit Job</a></button>
+                <button class="btn btn-primary"><a href="/dash/{{job.id}}">Edit Job</a></button>
             </div>
-        
+
 
 
         </div>
@@ -96,28 +168,31 @@
 {{#if seeker}}
 
 
+<div class="d-flex justify-content-center">
+    <div class="card" style="width: 500px; margin-top: 20px;">
+        <div class="card-header">
+            <h3>Your Profile</h3>
+        </div>
+        <div class="card-body">
+            <img class="mb-3" src="{{image}}" width="100" height="100">
+            <p>
+            <h4>Your Name</h4>
+            {{full_name}}</p>
+            <h4>Your Description</h4>
+            <p>{{description}}</p>
+            <h4>Skills</h4>
+            <ul class="list-group">
+                {{#each userskills as |skill|}}
 
-<div class="card" style="width: 500px; margin-top: 20px;">
-<div class="card-header">
-<h3>Your Profile</h3>
-</div>
-<div class="card-body">
-<img class="mb-3" src="{{image}}" width="100" height="100">
-<p><h4>Your Name</h4>
-{{full_name}}</p>
-<h4>Your Description</h4>
-<p>{{description}}</p>
-<h4>Skills</h4>
-<ul class="list-group">
-{{#each userskills as |skill|}}
+                <li class="list-group-item">{{skill.name}}
+                <li>
 
-<li class="list-group-item">{{skill.name}}<li>
+                    {{/each}}
+            </ul>
 
-{{/each}}
-</ul>
-
-<button id="myBtn"class="btn btn-primary">Update profile</button>
-</div>
+            <button id="myBtn" class="btn btn-primary">Update profile</button>
+        </div>
+    </div>
 </div>
 
 <div id="myModal" class="modal">
@@ -126,73 +201,76 @@
     <div class="modal-content">
         <span class="close">&times;</span>
         <div>
-               <div>
-                    <img class="mt-2 mb-2" src="{{image}}" width="100" height="100"><br>
-                    {{!-- <a href="/image" class="btn btn-primary">Change Profile Image</a> --}}
-                  
-   
-      <h4>Change Profile Image</h4>
- 
-   
-      <form id="upload-form">
-        {{!-- <label for="img">Select image to upload:</label><br> --}}
-        <input type="file" id="img-input" name="img" accept="image/*"><br>
-        <input type="submit" id="submit-image" value="submit image" class="btn btn-primary mt-2 mb-3">
-        <br>
-      </form>
+            <div>
+                <img class="mt-2 mb-2" src="{{image}}" width="100" height="100"><br>
+                {{!-- <a href="/image" class="btn btn-primary">Change Profile Image</a> --}}
 
-    
 
-            <div class="mt-3">
-                {{> seekerskill}}
-                </br>
-            </div>
+                <h4>Change Profile Image</h4>
 
-            <form>
-                <input type="hidden" id="UserID" name="userID" value="{{seeker}}">
-             
 
-                <div>
-                    <h4>Update General Information</h4>
-                    <label for="descriptionUpdate">Description:</label>
-                    <input type="text" id="descriptionUpdate" value="{{description}}"/><br>
-                      <label for="fullnameUpdate">Full Name:</label>
-                    <input type="text" id="fullnameUpdate" value="{{full_name}}"/><br>
-                    <button class="btn btn-primary mt-2 mb-2" id="description" type="click">Update description</button>
+                <form id="upload-form">
+                    {{!-- <label for="img">Select image to upload:</label><br> --}}
+                    <input type="file" id="img-input" name="img" accept="image/*"><br>
+                    <input type="submit" id="submit-image" value="submit image" class="btn btn-primary mt-2 mb-3">
+                    <br>
+                </form>
+
+
+
+                <div class="mt-3">
+                    {{> seekerskill}}
+                    </br>
                 </div>
-            </form>
-        </div> 
+
+                <form>
+                    <input type="hidden" id="UserID" name="userID" value="{{seeker}}">
+
+
+                    <div>
+                        <h4>Update General Information</h4>
+                        <label for="descriptionUpdate">Description:</label>
+                        <input type="text" id="descriptionUpdate" value="{{description}}" /><br>
+                        <label for="fullnameUpdate">Full Name:</label>
+                        <input type="text" id="fullnameUpdate" value="{{full_name}}" /><br>
+                        <button class="btn btn-primary mt-2 mb-4" id="description" type="click">Update
+                            description</button>
+                    </div>
+                </form>
+            </div>
+        </div>
     </div>
-</div>
 
 
 
-<script>// Get the modal
-    var modal = document.getElementById("myModal");
+    <script>// Get the modal
+        var modal = document.getElementById("myModal");
 
-    // Get the button that opens the modal
-    var btn = document.getElementById("myBtn");
+        // Get the button that opens the modal
+        var btn = document.getElementById("myBtn");
 
-    // Get the <span> element that closes the modal
-    var span = document.getElementsByClassName("close")[0];
+        // Get the <span> element that closes the modal
+        var span = document.getElementsByClassName("close")[0];
 
-    // When the user clicks on the button, open the modal
-    btn.onclick = function () {
-        modal.style.display = "block";
-    }
+        // When the user clicks on the button, open the modal
+        btn.onclick = function () {
+            modal.style.display = "block";
+        }
 
-    // When the user clicks on <span> (x), close the modal
-    span.onclick = function () {
-        modal.style.display = "none";
-    }
-
-    // When the user clicks anywhere outside of the modal, close it
-    window.onclick = function (event) {
-        if (event.target == modal) {
+        // When the user clicks on <span> (x), close the modal
+        span.onclick = function () {
             modal.style.display = "none";
         }
-    }
-</script>
-<script src="./javascript/user-update-form.js"></script>
 
-{{/if}}
+        // When the user clicks anywhere outside of the modal, close it
+        window.onclick = function (event) {
+            if (event.target == modal) {
+                modal.style.display = "none";
+            }
+        }
+    </script>
+ 
+
+    {{/if}}
+
+       <script src="./javascript/user-update-form.js"></script>

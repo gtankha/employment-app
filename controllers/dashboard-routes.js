@@ -9,7 +9,6 @@ const { request } = require('express');
 
 router.get('/', (req, res) => {
 
-    console.log(req.session.user_id)
 
     if (req.session.type === "company") {
         Jobs.findAll({
@@ -20,13 +19,21 @@ router.get('/', (req, res) => {
             const companyId = req.session.user_id;
             const jobs = data.map(post => post.get({ plain: true }))
        
-
+            Users.findAll({
+                where: { id: req.session.user_id }})
+            .then(dataUser => {
             res.render('dashboard', {
                 jobs,
                 companyId,
                 type: req.session.type,
+                company_name: dataUser[0].company_name,
+                description: dataUser[0].description,
+                image: dataUser[0].image,
+                loggedIn: req.session.loggedIn,
+                company: true
 
             })
+        })
         })
     }
     else if (req.session.type === "seeker") {

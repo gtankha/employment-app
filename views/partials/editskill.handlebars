@@ -1,8 +1,8 @@
 <div class={{type}} id="types">
-    <div class="form-check">
+    <div class="form-check padding-zero">
         <form class={{job.id}} id="skillform">
             <fieldset>
-                <p>Please Select Skillsets</p>
+                <h5>Please Select Skillsets</h5>
                 {{#each skills as |skills|}}
                 <input type="checkbox" id="skill{{@index}}" value="{{skills.id}}">{{skills.name}}<br>
                 {{/each}}

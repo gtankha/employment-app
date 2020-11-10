@@ -9,6 +9,8 @@ const session = require('express-session');
 const clientID = 'c0c14aedd53cea6';
 
 router.post('/', function(req, res, next) {
+
+    console.log("id //////////",console.log(req.params.id))
     var busboy = new Busboy({headers: req.headers});
     busboy.on('file', function(fieldname, file, filename, encoding, mimetype) {
         if(fieldname == 'image') {

@@ -15,17 +15,27 @@ async function skillSubmit(event) {
 async function descriptionUpdate(event) {
 
     const description = document.querySelector('#descriptionUpdate').value.trim();
+
+    const bodyObj = {description:description}
+
+    if(document.querySelector('#fullnameUpdate'))
+    {
     const full_name = document.querySelector('#fullnameUpdate').value.trim();
+    bodyObj.full_name = full_name;
+    }
+
+    if(document.querySelector('#companynameUpdate'))
+    {
+    const company_name = document.querySelector('#companynameUpdate').value.trim();
+    bodyObj.company_name = company_name;
+    }
 
 
     const userID=document.querySelector("#UserID").value;
 
     const response = await fetch(`/api/users/`+userID, {
         method: 'put',
-        body: JSON.stringify({
-            description: description,
-            full_name: full_name
-        }),
+        body: JSON.stringify(bodyObj),
         headers: { 'Content-Type': 'application/json' }
     });
 
@@ -38,6 +48,7 @@ async function descriptionUpdate(event) {
 }
 
 async function photoChange(event) {
+
     event.preventDefault();
 
     const imgInputEl = document.getElementById('img-input');
@@ -50,7 +61,7 @@ async function photoChange(event) {
         body: formData
     });
         if (response.ok) {
-            document.location.replace('/dash')
+           document.location.replace('/dash')
         } else {
             alert(response.statusText);
         }
@@ -59,3 +70,4 @@ async function photoChange(event) {
 //document.querySelector('#skills').addEventListener('click', skillSubmit);
 document.querySelector('#description').addEventListener('click', descriptionUpdate);
 document.querySelector('#submit-image').addEventListener('click', photoChange);
+

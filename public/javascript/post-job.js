@@ -1,7 +1,6 @@
 async function postJob(event) {
     event.preventDefault();
     console.log(document.querySelector('#UserID').value)
-    console.log('wtf')
     const company_id = document.querySelector('#UserID').value;
     const title = document.querySelector('#job-title').value.trim();
     const description = document.querySelector('#job-description').value.trim();
