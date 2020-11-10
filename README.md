@@ -1,6 +1,7 @@
 # Employment App
 
-
+![Screenshot 1](/assets/images/screenshot1.png?raw=true) 
+![Screenshot 2](/assets/images/screenshot2.png?raw=true) 
   ## Table of Contents
 
   1. [Description](#description)
