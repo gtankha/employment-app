@@ -17,7 +17,7 @@
   <a name="description"></a>
   ## 1. Description
 
-  "Tinder for Companies and job seekers". Provides and interface that allow seekers and companies to find matches based on skill set, and to confirm interviews when there's mutual interest for a job opening.
+  "Tinder for Companies and job seekers". Provides an interface that allow seekers and companies to find matches based on skill set, and to confirm interviews when there's mutual interest for a job opening.
  
   <a name="installation"></a> 
   ## 2. Installation
