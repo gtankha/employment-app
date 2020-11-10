@@ -66,7 +66,7 @@
   
   In case of any questions, please reach out to the following contact email: gtankha@gmail.com
   
-   <a name="contributers"></a> 
+   <a name="contributors"></a> 
   ## 8. Contributors
   Ronan Smith: basic front end, Dashboard routes, README
   
