@@ -35,6 +35,11 @@ nav button {
     border: none;
     cursor: pointer;
 }
+
+ul {
+  list-style-type: none;
+}
+
 .more-round {
 
   border-radius:15px;
