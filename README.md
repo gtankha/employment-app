@@ -11,7 +11,7 @@
   5. [Contributing](#contributing)
   6. [Tests](#tests)
   7. [Questions](#questions)
-  8. [Contributers](#contributters)
+  8. [Contributors](#contributors)
 
 
   <a name="description"></a>
