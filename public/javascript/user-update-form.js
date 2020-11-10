@@ -54,7 +54,7 @@ async function photoChange(event) {
     const imgInputEl = document.getElementById('img-input');
     var formData = new FormData();
     formData.append("image", imgInputEl.files[0]);
-    console.log(document.querySelector("#UserID").value)
+  
 
     const response = await fetch('/api/upload?id=' + document.querySelector("#UserID").value, {
         method: 'POST',
@@ -66,6 +66,35 @@ async function photoChange(event) {
             alert(response.statusText);
         }
 }
+/*
+const job_bodies = document.querySelectorAll("[id=job-body]")
+job_bodies.forEach(job =>{
+
+    const btn = document.createElement("button");
+    btn.className = "btn btn-secondary mt-3";
+    btn.textContent = "delete";
+    btn.addEventListener('click',deleteJobHandler)
+
+    job.appendChild(btn);
+
+})
+
+async function deleteJobHandler(event){
+
+    const job_id = event.target.parentNode.getAttribute("data-job-id");
+    console.log(job_id)
+    const response = await fetch('/api/jobs/'+job_id, {
+        method: 'delete',
+        
+    });
+        if (response.ok) {
+           document.location.replace('/dash')
+        } else {
+            alert(response.statusText);
+        }
+
+
+}*/
 
 //document.querySelector('#skills').addEventListener('click', skillSubmit);
 document.querySelector('#description').addEventListener('click', descriptionUpdate);
