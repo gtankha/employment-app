@@ -57,7 +57,7 @@ router.get('/', (req, res) => {
                             .then(newUserData=> {
                            
                             res.render('dash-interests', { interests: interests, matchingSkillUsers: matchingSkillUsers, company: true, seeker: false, 
-                            loggedIn: req.session.loggedIn, type:req.session.type,full_name:newUserData.full_name,image:newUserData.image,
+                            loggedIn: req.session.loggedIn, type:req.session.type,user_id:req.session.user_id,full_name:newUserData.full_name,image:newUserData.image,
                             company_name:newUserData.company_name,description:newUserData.description });
                          
                            
@@ -110,7 +110,7 @@ router.get('/', (req, res) => {
                             .then(newUserData=> {
                            
                             res.render('dash-interests', { interests: interests, matchingSkillUsers: matchingSkillUsers, company: false, seeker: true,
-                            loggedIn: req.session.loggedIn, type:req.session.type,full_name:newUserData.full_name,image:newUserData.image,
+                            loggedIn: req.session.loggedIn, type:req.session.type,user_id:req.session.user_id,full_name:newUserData.full_name,image:newUserData.image,
                             company_name:newUserData.company_name,description:newUserData.description });
 
                                })

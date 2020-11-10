@@ -150,6 +150,8 @@ function createMatchesButtons() {
     const type = document.getElementById("container-interests").getAttribute("data-type");
     const user_id = document.getElementById("container-interests").getAttribute("data-user-id");
 
+   
+
     if (type == "company") {
 
 
