@@ -218,7 +218,7 @@ function createMatchesButtons() {
                                 console.log('success');
                                 location.reload(false);
                             } else {
-                                alert(response.statusText);
+                                alert("Interest already set!");
                             }
 
 
@@ -264,7 +264,7 @@ function createMatchesButtons() {
                     console.log('success');
                     location.reload(false);
                 } else {
-                    alert(response.statusText);
+                    alert("Interest already set!");
                 }
 
             })
