@@ -43,8 +43,8 @@ router.get('/', (req, res) => {
                     ]
                 })
                     .then(dbUserData => {
-                        console.log("dbuser data///////////"+session_user_id)
-                        console.log(dbUserData)
+                        
+                
 
                         const duplicateSkillUsers = dbUserData.map(post => post.get({ plain: true }));
                         let matchingSkillUsers = Array.from(new Set(duplicateSkillUsers.map(a => (a.user_id ))))
@@ -53,9 +53,16 @@ router.get('/', (req, res) => {
                             })   
                             matchingSkillUsers = matchingSkillUsers.filter(a => a.user_id != req.session.user_id );
                            
+                            Users.findOne({where:{id:session_user_id}})
+                            .then(newUserData=> {
                            
-                            res.render('dash-interests', { interests: interests, matchingSkillUsers: matchingSkillUsers, company: true, seeker: false, loggedIn: req.session.loggedIn, type:req.session.type,session:req.session });
-                    })
+                            res.render('dash-interests', { interests: interests, matchingSkillUsers: matchingSkillUsers, company: true, seeker: false, 
+                            loggedIn: req.session.loggedIn, type:req.session.type,full_name:newUserData.full_name,image:newUserData.image,
+                            company_name:newUserData.company_name,description:newUserData.description });
+                         
+                           
+                        })
+                        })
 
                     .catch(err => console.log(err))
 
@@ -99,9 +106,14 @@ router.get('/', (req, res) => {
                                 return duplicateSkillUsers.find(a => a.job_id === job_id)
                             });
 
+                            Users.findOne({where:{id:session_user_id}})
+                            .then(newUserData=> {
+                           
+                            res.render('dash-interests', { interests: interests, matchingSkillUsers: matchingSkillUsers, company: false, seeker: true,
+                            loggedIn: req.session.loggedIn, type:req.session.type,full_name:newUserData.full_name,image:newUserData.image,
+                            company_name:newUserData.company_name,description:newUserData.description });
 
-                        res.render('dash-interests', { interests: interests, matchingSkillUsers: matchingSkillUsers, company: false, seeker: true, loggedIn: req.session.loggedIn, type: req.session.type,session:req.session });
-
+                               })
                     })
                     .catch(err => console.log(err))
 
