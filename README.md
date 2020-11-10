@@ -37,8 +37,6 @@
   
   When there's mutual interest between candidate and company for a specific job opening, that interest will appear under the confirmed interviews tab, provided that both parties click "I'm interested" on the same job position.
 
-  Application is running on Heroku. It will directly take you to the home page from which you can setup a user or login to access all the functionality.
-
   <a name="license"></a> 
   ## 4. License
    ![](https://img.shields.io/badge/License-ISC-blue.svg)
