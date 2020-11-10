@@ -1,6 +1,6 @@
 {{#if companyId}}
-<div class="d-flex justify-content-center mt-5">
-    <div class="card width600 mr-3">
+<div id="company-dashboard" class="d-flex justify-content-center mt-5">
+    <div class="card width600 ml-3 mr-3 mb-4">
         <div class="card-header">
             <h3>Your Profile</h3>
         </div>
@@ -151,7 +151,7 @@
                     {{/each}}
                 </ul>
                 
-                <button class="btn btn-primary"><a href="/dash/{{job.id}}">Edit Job</a></button>
+                <button class="btn btn-primary mt-3"><a href="/dash/{{job.id}}">Edit Job</a></button>
             </div>
 
 
@@ -274,3 +274,4 @@
     {{/if}}
 
        <script src="./javascript/user-update-form.js"></script>
+       <script src="./javascript/responsive.js"></script>

@@ -2,6 +2,33 @@
 
 function windowSizeHandler(event) {
 
+
+
+    if(document.getElementById('company-dashboard'))
+    {
+        
+        if (window.innerWidth <= 900) {
+
+            document.getElementById('company-dashboard').classList.remove("d-flex");
+            document.getElementById('company-dashboard').classList.add("flex-column");
+            document.getElementById('company-dashboard').classList.add("align-content-center");
+            document.getElementById('company-dashboard').classList.remove("justify-content-center");
+            
+
+        }
+        else
+        {
+            document.getElementById('company-dashboard').classList.add("d-flex");
+            document.getElementById('company-dashboard').classList.remove("flex-column");
+            document.getElementById('company-dashboard').classList.remove("align-content-center");
+            document.getElementById('company-dashboard').classList.add("justify-content-center");
+
+        }
+
+        
+    }
+
+   
     if (document.querySelector("ul")) {
         if (window.innerWidth <= 1000) {
             document.querySelector("ul").classList.remove('nav-tabs');
@@ -16,7 +43,7 @@ function windowSizeHandler(event) {
     }
 
 
-    if (window.innerWidth <= 500) {
+    if (window.innerWidth <= 600) {
 
 
         document.querySelector("header").classList.remove('d-flex');
@@ -52,6 +79,7 @@ function windowSizeHandler(event) {
 
 
     }
+
 }
 
 window.addEventListener('resize', windowSizeHandler);
