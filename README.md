@@ -1,4 +1,4 @@
-# Employer
+# Employment App
 
 
   ## Table of Contents
@@ -16,11 +16,7 @@
   <a name="description"></a>
   ## 1. Description
 
-  Application provides the ability to do the following: 
-
-  As a 'Seeker' you add your name to a list of potential candidates for employeers to show interest in, you can also show interest in employers. If both you and an Employer show  interest in eachother, you are matched up for an interview.
-  
-  As an Employer you can create jobs for Seekers to browse and show interest in. If you select a Seeker for a job they show interest in, you get a confirmed interview.
+  "Tinder for Companies and job seekers". Provides and interface that allow seekers and companies to find matches based on skill set, and to confirm interviews when there's mutual interest for a job opening.
  
   <a name="installation"></a> 
   ## 2. Installation
@@ -29,6 +25,16 @@
 
   <a name="usage"></a> 
   ## 3. Usage
+  
+  Application provides the ability to do the following: 
+
+  As a 'Seeker' you add your name to a list of potential candidates for employeers to show interest in, you can also show interest in employers. If both you and an Employer show  interest in eachother, you are matched up for an interview.
+  
+  As an Employer you can create jobs for Seekers to browse and show interest in. If you select a Seeker for a job they show interest in, you get a confirmed interview.
+  
+  Associating your jobs, or if you're a job seeker, your user profile with a set of skills will improve the accuracy of your matching jobs, or matching candidates. If a candidate has one or more skills that match the skill requirements ofa specific jobs, he will appear under the job matches by skill tab, and vice-versa.
+  
+  When there's mutual interest between candidate and company for a specific job opening, that interest will appear under the confirmed interviews tab, provided that both parties click "I'm interested" on the same job position.
 
   Application is running on Heroku. It will directly take you to the home page from which you can setup a user or login to access all the functionality.
 
@@ -55,15 +61,12 @@
   
   GitHub Username: gtankha
 
-  GitHub: https://github.com/gtankha/tech-blog
-
-  Website: https://calm-temple-62870.herokuapp.com/
-
+  GitHub: https://github.com/gtankha/
   
   In case of any questions, please reach out to the following contact email: gtankha@gmail.com
   
    <a name="contributers"></a> 
-  ## 7. Contribubers
+  ## 8. Contribubers
   Ronan Smith: basic front end, Dashboard routes, README
   
   Gautam Tankha: Skill routes, back end implementation, Skill selectors
