@@ -1,11 +1,15 @@
 {{#if companyId}}
 <div id="company-dashboard" class="d-flex justify-content-center mt-5">
-    <div class="card width600 ml-3 mr-3 mb-4">
+    <div class="card width300 ml-3 mr-3 mb-4" >
         <div class="card-header">
             <h3>Your Profile</h3>
         </div>
         <div class="card-body">
+            {{#if image}}
             <img class="mb-3" src="{{image}}" width="100" height="100">
+            {{else}}
+            <span class="fa display-1">&#xf007;</span>
+            {{/if}}
             <p>
             <h5>Company Name</h5>
             {{company_name}}</p>
@@ -18,32 +22,37 @@
                 <!-- Modal content -->
                 <div class="modal-content width600">
 
-                      <h4>Change Company Logo</h4>
+                    <h4>Change Company Logo</h4>
+                    {{#if image}}
+                    <img class="mt-2 mb-2" src="{{image}}" width="100" height="100"><br>
+                    
 
-                      <img class="mt-2 mb-2" src="{{image}}" width="100" height="100"><br>
+                        {{else}}
+                        <span class="fa display-1">&#xf007;</span>
+                        {{/if}}
+
                         <div>
-                           
-                            <input type="file" id="img-input" name="img" accept="image/*"><br>
-                            <button id="submit-image" 
-                                class="btn btn-primary mt-2 mb-3">submit </button>
+
+                        <input type="file" id="img-input" name="img" accept="image/*"><br>
+                        <button id="submit-image" class="btn btn-primary mt-2 mb-3">submit </button>
                         <br>
 
-                    <form class="update-company-form">
-                        <input type="hidden" id="companyID" name="userID" value="{{companyId}}">
+                        <form class="update-company-form">
+                            <input type="hidden" id="companyID" name="userID" value="{{companyId}}">
 
-                  
-                        </div>
-                        <div>
-                              <h4>Update user information</h4>
-                            <label for="companynameUpdate">Company Name</label><br>
-                            <input type="text" id="companynameUpdate" value="{{company_name}}"/>
-                        </div>
-                        <div>
-                            <label for="company-description">Company Description</label><br>
-                            <input type="text" id="descriptionUpdate" value="{{description}}" />
-                        </div>
-                        <button id="description" type="submit" class="mt-3 btn btn-primary w-50">Update
-                            Information</button>
+
+                    </div>
+                    <div>
+                        <h4>Update user information</h4>
+                        <label for="companynameUpdate">Company Name</label><br>
+                        <input type="text" id="companynameUpdate" value="{{company_name}}" />
+                    </div>
+                    <div>
+                        <label for="company-description">Company Description</label><br>
+                        <input type="text" id="descriptionUpdate" value="{{description}}" />
+                    </div>
+                    <button id="description" type="submit" class="mt-3 btn btn-primary w-50">Update
+                        Information</button>
                     </form>
                 </div>
 
@@ -72,7 +81,7 @@
 
         </div>
     </div>
-    <div class="display-jobs width600">
+    <div class="display-jobs width600" >
         <div class="card">
             <h2 class="card-header">Your Jobs:</h2>
 
@@ -143,14 +152,14 @@
                 </p>
             </div>
             <div class="card-body">
-                
-                    <b> Skills: </b>
+
+                <b> Skills: </b>
                 <ul class="list-group">
                     {{#each job.skills as |skills|}}
                     <li class="list-group-item"> {{skills.name}} </li>
                     {{/each}}
                 </ul>
-                
+
                 <button class="btn btn-primary mt-3"><a href="/dash/{{job.id}}">Edit Job</a></button>
             </div>
 
@@ -176,7 +185,7 @@
         </div>
         <div class="card-body">
             <img class="mb-3" src="{{image}}" width="100" height="100">
-            
+
             <h4>Your Name</h4>
             <p>{{full_name}}</p>
             <h4>Your Description</h4>
@@ -185,9 +194,10 @@
             <ul class="list-group">
                 {{#each userskills as |skill|}}
 
-                <li class="list-group-item">{{skill.name}}<li>
+                <li class="list-group-item">{{skill.name}}
+                <li>
 
-                 {{/each}}
+                    {{/each}}
             </ul>
 
             <button id="myBtn" class="btn btn-primary mt-3">Update profile</button>
@@ -269,9 +279,9 @@
             }
         }
     </script>
- 
+
 
     {{/if}}
 
-       <script src="./javascript/user-update-form.js"></script>
-       <script src="./javascript/responsive.js"></script>
+    <script src="./javascript/user-update-form.js"></script>
+    <script src="./javascript/responsive.js"></script>

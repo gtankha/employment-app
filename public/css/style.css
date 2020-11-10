@@ -40,6 +40,11 @@ ul {
   list-style-type: none;
 }
 
+.width300 {
+
+  max-width:300px;
+}
+
 .more-round {
 
   border-radius:15px;
