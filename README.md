@@ -33,7 +33,7 @@
   
   As an Employer you can create jobs for Seekers to browse and show interest in. If you select a Seeker for a job they show interest in, you get a confirmed interview.
   
-  Associating your jobs, or if you're a job seeker, your user profile with a set of skills will improve the accuracy of your matching jobs, or matching candidates. If a candidate has one or more skills that match the skill requirements ofa specific jobs, he will appear under the job matches by skill tab, and vice-versa.
+  Associating your jobs, or if you're a job seeker, your user profile with a set of skills will improve the accuracy of your matching jobs, or matching candidates. If a candidate has one or more skills that match the skill requirements of a specific job, he will appear under the tab "job matches by skill", and vice-versa. To do that, first create your user profile, if you're a seeker. Then go to the dashboard, click to edit your profile, and check de boxes with the skills you would like to select. As a company, first create a job on the dashboard, then click to edit the job you would like to add skills to, and check the boxes with the corresponding skills and click submit.
   
   When there's mutual interest between candidate and company for a specific job opening, that interest will appear under the confirmed interviews tab, provided that both parties click "I'm interested" on the same job position.
 
@@ -67,7 +67,7 @@
   In case of any questions, please reach out to the following contact email: gtankha@gmail.com
   
    <a name="contributers"></a> 
-  ## 8. Contribubers
+  ## 8. Contributors
   Ronan Smith: basic front end, Dashboard routes, README
   
   Gautam Tankha: Skill routes, back end implementation, Skill selectors
