@@ -35,7 +35,7 @@
   
   Associating your jobs, or if you're a job seeker, your user profile with a set of skills will improve the accuracy of your job matches, or matching candidates if you're a Company. If a candidate has one or more skills that match the skill requirements of a specific job, he will appear under the tab "job matches by skill", and vice-versa. To add skills, first create your user profile, if you're a seeker. Then go to the dashboard, or click "edit profile" in the homepage, and check de boxes with the skills you would like to select. As a company, first create a job on the dashboard, then click to edit the job you would like to add skills to, and check the boxes with the corresponding skills and click submit.
   
-  When there's mutual interest between candidate and company for a specific job opening, that interest will appear under the confirmed interviews tab, provided that both parties click "I'm interested" on the same job position.
+  When there's mutual interest between candidate and company for a specific job opening, that interest will appear under the confirmed interviews tab.
 
   <a name="license"></a> 
   ## 4. License
