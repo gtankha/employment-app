@@ -60,7 +60,7 @@
   
   GitHub Username: gtankha
 
-  GitHub: https://github.com/gtankha/
+  GitHub: https://github.com/gtankha/employment-app
   
   In case of any questions, please reach out to the following contact email: gtankha@gmail.com
   
